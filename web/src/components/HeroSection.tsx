@@ -199,7 +199,7 @@ export default function HeroSection() {
               {!loading && !error && upToLately && (
                 <div className="text-right">
                   <span className="text-xs text-gray-400 font-mono">
-                    (updated {upToLately.datetime_summary})
+                    (updated {upToLately.datetime_summary.split(" ")[0]})
                   </span>
                 </div>
               )}
