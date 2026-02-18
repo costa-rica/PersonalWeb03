@@ -12,6 +12,7 @@ interface BookEntry {
   my_rating: number;
   average_rating: number;
   exclusive_shelf: string | null;
+  date_read: string | null;
 }
 
 export default function BooksSection() {
@@ -123,65 +124,69 @@ export default function BooksSection() {
               {searchQuery ? "no books found" : "no books yet"}
             </div>
           ) : (
-            <>
-              {/* Table header */}
-              <div className="border-b-2 border-black bg-gray-50">
-                <table className="w-full">
-                  <thead>
-                    <tr>
-                      <th className="text-left px-6 py-3 font-mono font-bold text-sm text-black">
-                        Title
-                      </th>
-                      <th className="text-left px-6 py-3 font-mono font-bold text-sm text-black hidden sm:table-cell">
-                        Author
-                      </th>
-                      <th className="text-center px-4 py-3 font-mono font-bold text-sm text-black w-24">
-                        My Rating
-                      </th>
-                      <th className="text-center px-4 py-3 font-mono font-bold text-sm text-black w-24">
-                        Avg Rating
-                      </th>
-                    </tr>
-                  </thead>
-                </table>
-              </div>
-
-              {/* Scrollable body */}
-              <div className="flex-1 overflow-y-auto">
-                <table className="w-full">
-                  <tbody>
-                    {filteredBooks.map((book) => (
-                      <tr
-                        key={book.id}
-                        className="border-b border-gray-200 hover:bg-gray-50 transition-colors"
-                      >
-                        <td className="px-6 py-3 font-mono text-sm">
-                          <span>{book.title}</span>
-                          {book.exclusive_shelf === "currently-reading" && (
-                            <span className="ml-2 inline-block bg-green-100 text-green-700 text-[10px] font-bold px-2 py-0.5 rounded-full -translate-y-1 rotate-[-2deg]">
-                              currently reading
-                            </span>
-                          )}
-                          {/* Show author on mobile below title */}
-                          <span className="block text-xs text-gray-500 sm:hidden mt-1">
-                            {book.author}
+            <div className="flex-1 overflow-y-auto">
+              <table className="w-full table-fixed">
+                <colgroup>
+                  <col className="w-[40%]" />
+                  <col className="w-[30%] hidden sm:table-column" />
+                  <col className="w-16" />
+                  <col className="w-16" />
+                  <col className="w-16" />
+                </colgroup>
+                <thead className="sticky top-0 bg-gray-50 border-b-2 border-black">
+                  <tr>
+                    <th className="text-left px-6 py-3 font-mono font-bold text-sm text-black">
+                      Title
+                    </th>
+                    <th className="text-left px-6 py-3 font-mono font-bold text-sm text-black hidden sm:table-cell">
+                      Author
+                    </th>
+                    <th className="text-center px-2 py-3 font-mono font-bold text-sm text-black">
+                      Year
+                    </th>
+                    <th className="text-center px-2 py-3 font-mono font-bold text-sm text-black">
+                      My
+                    </th>
+                    <th className="text-center px-2 py-3 font-mono font-bold text-sm text-black">
+                      Avg
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredBooks.map((book) => (
+                    <tr
+                      key={book.id}
+                      className="border-b border-gray-200 hover:bg-gray-50 transition-colors"
+                    >
+                      <td className="px-6 py-3 font-mono text-sm break-words">
+                        <span>{book.title}</span>
+                        {book.exclusive_shelf === "currently-reading" && (
+                          <span className="ml-2 inline-block bg-green-100 text-green-700 text-[10px] font-bold px-2 py-0.5 rounded-full -translate-y-1 rotate-[-2deg]">
+                            currently reading
                           </span>
-                        </td>
-                        <td className="px-6 py-3 font-mono text-sm text-gray-700 hidden sm:table-cell">
+                        )}
+                        {/* Show author on mobile below title */}
+                        <span className="block text-xs text-gray-500 sm:hidden mt-1">
                           {book.author}
-                        </td>
-                        <td className="px-4 py-3 font-mono text-sm text-center">
-                          {formatRating(book.my_rating)}
-                        </td>
-                        <td className="px-4 py-3 font-mono text-sm text-center">
-                          {formatRating(book.average_rating)}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </>
+                        </span>
+                      </td>
+                      <td className="px-6 py-3 font-mono text-sm text-gray-700 hidden sm:table-cell break-words">
+                        {book.author}
+                      </td>
+                      <td className="px-2 py-3 font-mono text-sm text-center">
+                        {book.date_read ? book.date_read.split("-")[0] : "\u2014"}
+                      </td>
+                      <td className="px-2 py-3 font-mono text-sm text-center">
+                        {formatRating(book.my_rating)}
+                      </td>
+                      <td className="px-2 py-3 font-mono text-sm text-center">
+                        {formatRating(book.average_rating)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
       </div>

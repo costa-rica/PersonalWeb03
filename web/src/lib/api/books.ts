@@ -8,6 +8,7 @@ export interface BookItem {
   my_rating: number
   average_rating: number
   exclusive_shelf: string | null
+  date_read: string | null
 }
 
 export interface UploadBooksSummary {

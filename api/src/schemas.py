@@ -134,6 +134,7 @@ class BookOut(BaseModel):
     my_rating: int
     average_rating: float
     exclusive_shelf: Optional[str] = None
+    date_read: Optional[str] = None
 
     class Config:
         from_attributes = True
