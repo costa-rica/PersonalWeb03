@@ -51,14 +51,29 @@ export default function BooksSection() {
   }, []);
 
   const filteredBooks = useMemo(() => {
-    if (!searchQuery.trim()) return books;
+    const filtered = searchQuery.trim()
+      ? books.filter(
+          (book) =>
+            book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            book.author.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      : books;
 
-    const query = searchQuery.toLowerCase();
-    return books.filter(
-      (book) =>
-        book.title.toLowerCase().includes(query) ||
-        book.author.toLowerCase().includes(query)
-    );
+    return [...filtered].sort((a, b) => {
+      // Currently reading always goes to the top
+      const aReading = a.exclusive_shelf === "currently-reading";
+      const bReading = b.exclusive_shelf === "currently-reading";
+      if (aReading && !bReading) return -1;
+      if (!aReading && bReading) return 1;
+
+      // Null date_read goes to the end
+      if (!a.date_read && !b.date_read) return 0;
+      if (!a.date_read) return 1;
+      if (!b.date_read) return -1;
+
+      // Sort by date_read descending (most recent first)
+      return new Date(b.date_read).getTime() - new Date(a.date_read).getTime();
+    });
   }, [books, searchQuery]);
 
   const formatRating = (rating: number) => {
