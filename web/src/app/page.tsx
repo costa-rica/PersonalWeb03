@@ -2,6 +2,7 @@ import HeroSection from "@/components/HeroSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import ResumeSection from "@/components/ResumeSection";
 import BlogSection from "@/components/BlogSection";
+import BooksSection from "@/components/BooksSection";
 
 export default function HomePage() {
   return (
@@ -9,6 +10,7 @@ export default function HomePage() {
       <HeroSection />
       <ProjectsSection />
       <BlogSection />
+      <BooksSection />
       <ResumeSection />
     </main>
   );

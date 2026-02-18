@@ -36,6 +36,7 @@ import ModalInformationOk from "@/components/ui/modal/ModalInformationOk";
 import ModalInformationYesOrNo from "@/components/ui/modal/ModalInformationYesOrNo";
 import ModalUpdatePost from "@/components/ui/modal/ModalUpdatePost";
 import DatabaseManagementSection from "@/components/admin/DatabaseManagementSection";
+import BooksManagementSection from "@/components/admin/BooksManagementSection";
 import CreateBlogPostLinkSection from "@/components/admin/CreateBlogPostLinkSection";
 
 const uploadSchema = z.object({
@@ -510,6 +511,12 @@ export default function AdminPage() {
             token={token}
             onLoadingChange={setIsLoading}
             onSuccess={handleUpdateSuccess}
+          />
+
+          {/* Books Management Section */}
+          <BooksManagementSection
+            token={token}
+            onLoadingChange={setIsLoading}
           />
 
           {/* Database Management Section */}

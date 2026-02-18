@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session
 from loguru import logger
 
 from src.database import get_db
-from src.models import User, BlogPost
+from src.models import User, BlogPost, Book
 from src.auth import get_current_user
 
 router = APIRouter(prefix="/admin", tags=["Admin"])
@@ -142,6 +142,39 @@ def backup_database(
             zip_file.writestr('db_backup/blogpost.csv', post_csv.getvalue())
             logger.debug("BlogPost table backed up successfully")
 
+            # Backup Book table
+            books = db.query(Book).all()
+            logger.info(f"Backing up {len(books)} books")
+
+            book_csv = io.StringIO()
+            book_writer = csv.writer(book_csv)
+            book_writer.writerow([
+                'id', 'book_id', 'title', 'author', 'my_rating', 'average_rating',
+                'exclusive_shelf', 'isbn', 'isbn13', 'number_of_pages',
+                'year_published', 'date_read', 'date_added', 'created_at', 'updated_at'
+            ])
+            for book in books:
+                book_writer.writerow([
+                    book.id,
+                    book.book_id,
+                    book.title,
+                    book.author,
+                    book.my_rating,
+                    book.average_rating,
+                    book.exclusive_shelf or '',
+                    book.isbn or '',
+                    book.isbn13 or '',
+                    book.number_of_pages or '',
+                    book.year_published or '',
+                    book.date_read or '',
+                    book.date_added or '',
+                    book.created_at.isoformat() if book.created_at else '',
+                    book.updated_at.isoformat() if book.updated_at else ''
+                ])
+
+            zip_file.writestr('db_backup/book.csv', book_csv.getvalue())
+            logger.debug("Book table backed up successfully")
+
         # Prepare ZIP for download
         zip_buffer.seek(0)
 
@@ -202,6 +235,8 @@ def restore_database(
         "users_skipped": 0,
         "posts_imported": 0,
         "posts_skipped": 0,
+        "books_imported": 0,
+        "books_skipped": 0,
         "skipped_details": []
     }
 
@@ -347,6 +382,50 @@ def restore_database(
 
                 db.commit()
                 logger.info(f"BlogPost table restore complete: {summary['posts_imported']} imported, {summary['posts_skipped']} skipped")
+
+            # Restore Book table if exists
+            book_csv_path = find_csv_file('book.csv')
+            if book_csv_path:
+                logger.info(f"Restoring Book table from: {book_csv_path}")
+                book_csv_data = zip_ref.read(book_csv_path).decode('utf-8')
+                book_reader = csv.DictReader(io.StringIO(book_csv_data))
+
+                for row in book_reader:
+                    book_id = int(row['book_id'])
+
+                    existing = db.query(Book).filter(Book.book_id == book_id).first()
+                    if existing:
+                        logger.warning(f"Skipping book_id {book_id}: already exists")
+                        summary["books_skipped"] += 1
+                        summary["skipped_details"].append(f"Book book_id {book_id}: already exists")
+                        continue
+
+                    new_book = Book(
+                        id=int(row['id']),
+                        book_id=book_id,
+                        title=row['title'],
+                        author=row['author'],
+                        my_rating=int(row['my_rating']) if row.get('my_rating') else 0,
+                        average_rating=float(row['average_rating']) if row.get('average_rating') else 0,
+                        exclusive_shelf=row.get('exclusive_shelf') or None,
+                        isbn=row.get('isbn') or None,
+                        isbn13=row.get('isbn13') or None,
+                        number_of_pages=int(row['number_of_pages']) if row.get('number_of_pages') else None,
+                        year_published=int(row['year_published']) if row.get('year_published') else None,
+                        date_read=row.get('date_read') or None,
+                        date_added=row.get('date_added') or None,
+                    )
+                    if row.get('created_at'):
+                        new_book.created_at = datetime.fromisoformat(row['created_at'])
+                    if row.get('updated_at'):
+                        new_book.updated_at = datetime.fromisoformat(row['updated_at'])
+
+                    db.add(new_book)
+                    summary["books_imported"] += 1
+                    logger.debug(f"Imported book: {row['title']}")
+
+                db.commit()
+                logger.info(f"Book table restore complete: {summary['books_imported']} imported, {summary['books_skipped']} skipped")
 
         logger.info(f"Database restore completed successfully: {summary}")
         return {

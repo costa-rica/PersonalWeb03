@@ -123,6 +123,22 @@ class BlogPostDetail(BaseModel):
         from_attributes = True
 
 
+# Book Schemas
+class BookOut(BaseModel):
+    """Schema for book list response."""
+
+    id: int
+    book_id: int
+    title: str
+    author: str
+    my_rating: int
+    average_rating: float
+    exclusive_shelf: Optional[str] = None
+
+    class Config:
+        from_attributes = True
+
+
 # Hero Section Schemas
 class TogglTableItem(BaseModel):
     """Schema for a single toggl table item."""

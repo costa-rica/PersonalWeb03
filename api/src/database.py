@@ -7,7 +7,7 @@ from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
 from loguru import logger
 
-from src.models import Base, User
+from src.models import Base, User, Book
 
 # Load environment variables
 load_dotenv()

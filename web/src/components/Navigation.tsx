@@ -22,6 +22,9 @@ export default function Navigation() {
         <Link href="#blog" className="hover:text-gray-600 transition-colors">
           blog
         </Link>
+        <Link href="#books" className="hover:text-gray-600 transition-colors">
+          books
+        </Link>
         <Link href="#resume" className="hover:text-gray-600 transition-colors">
           resume
         </Link>
