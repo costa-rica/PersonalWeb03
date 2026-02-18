@@ -2,6 +2,7 @@
 
 import csv
 import io
+from datetime import datetime
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File
 from sqlalchemy.orm import Session
@@ -30,6 +31,26 @@ def safe_int(value: str, default: int = 0) -> int:
         return int(value.strip())
     except ValueError:
         return default
+
+
+def normalize_date(value: str) -> str | None:
+    """Normalize date strings from various GoodReads formats to YYYY-MM-DD."""
+    if not value or not value.strip():
+        return None
+    value = value.strip()
+    formats = [
+        '%Y/%m/%d',  # GoodReads CSV: 2025/12/01
+        '%m/%d/%y',  # Excel-mangled: 12/1/25
+        '%m/%d/%Y',  # Excel-mangled: 12/1/2025
+        '%Y-%m-%d',  # Already normalized
+    ]
+    for fmt in formats:
+        try:
+            return datetime.strptime(value, fmt).strftime('%Y-%m-%d')
+        except ValueError:
+            continue
+    logger.warning(f"Could not parse date: '{value}', storing as-is")
+    return value
 
 
 def safe_float(value: str, default: float = 0.0) -> float:
@@ -95,8 +116,8 @@ def upload_books_csv(
                 'isbn13': clean_isbn(row.get('ISBN13', '')) or None,
                 'number_of_pages': safe_int(row.get('Number of Pages', '')) or None,
                 'year_published': safe_int(row.get('Year Published', '')) or None,
-                'date_read': row.get('Date Read', '').strip() or None,
-                'date_added': row.get('Date Added', '').strip() or None,
+                'date_read': normalize_date(row.get('Date Read', '')),
+                'date_added': normalize_date(row.get('Date Added', '')),
             }
 
             if existing:

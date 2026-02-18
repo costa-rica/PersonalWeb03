@@ -72,7 +72,8 @@ export default function BooksSection() {
       if (!b.date_read) return -1;
 
       // Sort by date_read descending (most recent first)
-      return new Date(b.date_read).getTime() - new Date(a.date_read).getTime();
+      // Dates are stored as YYYY-MM-DD so string comparison works correctly
+      return b.date_read.localeCompare(a.date_read);
     });
   }, [books, searchQuery]);
 
