@@ -18,7 +18,10 @@ interface TogglEntry {
 export default function HeroSection() {
   // Configuration: Number of words to show before truncating
   const TRUNCATE_WORD_COUNT = 35;
-  
+
+  // Check if hours table should be displayed (from env variable)
+  const shouldDisplayHours = process.env.NEXT_PUBLIC_DISPLAY_HOURS_SPENT === 'true';
+
   const [upToLately, setUpToLately] = useState<UpToLately | null>(null);
   const [togglTable, setTogglTable] = useState<TogglEntry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -169,7 +172,7 @@ export default function HeroSection() {
                 </div>
               )}
 
-              {!loading && !error && togglTable.length > 0 && upToLately && (isExpanded || countWords(upToLately.text) <= TRUNCATE_WORD_COUNT) && (
+              {!loading && !error && shouldDisplayHours && togglTable.length > 0 && upToLately && (isExpanded || countWords(upToLately.text) <= TRUNCATE_WORD_COUNT) && (
                 <div className="border-2 border-black rounded-2xl overflow-hidden bg-gray-50">
                   <table className="w-full font-mono text-sm">
                     <thead>

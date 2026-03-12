@@ -73,6 +73,12 @@ const envSchema = z.object({
       required_error: 'PATH_TO_LOGS is required',
     })
     .min(1, 'PATH_TO_LOGS cannot be empty'),
+
+  NEXT_PUBLIC_DISPLAY_HOURS_SPENT: z
+    .enum(['true', 'false'], {
+      required_error: 'NEXT_PUBLIC_DISPLAY_HOURS_SPENT is required',
+      invalid_type_error: 'NEXT_PUBLIC_DISPLAY_HOURS_SPENT must be exactly "true" or "false" (lowercase)',
+    }),
 });
 
 // ANSI color codes for terminal output
@@ -112,6 +118,8 @@ function formatErrorMessage(errors) {
       lines.push(colors.cyan + '    Example: PersonalWeb03-NextJS' + colors.reset);
     } else if (field === 'PATH_TO_LOGS') {
       lines.push(colors.cyan + '    Example: /var/log/myapp' + colors.reset);
+    } else if (field === 'NEXT_PUBLIC_DISPLAY_HOURS_SPENT') {
+      lines.push(colors.cyan + '    Example: true' + colors.reset);
     }
 
     lines.push('');
@@ -126,6 +134,7 @@ function formatErrorMessage(errors) {
   lines.push(colors.green + 'NEXT_PUBLIC_MODE=production' + colors.reset);
   lines.push(colors.green + 'NEXT_PUBLIC_NAME_APP=PersonalWeb03-NextJS' + colors.reset);
   lines.push(colors.green + 'PATH_TO_LOGS=/var/log/myapp' + colors.reset);
+  lines.push(colors.green + 'NEXT_PUBLIC_DISPLAY_HOURS_SPENT=true' + colors.reset);
   lines.push('');
   lines.push('See .env.example for a complete template.');
   lines.push(colors.red + separator + colors.reset);
