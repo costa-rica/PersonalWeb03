@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "build": "node scripts/validate-env.js && next build",
     "dev": "next dev -p ${PORT:-3001}",
     "lint": "eslint .",
     "start": "next start -p ${PORT:-3001}"
