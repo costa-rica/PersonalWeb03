@@ -1,6 +1,6 @@
-# CLAUDE.md
+# AGENT.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to engineers and coding agents when working with code in this repository.
 
 ## Project Overview
 
@@ -35,6 +35,7 @@ This variable is used for API calls to fetch dynamic content like hero section d
 ## Architecture
 
 ### Frontend Stack
+
 - **Framework**: Next.js 16 with App Router (RSC enabled)
 - **UI**: Tailwind CSS 4 + shadcn/ui components
 - **State Management**: Redux Toolkit with per-request store pattern
@@ -75,6 +76,7 @@ public/               # Static assets (images, icons)
 ### State Management Pattern
 
 Uses Redux Toolkit with the **per-request store pattern** for RSC compatibility:
+
 - Store is created per request via `makeStore()` in `lib/store.ts`
 - `StoreProvider.tsx` wraps the app and maintains store reference
 - Use typed hooks from `lib/hooks.ts`: `useAppDispatch`, `useAppSelector`, `useAppStore`
@@ -82,12 +84,14 @@ Uses Redux Toolkit with the **per-request store pattern** for RSC compatibility:
 ### Path Aliases
 
 Configured in `tsconfig.json`:
+
 - `@/*` maps to project root
 - Example: `@/components/HeroSection`, `@/lib/utils`
 
 ### UI Component System
 
 Uses **shadcn/ui** (New York style):
+
 - Configuration: `components.json`
 - Base color: neutral, CSS variables enabled
 - Import UI components from `@/components/ui`
@@ -97,6 +101,7 @@ Uses **shadcn/ui** (New York style):
 ### Backend Integration
 
 The frontend connects to a FastAPI backend (see `docs/API_REFERENCE.md`):
+
 - Base URL: `http://localhost:8000`
 - JWT authentication for protected endpoints
 - Blog posts served as markdown with static assets
@@ -104,6 +109,7 @@ The frontend connects to a FastAPI backend (see `docs/API_REFERENCE.md`):
 - API routers: `/auth`, `/blog`, `/hero-section/data`, `/posts`
 
 Key backend features:
+
 - JWT tokens never expire
 - Blog posts created from ZIP archives
 - Markdown content with asset management
@@ -112,10 +118,12 @@ Key backend features:
 ## Build Configuration
 
 ### next.config.mjs
+
 - TypeScript build errors ignored (`ignoreBuildErrors: true`)
 - Image optimization disabled (`unoptimized: true`)
 
 ### Tailwind CSS 4
+
 - Using `@tailwindcss/postcss` plugin
 - Global styles in `app/globals.css`
 - CSS variables for theming
@@ -123,15 +131,18 @@ Key backend features:
 ## Component Guidelines
 
 ### Section Components
+
 Each major section (Hero, Projects, Resume, Blog) is a separate component that handles its own layout and data. The main page (`app/page.tsx`) composes these sections.
 
 **HeroSection**: Fetches dynamic content from `/hero-section/data` API endpoint on mount. Displays:
+
 - Static intro content
 - `up_to_lately.text` from API (with loading/error states)
 - Project hours table from `toggl_table` API data (project name and hours formatted to 1 decimal place)
 - Table is hidden if API fails or returns no data
 
 ### Client vs Server Components
+
 - Most section components are client components (`"use client"`)
 - Layout is a server component that wraps with `StoreProvider` and `Analytics`
 - Redux requires client components for hooks
