@@ -35,6 +35,11 @@ This checklist breaks the LEFT-OFF migration into phases so the engineer can imp
 - [ ] Decide and document behavior when no cutoff heading is found. The likely default is to extract the entire file.
 - [ ] Decide and document behavior when the file is missing or headings are malformed.
 - [ ] Rename parser classes, methods, docstrings, and log messages if needed so they no longer describe `.docx` behavior.
+- [ ] Add `unittest` coverage for the markdown parser before considering the parser migration complete.
+- [ ] Add a parser test for extracting only the rolling 7-day window from newest-first `# YYYYMMDD` headings.
+- [ ] Add a parser test for the no-cutoff-found case so full-file extraction is intentional and protected.
+- [ ] Add a parser test that preserves markdown content such as `- [ ]` task items, backticks, blank lines, and plain text.
+- [ ] Add a parser test for malformed or unexpected headings so failure behavior is explicit.
 - [ ] Commit changes for Phase 3 before moving to Phase 4.
 
 ## Phase 4. Update prompt, docs, and references
@@ -48,20 +53,23 @@ This checklist breaks the LEFT-OFF migration into phases so the engineer can imp
 
 ## Phase 5. Verify behavior
 
+- [ ] Run the `unittest` test suite for the LEFT-OFF service before running manual verification.
 - [ ] Run the LEFT-OFF service against the real file at `/Users/nick/Documents/_project_resources/PersonalWeb03/obsidian/LEFT-OFF.md`.
 - [ ] Verify the generated `last-7-days-activities.md` contains only the expected date range.
 - [ ] Verify the extracted markdown keeps task items, code snippets, and plain text intact.
 - [ ] Verify the summarizer still returns valid JSON and writes `left-off-7-day-summary.json`.
 - [ ] Verify the service works without OneDrive environment variables present.
 - [ ] Review logs for outdated `.docx` or OneDrive wording and clean up any remaining references.
+- [ ] If manual verification reveals an edge case, add or update a `unittest` case before closing the phase.
 - [ ] Commit changes for Phase 5 before moving to Phase 6.
 
 ## Phase 6. Cleanup and future-proofing
 
 - [ ] Remove unused OneDrive LEFT-OFF code only if it is no longer needed elsewhere.
 - [ ] Remove unused Python dependencies related only to the retired LEFT-OFF `.docx` flow if they are no longer needed by the project.
-- [ ] Consider adding a small parser test fixture for markdown headings and cutoff behavior.
-- [ ] Consider adding a test case that includes `- [ ]`, backticks, blank lines, and future-safe markdown links.
+- [ ] Add or refine shared `unittest` fixtures and sample markdown inputs so future LEFT-OFF parser changes are easy to test.
+- [ ] Add a `unittest` case that includes future-safe markdown links so parser behavior is protected when links are introduced.
+- [ ] Document how to run the `unittest` suite for this service in the active project docs.
 - [ ] Add a short note describing the expected `LEFT-OFF.md` structure so future edits do not accidentally break the parser.
 - [ ] Commit changes for Phase 6 after cleanup is complete.
 
