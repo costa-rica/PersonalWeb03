@@ -10,7 +10,7 @@ Automated services for PersonalWeb03 that run as scheduled cron jobs. Downloads 
 
 **File**: `services-data/left-off-7-day-summary.json`
 
-Generates AI-powered summaries of the last 7 days of activities from LEFT-OFF.docx.
+Generates AI-powered summaries of the last 7 days of activities from `obsidian/LEFT-OFF.md`.
 
 ```json
 {
@@ -20,7 +20,6 @@ Generates AI-powered summaries of the last 7 days of activities from LEFT-OFF.do
 ```
 
 **Temp Files**: `services-data/left-off-temp/`
-- `LEFT-OFF.docx` - Downloaded document from OneDrive
 - `last-7-days-activities.md` - Extracted activities in markdown
 
 ---
@@ -53,10 +52,6 @@ pip install -r requirements.txt
 PATH_PROJECT_RESOURCES=/path/to/project/resources
 
 # LEFT-OFF Service
-TARGET_FILE_ID=your_onedrive_file_id
-APPLICATION_ID=your_azure_app_id
-CLIENT_SECRET=your_azure_client_secret
-REFRESH_TOKEN=your_refresh_token
 KEY_OPENAI=your_openai_api_key
 
 # Toggl Service
@@ -75,6 +70,9 @@ python src/main.py --run-anyway       # Runs LEFT-OFF + Toggl anytime (bypass gu
 # Run individual services (anytime - bypass guardrail)
 python src/main.py --run-left-off     # LEFT-OFF only
 python src/main.py --run-toggl        # Toggl only
+
+# Run the unit tests
+python -m unittest discover -s tests
 ```
 
 **Exit Codes**:
@@ -88,6 +86,15 @@ python src/main.py --run-toggl        # Toggl only
 
 - **[DEVELOPMENT_NOTES.md](docs/DEVELOPMENT_NOTES.md)** - Complete engineering reference with API details, architecture, and troubleshooting
 - **requirements/** - Original specifications used for initial development (historical reference)
+
+## LEFT-OFF Source Format
+
+The LEFT-OFF service reads from `PATH_PROJECT_RESOURCES/obsidian/LEFT-OFF.md`.
+
+- Top-level date headings must use `# YYYYMMDD`
+- Top-level date headings should be newest first
+- All content under a date heading belongs to that day until the next top-level date heading
+- Markdown content such as task items, code snippets, and plain text is preserved before summarization
 
 ---
 

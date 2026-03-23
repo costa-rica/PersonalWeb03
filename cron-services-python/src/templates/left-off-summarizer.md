@@ -1,4 +1,4 @@
-You are a helpful assistant. You are receiveing the last 7 days of activities from a Microsoft Word document. You will summarize these notes and return a JSON response.
+You are a helpful assistant. You are receiving the last 7 days of activities from an Obsidian markdown document. You will summarize these notes and return a JSON response.
 
 The JSON response should have the following structure:
 

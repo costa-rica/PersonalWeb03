@@ -31,11 +31,8 @@ class Config:
             )
         
         # LEFT-OFF service config
-        self.target_file_name = os.getenv('NAME_TARGET_FILE', 'LEFT-OFF.docx')
-        self.target_file_id = os.getenv('TARGET_FILE_ID')
-        self.application_id = os.getenv('APPLICATION_ID')
-        self.client_secret = os.getenv('CLIENT_SECRET')
-        self.refresh_token = os.getenv('REFRESH_TOKEN')
+        self.left_off_source_dir = Path(self.path_project_resources) / 'obsidian'
+        self.left_off_source_name = 'LEFT-OFF.md'
         
         # OpenAI config
         self.openai_base_url = os.getenv('URL_BASE_OPENAI', 'https://api.openai.com/v1')
@@ -55,10 +52,6 @@ class Config:
             ValueError: If required configuration is missing
         """
         required = {
-            'TARGET_FILE_ID': self.target_file_id,
-            'APPLICATION_ID': self.application_id,
-            'CLIENT_SECRET': self.client_secret,
-            'REFRESH_TOKEN': self.refresh_token,
             'KEY_OPENAI': self.openai_api_key,
         }
         
@@ -68,9 +61,9 @@ class Config:
         
         logger.info("LEFT-OFF configuration validated successfully")
 
-    def get_left_off_file_path(self):
-        """Get the full path for the LEFT-OFF.docx file."""
-        return self.services_data_dir / 'left-off-temp' / self.target_file_name
+    def get_left_off_source_path(self):
+        """Get the full path for the LEFT-OFF.md source file."""
+        return self.left_off_source_dir / self.left_off_source_name
 
     def get_activities_file_path(self):
         """Get the full path for the last-7-days-activities.md file."""

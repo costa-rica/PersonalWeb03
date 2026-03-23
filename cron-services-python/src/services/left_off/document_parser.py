@@ -1,48 +1,57 @@
 """
-Document parser for extracting content from LEFT-OFF.docx file.
+Markdown parser for extracting recent content from LEFT-OFF.md.
 """
 
 import re
+import logging
 from datetime import datetime, timedelta
-from docx import Document
-from loguru import logger
+from pathlib import Path
+
+try:
+    from loguru import logger
+except ImportError:  # pragma: no cover - fallback for minimal test environments
+    logger = logging.getLogger(__name__)
 
 
-class DocumentParser:
-    """Parser for extracting last 7 days of activities from LEFT-OFF.docx."""
+class LeftOffMarkdownParser:
+    """Parser for extracting the last 7 days of activities from LEFT-OFF.md."""
 
-    def __init__(self, docx_path):
+    DATE_HEADING_PATTERN = re.compile(r"^#\s+(\d{8})\s*$")
+
+    def __init__(self, markdown_path, now_provider=None):
         """
-        Initialize document parser.
+        Initialize the markdown parser.
 
         Args:
-            docx_path: Path to the .docx file
+            markdown_path: Path to the LEFT-OFF.md file
+            now_provider: Optional callable returning the current datetime
         """
-        self.docx_path = docx_path
-        self.document = None
+        self.markdown_path = Path(markdown_path)
+        self.now_provider = now_provider or datetime.now
+        self.lines = None
 
     def load_document(self):
         """
-        Load the .docx document.
+        Load the markdown document.
 
         Returns:
             bool: True if successful, False otherwise
         """
         try:
-            logger.info(f"Loading document: {self.docx_path}")
-            self.document = Document(self.docx_path)
-            logger.info(f"Document loaded successfully ({len(self.document.paragraphs)} paragraphs)")
+            logger.info(f"Loading markdown document: {self.markdown_path}")
+            self.lines = self.markdown_path.read_text(encoding="utf-8").splitlines()
+            logger.info(f"Markdown document loaded successfully ({len(self.lines)} lines)")
             return True
-        except Exception as e:
-            logger.error(f"Failed to load document: {e}")
+        except Exception as exc:
+            logger.error(f"Failed to load markdown document: {exc}")
             return False
 
     def extract_last_7_days(self, output_path):
         """
-        Extracts content from the last 7 days and saves to a markdown file.
+        Extract content from the last 7 days and save it as markdown.
 
-        The document has Heading 1 sections in YYYYMMDD format. This method finds
-        the first Heading 1 that is 8+ days old and extracts all content above it.
+        The markdown file is expected to contain top-level headings in
+        ``# YYYYMMDD`` format, with the newest date first in the file.
 
         Args:
             output_path: Path to save the extracted markdown content
@@ -50,65 +59,53 @@ class DocumentParser:
         Returns:
             bool: True if successful, False otherwise
         """
-        if not self.document:
-            logger.error("Document not loaded")
+        if self.lines is None:
+            logger.error("Markdown document not loaded")
             return False
 
-        # Calculate the cutoff date (8 days ago)
-        cutoff_date = datetime.now() - timedelta(days=8)
-        cutoff_date_str = cutoff_date.strftime('%Y%m%d')
+        cutoff_date = self.now_provider() - timedelta(days=8)
+        cutoff_date_str = cutoff_date.strftime("%Y%m%d")
         logger.info(f"Extracting content from last 7 days (cutoff: {cutoff_date_str})")
 
-        # Find the cutoff paragraph index
         cutoff_index = None
-        date_pattern = re.compile(r'^\d{8}$')  # YYYYMMDD format
+        found_date_heading = False
 
-        for i, paragraph in enumerate(self.document.paragraphs):
-            # Check if this is a Heading 1
-            if paragraph.style.name == 'Heading 1':
-                text = paragraph.text.strip()
+        for index, line in enumerate(self.lines):
+            match = self.DATE_HEADING_PATTERN.match(line)
+            if not match:
+                continue
 
-                # Check if it matches YYYYMMDD format
-                if date_pattern.match(text):
-                    logger.debug(f"Found Heading 1 date: {text}")
+            found_date_heading = True
+            heading_date = match.group(1)
+            logger.debug(f"Found markdown date heading: {heading_date}")
 
-                    # Check if this date is 8+ days ago
-                    if text <= cutoff_date_str:
-                        cutoff_index = i
-                        logger.info(f"Found cutoff date: {text} at paragraph {i}")
-                        break
+            if heading_date <= cutoff_date_str:
+                cutoff_index = index
+                logger.info(f"Found cutoff date: {heading_date} at line {index + 1}")
+                break
+
+        if not found_date_heading:
+            logger.error("No valid '# YYYYMMDD' headings found in LEFT-OFF markdown")
+            return False
 
         if cutoff_index is None:
-            logger.warning("No cutoff date found - extracting entire document")
-            cutoff_index = len(self.document.paragraphs)
+            logger.warning("No cutoff date found - extracting entire markdown file")
+            extracted_lines = list(self.lines)
+        else:
+            extracted_lines = self.lines[:cutoff_index]
 
-        # Extract content from beginning to cutoff
-        logger.info(f"Extracting {cutoff_index} paragraphs")
-        content_lines = []
-
-        for i in range(cutoff_index):
-            paragraph = self.document.paragraphs[i]
-            text = paragraph.text
-
-            # Add markdown formatting based on style
-            if paragraph.style.name == 'Heading 1':
-                content_lines.append(f"# {text}")
-            elif paragraph.style.name == 'Heading 2':
-                content_lines.append(f"## {text}")
-            elif paragraph.style.name == 'Heading 3':
-                content_lines.append(f"### {text}")
-            else:
-                content_lines.append(text)
-
-        # Join with newlines and save
-        content = '\n'.join(content_lines)
+        content = "\n".join(extracted_lines).rstrip() + "\n"
 
         try:
-            with open(output_path, 'w', encoding='utf-8') as f:
-                f.write(content)
-            logger.info(f"Extracted content saved to: {output_path}")
+            output_file = Path(output_path)
+            output_file.parent.mkdir(parents=True, exist_ok=True)
+            output_file.write_text(content, encoding="utf-8")
+            logger.info(f"Extracted content saved to: {output_file}")
             logger.info(f"Content length: {len(content)} characters")
             return True
-        except Exception as e:
-            logger.error(f"Failed to save extracted content: {e}")
+        except Exception as exc:
+            logger.error(f"Failed to save extracted content: {exc}")
             return False
+
+
+DocumentParser = LeftOffMarkdownParser

@@ -14,8 +14,8 @@ PersonalWeb03-Services/
 │   ├── main.py                      # Entry point with CLI and guardrail logic
 │   ├── services/                    # Service implementations
 │   │   ├── left_off/                # LEFT-OFF document summarization
-│   │   │   ├── onedrive_client.py   # MS Graph API client for OneDrive
-│   │   │   ├── document_parser.py   # .docx parsing and extraction
+│   │   │   ├── onedrive_client.py   # Legacy MS Graph helper kept for reference
+│   │   │   ├── document_parser.py   # LEFT-OFF.md parsing and extraction
 │   │   │   └── summarizer.py        # OpenAI-powered summarization
 │   │   └── toggl/                   # (Future) Toggl Tracker service
 │   ├── utils/                       # Shared utilities
@@ -69,19 +69,16 @@ Loads and validates environment variables from `.env`:
 
 ### Required Variables
 - `PATH_PROJECT_RESOURCES` - Base path for output files
-- `TARGET_FILE_ID` - OneDrive file ID for LEFT-OFF.docx
-- `APPLICATION_ID` - Azure AD application ID
-- `CLIENT_SECRET` - Azure AD client secret
-- `REFRESH_TOKEN` - OneDrive refresh token (rotates on use)
 - `KEY_OPENAI` - OpenAI API key
 
 ### Path Helpers
-- `get_left_off_file_path()` → `{PATH_PROJECT_RESOURCES}/services-data/left-off-temp/LEFT-OFF.docx`
+- `get_left_off_source_path()` → `{PATH_PROJECT_RESOURCES}/obsidian/LEFT-OFF.md`
 - `get_activities_file_path()` → `{PATH_PROJECT_RESOURCES}/services-data/left-off-temp/last-7-days-activities.md`
 - `get_summary_json_path()` → `{PATH_PROJECT_RESOURCES}/services-data/left-off-7-day-summary.json`
 
 **Directory Structure**:
-- Temp files (downloaded .docx, extracted markdown) → `services-data/left-off-temp/`
+- Source files → `obsidian/`
+- Temp files (extracted markdown) → `services-data/left-off-temp/`
 - Final output (JSON summary) → `services-data/left-off-7-day-summary.json`
 
 ## Logging
@@ -101,20 +98,19 @@ Each module has its own logger: `logger = logging.getLogger(__name__)`
 
 ## LEFT-OFF Service
 
-Downloads LEFT-OFF.docx from OneDrive, extracts last 7 days of activities, and generates AI-powered summaries.
+Reads LEFT-OFF.md from the Obsidian resources directory, extracts last 7 days of activities, and generates AI-powered summaries.
 
 ### Workflow
 
-1. **Download** (`onedrive_client.py`):
-   - Authenticate via MSAL with refresh token
-   - Download file by ID from MS Graph API
-   - Save to `services-data/left-off-temp/LEFT-OFF.docx`
+1. **Load Source**:
+   - Read `{PATH_PROJECT_RESOURCES}/obsidian/LEFT-OFF.md`
+   - Confirm the source file exists before parsing
 
 2. **Parse** (`document_parser.py`):
-   - Load .docx with `python-docx`
+   - Load markdown from `LEFT-OFF.md`
    - Find cutoff date (8 days ago in YYYYMMDD format)
-   - Extract all content before first Heading 1 ≥ cutoff
-   - Convert to markdown and save to `services-data/left-off-temp/last-7-days-activities.md`
+   - Extract all content before the first top-level `# YYYYMMDD` heading that is at or older than the cutoff
+   - Preserve markdown and save to `services-data/left-off-temp/last-7-days-activities.md`
 
 3. **Summarize** (`summarizer.py`):
    - Load prompt template from `templates/left-off-summarizer.md`
@@ -123,25 +119,15 @@ Downloads LEFT-OFF.docx from OneDrive, extracts last 7 days of activities, and g
    - Save JSON response to `services-data/left-off-7-day-summary.json`
    - Print result to console
 
-### OneDrive Authentication
-
-**File**: `src/services/left_off/onedrive_client.py`
-
-Uses MSAL's `ConfidentialClientApplication` with refresh tokens:
-- Authority: `https://login.microsoftonline.com/consumers`
-- Scopes: `['Files.Read', 'Files.Read.All']`
-- **Token Rotation**: Refresh tokens may rotate on use (Microsoft security policy)
-  - New tokens logged as WARNING (commented out to avoid secrets in logs)
-  - Update `.env` manually if authentication fails
-
 ### Document Structure Expectations
 
-The LEFT-OFF.docx file must follow this structure:
-- **Heading 1**: Date in YYYYMMDD format (e.g., `20251207`)
-- **Heading 2**: Section headers (e.g., "LEFT-OFF", "Accomplished Today")
+The `LEFT-OFF.md` file must follow this structure:
+- **Top-level heading**: Date in `# YYYYMMDD` format (for example, `# 20260322`)
+- **Nested headings**: Any lower markdown heading level may appear under a date
 - **Organization**: Most recent entries at top, oldest at bottom
+- **Content**: Everything under a date heading belongs to that date until the next top-level date heading
 
-Parser extracts all paragraphs until it finds the first Heading 1 date that is ≥ 8 days old.
+Parser extracts all lines until it finds the first top-level date heading that is 8 or more days old.
 
 ### OpenAI Integration
 
@@ -158,7 +144,6 @@ Edit `templates/left-off-summarizer.md` to modify summary style, length, or form
 ### Output Files
 
 1. **Temp Files** (in `services-data/left-off-temp/`):
-   - `LEFT-OFF.docx` - Downloaded document
    - `last-7-days-activities.md` - Extracted markdown
 
 2. **Final Output** (in `services-data/`):
@@ -166,8 +151,9 @@ Edit `templates/left-off-summarizer.md` to modify summary style, length, or form
 
 ### Error Cases
 
-- **Invalid/Expired Refresh Token**: Returns exit code 1, logs auth error
-- **Missing Document Structure**: Parser warns if no cutoff date found, extracts entire doc
+- **Missing Source File**: Returns exit code 1, logs missing file path
+- **Missing Document Structure**: Parser returns exit code 1 if no valid top-level date headings are found
+- **No Cutoff Heading Found**: Parser warns and extracts the entire markdown file
 - **OpenAI API Failure**: Returns exit code 1, logs API error with details
 - **Missing Template**: Returns exit code 1, logs file not found
 
@@ -194,8 +180,6 @@ Use exit codes for cron job monitoring and alerting.
 ## Dependencies
 
 See `requirements.txt`:
-- `msal` - Microsoft Authentication Library for OneDrive
-- `python-docx` - Parse .docx files
 - `requests` - HTTP requests for Graph API
 - `openai` - OpenAI API client
 - `python-dotenv` - Load .env files
@@ -218,6 +202,7 @@ See `requirements.txt`:
    - No code changes needed for prompt adjustments
 
 3. **Testing**:
+   - Use `python -m unittest discover -s tests` for parser-focused regression coverage
    - Use `--run-{service}` flags for individual testing
    - Use `--run-anyway` to bypass guardrail during development
    - Check logs for detailed execution flow
@@ -225,4 +210,4 @@ See `requirements.txt`:
 4. **Production Deployment**:
    - Deploy as cron job on Sunday 11:00 PM
    - Monitor exit codes for success/failure
-   - Update `.env` if refresh tokens expire
+   - Confirm `PATH_PROJECT_RESOURCES/obsidian/LEFT-OFF.md` remains available to the cron environment

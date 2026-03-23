@@ -19,7 +19,6 @@ sys.path.insert(0, str(Path(__file__).parent))
 from utils.config import Config
 from utils.guardrail import TimeGuardrail
 from utils.logging_config import configure_logging
-from services.left_off.onedrive_client import OneDriveClient
 from services.left_off.document_parser import DocumentParser
 from services.left_off.summarizer import Summarizer
 from services.toggl.toggl_client import TogglClient
@@ -28,7 +27,7 @@ from services.toggl.time_aggregator import TimeAggregator
 
 def run_left_off_service():
     """
-    Run the LEFT-OFF.docx download and summary service.
+    Run the LEFT-OFF markdown summarization service.
     
     Returns:
         int: Exit code (0=success, 1=error)
@@ -40,31 +39,19 @@ def run_left_off_service():
         config = Config()
         config.validate_left_off_config()
         
-        # Step 1: Download LEFT-OFF.docx from OneDrive
-        logger.info("Step 1: Downloading LEFT-OFF.docx from OneDrive")
-        client = OneDriveClient(
-            application_id=config.application_id,
-            client_secret=config.client_secret,
-            refresh_token=config.refresh_token
-        )
-        
-        # Get access token
-        if not client.get_access_token():
-            logger.error("Failed to obtain access token")
+        # Step 1: Load LEFT-OFF.md from the Obsidian resources directory
+        source_path = config.get_left_off_source_path()
+        logger.info(f"Step 1: Loading LEFT-OFF markdown from {source_path}")
+        if not source_path.exists():
+            logger.error(f"LEFT-OFF markdown file not found: {source_path}")
             return 1
         
-        # Download LEFT-OFF.docx file
-        output_path = config.get_left_off_file_path()
-        if not client.download_file(config.target_file_id, str(output_path)):
-            logger.error("Failed to download LEFT-OFF.docx")
-            return 1
-        
-        # Step 2: Parse document and extract last 7 days
-        logger.info("Step 2: Parsing document and extracting last 7 days")
-        parser = DocumentParser(str(output_path))
+        # Step 2: Parse markdown and extract last 7 days
+        logger.info("Step 2: Parsing markdown and extracting last 7 days")
+        parser = DocumentParser(str(source_path))
         
         if not parser.load_document():
-            logger.error("Failed to load document")
+            logger.error("Failed to load LEFT-OFF markdown")
             return 1
         
         activities_path = config.get_activities_file_path()
@@ -96,6 +83,7 @@ def run_left_off_service():
         # Save the JSON result to file
         summary_json_path = config.get_summary_json_path()
         try:
+            summary_json_path.parent.mkdir(parents=True, exist_ok=True)
             with open(summary_json_path, 'w', encoding='utf-8') as f:
                 json.dump(summary_result, f, indent=2)
             logger.info(f"Summary saved to: {summary_json_path}")
@@ -229,7 +217,7 @@ def main():
     parser.add_argument(
         '--run-left-off',
         action='store_true',
-        help='Run only the LEFT-OFF.docx download and summary service'
+        help='Run only the LEFT-OFF markdown summary service'
     )
     
     parser.add_argument(

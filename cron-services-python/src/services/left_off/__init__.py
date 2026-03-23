@@ -1,1 +1,1 @@
-"""LEFT-OFF service for downloading and summarizing LEFT-OFF.docx."""
+"""LEFT-OFF service for summarizing recent work from LEFT-OFF.md."""
