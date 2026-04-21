@@ -9,7 +9,18 @@ The JSON response should have the following structure:
 }
 ```
 
-The summary should be a concise summary of the last 7 days' progress. It should be no longer than 75 words. It will be in markdown format but cannot use double quotes. Please use bullets to make the summary more readable. The beginning should be a short summary that is not a bullet point. Please start this short summary with "Over the past 7 days, ...". The summary should not include any names of people. It can refer to projects and teams, but not specific people's names. Do not include anything under a section with "### Personal".
+Summary requirements:
+
+- Keep the summary concise and focused on the last 7 days of progress.
+- Keep the full summary to 75 words or fewer.
+- Write the summary in markdown format.
+- Do not use double quotes in the summary.
+- Use bullets to make the summary more readable.
+- Begin with a short summary sentence that is not a bullet point.
+- Start that opening sentence with `Over the past 7 days, ...`.
+- Do not include any names of people.
+- You may refer to projects and teams, but not specific people's names.
+- Do not include anything from a section labeled `### Personal`.
 
 Use the Toggl CSV context when it clearly matches project names or work streams mentioned in the markdown notes. Do not invent matches when the connection is weak.
 
@@ -26,6 +37,7 @@ Additional guidance:
 - When the markdown mentions NewsNexus, NewsNexus12, or a close variant, align it to News Nexus, especially if the Toggl CSV includes CPSC (News Nexus).
 - When the markdown mentions PersonalWeb03 or Personal Web, align it to my personal website, especially if the Toggl CSV includes Portfolio and content.
 - Use the normalized names in the final summary instead of the raw internal or code-style names.
+- Do not mention specific hour counts, totals, or numeric time estimates from Toggl in the summary.
 - If a match is uncertain, prefer the markdown meaning and avoid forcing a Toggl project link.
 
 Here is the text to summarize from the markdown file:
