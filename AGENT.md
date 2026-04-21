@@ -2,6 +2,9 @@
 
 This repository is a monorepo for PersonalWeb03. Start with the root `README.md` for the high-level layout, then read the nearest project-level `AGENT.md` before making changes inside a subproject.
 
+## Python
+When running Python, use the venv in the project. Do not use the system environment.
+
 ## Repository Layout
 
 1. `api/`
