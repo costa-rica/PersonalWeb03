@@ -29,13 +29,14 @@ class Summarizer:
         
         logger.info(f"Summarizer initialized with model: {model}")
 
-    def generate_summary(self, activities_path, template_path):
+    def generate_summary(self, activities_path, template_path, toggl_csv_path=None):
         """
         Generate an AI-powered summary of the activities.
 
         Args:
             activities_path: Path to the last-7-days-activities.md file
             template_path: Path to the prompt template file
+            toggl_csv_path: Optional path to project_time_entries.csv
 
         Returns:
             dict: JSON response with summary and datetime, or None if error
@@ -55,8 +56,12 @@ class Summarizer:
             with open(template_path, 'r', encoding='utf-8') as f:
                 prompt_template = f.read()
             
-            # Replace placeholder with activities content
-            prompt = prompt_template.replace('<< last-7-days-activities.md >>', activities_content)
+            toggl_csv_content = self._read_toggl_csv_content(toggl_csv_path)
+            prompt = self._build_prompt(
+                prompt_template,
+                activities_content,
+                toggl_csv_content
+            )
             
             logger.info(f"Sending request to OpenAI API ({self.model})")
             
@@ -98,3 +103,27 @@ class Summarizer:
         except Exception as e:
             logger.error(f"Error generating summary: {e}", exc_info=True)
             return None
+
+    @staticmethod
+    def _read_toggl_csv_content(toggl_csv_path):
+        if not toggl_csv_path:
+            logger.info("No Toggl CSV path provided for summary context")
+            return None
+
+        csv_path = Path(toggl_csv_path)
+        if not csv_path.exists():
+            logger.warning(f"Toggl CSV not found for summary context: {csv_path}")
+            return None
+
+        logger.info(f"Reading Toggl CSV context from: {csv_path}")
+        return csv_path.read_text(encoding='utf-8')
+
+    @staticmethod
+    def _build_prompt(prompt_template, activities_content, toggl_csv_content=None):
+        prompt = prompt_template.replace(
+            '<< last-7-days-activities.md >>',
+            activities_content
+        )
+
+        toggl_context = toggl_csv_content or 'Toggl data unavailable for this run.'
+        return prompt.replace('<< project_time_entries.csv >>', toggl_context)

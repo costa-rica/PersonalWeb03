@@ -70,7 +70,8 @@ def run_left_off_service():
         
         summary_result = summarizer.generate_summary(
             str(activities_path),
-            str(template_path)
+            str(template_path),
+            str(config.get_toggl_csv_path())
         )
         
         if not summary_result:
@@ -254,15 +255,17 @@ def main():
     # Run both services
     logger.info("Time window check passed - executing both services")
     
+    # Run Toggl service first so LEFT-OFF can use the refreshed CSV data when available.
+    toggl_exit_code = run_toggl_service()
+    if toggl_exit_code != 0:
+        logger.warning("Toggl service failed, continuing with LEFT-OFF without refreshed Toggl data")
+
     # Run LEFT-OFF service
-    exit_code = run_left_off_service()
-    if exit_code != 0:
-        logger.error("LEFT-OFF service failed, skipping Toggl service")
-        sys.exit(exit_code)
-    
-    # Run Toggl service
-    exit_code = run_toggl_service()
-    sys.exit(exit_code)
+    left_off_exit_code = run_left_off_service()
+    if left_off_exit_code != 0:
+        sys.exit(left_off_exit_code)
+
+    sys.exit(toggl_exit_code)
 
 
 if __name__ == '__main__':
