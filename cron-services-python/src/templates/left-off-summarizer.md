@@ -9,8 +9,8 @@ The JSON response should have the following structure:
 }
 ```
 
-The summary should be a concise summary of the day's progress. It should be no longer than 100 words. It will be in markdown format but cannot use double quotes. Please use bullets to make the summary more readable. The beginning should be a short summary that is not a bullet point. Please start this short summary with "Over the past 7 days, ...". The summary should not include any names of people. It can refer to projects and teams, but not specific people's names.
+The summary should be a concise summary of the last 7 days' progress. It should be no longer than 75 words. It will be in markdown format but cannot use double quotes. Please use bullets to make the summary more readable. The beginning should be a short summary that is not a bullet point. Please start this short summary with "Over the past 7 days, ...". The summary should not include any names of people. It can refer to projects and teams, but not specific people's names. Do not include anything under a section with "### Personal".
 
-Here is the text to summarize:
+Here is the text to summarize from the markdown file:
 
 << last-7-days-activities.md >>
