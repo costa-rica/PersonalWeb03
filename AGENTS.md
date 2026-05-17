@@ -1,21 +1,22 @@
-# AGENT.md
+# AGENTS.md
 
-This repository is a monorepo for PersonalWeb03. Start with the root `README.md` for the high-level layout, then read the nearest project-level `AGENT.md` before making changes inside a subproject.
+This repository is a monorepo for PersonalWeb03. Start with the root `README.md` for the high-level layout, then read the nearest project-level `AGENTS.md` before making changes inside a subproject.
 
 ## Python
+
 When running Python, use the venv in the project. Do not use the system environment.
 
 ## Repository Layout
 
 1. `api/`
    - FastAPI backend for authentication, blog management, downloads, and homepage data.
-   - Read `api/AGENT.md` before editing backend code.
+   - Read `api/AGENTS.md` before editing backend code.
 2. `web/`
    - Next.js frontend for the personal website and admin pages.
-   - Read `web/AGENT.md` before editing frontend code.
+   - Read `web/AGENTS.md` before editing frontend code.
 3. `cron-services-python/`
    - Python scheduled services that generate data files used by the site.
-   - Read `cron-services-python/AGENT.md` before editing service code.
+   - Read `cron-services-python/AGENTS.md` before editing service code.
 4. `docs/`
    - Shared images and reference material for the repository.
 
@@ -30,7 +31,7 @@ When running Python, use the venv in the project. Do not use the system environm
 ## Practical Workflow
 
 1. Identify which package owns the task.
-2. Read that package's `README.md` and `AGENT.md`.
+2. Read that package's `README.md` and `AGENTS.md`.
 3. Make the smallest change that solves the problem.
 4. Run the lightest relevant verification for the package you touched.
 5. Summarize any cross-package impact in the final handoff.
