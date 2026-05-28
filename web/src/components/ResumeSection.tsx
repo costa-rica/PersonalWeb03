@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Mail, Phone, MapPin, Globe, Github, Linkedin } from "lucide-react";
+import { Mail, MapPin, Globe, Github, Linkedin } from "lucide-react";
 
 export default function ResumeSection() {
   const contactInfo = [
@@ -25,98 +25,83 @@ export default function ResumeSection() {
     },
   ];
 
-  const projects = [
-    {
-      title: "News Nexus",
-      url: "https://news-nexus.kineticmetrics.com/",
-      description:
-        "News Nexus — A suite of applications featuring a web-based user interface connected through an API to a centralized database. The system integrates JavaScript and Python microservices that run Hugging Face models to analyze, categorize, and track news articles related to hazardous commercial products.",
-      technologies:
-        "JavaScript, restful API, SQLite database, HuggingFace, Python.",
-    },
-    {
-      title: "Kyber Vision",
-      url: "https://kybervision.eu/",
-      description:
-        "Kyber vision is a React Native mobile application for Kyber Vision, a platform providing the volleyball community with advanced training and statistics tools. The app enables players, trainers, and supporters to access videos, record actions, and analyze performance in real-time. It is supported by an Express.js API, ensuring seamless data management and interaction.",
-      technologies: "JavaScript, restful API, and SQLite database.",
-      demo: {
-        text: "Demo Version 0.6.1",
-        url: "https://expo.dev/preview/update?message=version%200.6.1%20-%20fixed%20action%20recording%20and%20quality%20change%20bugs&updateRuntimeVersion=1.0.0&createdAt=2025-01-18T09%3A58%3A25.002Z&slug=exp&projectId=19bda6d6-1261-4ffc-9425-4e157bd11f4b&group=43ea1e69-076f-4567-bec6-05bb784f6508",
-      },
-    },
-    {
-      title: "Open Mindset",
-      url: "https://github.com/amwebexpert/poc-mobile-python",
-      description:
-        "Lead the conversion of 'Open Mindset', a Python-based multi-platform application, into Xcode. Actively contributed to codebase enhancements and bug fixes, leading to successful pull requests; played a pivotal role in the deployment process for the Apple App Store.",
-      technologies: "Python, Xcode, Github, kivy-ios toolchain.",
-      appStore: {
-        text: "open mindset",
-        url: "https://apps.apple.com/us/app/open-mindset/id6467103164",
-      },
-    },
-    {
-      title: "What-Sticks",
-      url: "https://what-sticks.com/",
-      description:
-        "Personal data storage platform with statistical feedback to measure user tendencies.",
-      technologies: "Swift, Python, HTML/CSS, restful API, and MySQL database.",
-      appStore: {
-        text: "What Sticks",
-        url: "https://apps.apple.com/us/app/what-sticks/id6670183165",
-      },
-    },
-  ];
-
   const experience = [
     {
-      company: "Freelance (Dashboards and Databases)",
+      company: "Freelance",
       title: "Software Engineer",
-      dates: "2020 - Present",
-      description:
-        "Designed, developed, and deployed mobile and web applications from concept to production, including architecting and integrating AI-driven workflows that enhanced automation, analytics, and overall system performance.",
+      dates: "Nov 2020 - Present",
+      descriptions: [
+        "Building production software end-to-end, independently, for paying clients, equity-stake partners, and personal products. Stack spans full-stack web, mobile, AI integration, and DevOps.",
+        "News Nexus (paid client work): Sole builder and operator of a 5-service production platform supporting a US federal contract with the Consumer Product Safety Commission via Kinetic Metrics. Ingests news from multiple sources into Postgres 16 via a shared Sequelize model package; runs deduplication, semantic and location scoring, OpenAI state classification, and content scraping through Node and Python workers; serves a Next.js review portal for human-in-the-loop clip approval and weekly PDF/Excel contract delivery. Completed SQLite to Postgres migration.",
+        "Tastermonial (pro bono trial engagement): Partnered with the founder to add Oura sleep tracking across their stack: Elixir (Phoenix) and Python (FastAPI) backends, new PostgreSQL schemas, Junction webhook ingestion, and Flutter mobile UI. Stood up an isolated parallel ecosystem outside Tastermonial's prod/dev environments and shipped an auth-enabled Flutter web build so test users could trial it safely.",
+        "Kyber Vision (equity engagement): Built the React Native mobile app for a European volleyball analytics product. Handles auth, team and player admin, live match scripting via a custom court-zone tap and swipe-wheel gesture system, video upload and review, action-to-video timeline sync, and highlight montage requests. Integrates with an Express API, shared Sequelize models, and a BullMQ + Redis + ffmpeg worker that uploads to YouTube and generates montages.",
+        "What Sticks: Sleep and weather tracking web app. Daily API calls pull Oura Ring sleep scores and weather conditions; computes per-user temperature-to-sleep correlations over time.",
+      ],
     },
     {
-      company: "US Department of Navy",
+      company: "US Federal Government",
       title: "Economist",
       dates: "2012 - 2020",
-      description:
-        "In my latest role I was an integral part of a small team modernizing the Navy's negotiating tactics - using large data model of millions of parts to contest and negotiate contractor proposal estimates. Built and modified large data models. Industry analysis forecasting price growth. Developed indices used Navy wide to estimate cost growth and ultimately used in US Federal budget.",
+      descriptions: [
+        "Eight years as a federal economist focused on supply-chain analytics, price-growth analysis, and vendor proposal evaluation. Team lead on multiple engagements. Tools: regression, uncertainty analysis, forecasting, BLS price-index methodology, VBA, SAS JMP.",
+        "Ship Construction Price-Growth Negotiation: Built the Government's analytical position for a major proposal negotiation. For each part, ran regressions against historical purchases, mapped to a BLS price index via qualitative-similarity and growth-range checks, combined third-party BLS forecasts into a Government-position forecast, and produced uncertainty bounds. Implemented in VBA and SAS JMP.",
+        "NATO Inflation History: Authored a 40-year history of US inflation covering drivers and policy context; presented at a NATO conference.",
+        "VBA Tooling for External Data Ingest: Built Excel/VBA tools that automated extraction from external sources to feed recurring team analyses, replacing manual workflows.",
+      ],
     },
     {
       company: "ICF International",
-      title: "Economist",
+      title: "Associate",
       dates: "2009 - 2012",
-      description:
-        "Forecasted electricity markets using ICF International's proprietary linear program model of US electricity markets. I led in various modeling preparation efforts, contributed to the analysis of results, and wrote reports. Client projects included power plant valuations, energy price forecasts, market share forecasts, and various other indicators. Contributed to testing of model upgrade to .net framework.",
+      descriptions: [
+        "Three years in ICF's energy practice delivering forecasting and analytics for US electricity market clients including utilities, RTOs, and federal agencies. Tools: linear programming, econometric/regression modeling, large database management.",
+        "US Electricity Market Forecasting: Used ICF's proprietary LP model of US electricity markets to deliver power-plant valuations, energy-price forecasts, and market-share forecasts for utility and RTO clients.",
+        "NREL Cross-Model Comparison Study: Lead on database development and major contributor to the published report comparing technology costs and performance across seven energy market models.",
+        "ARRA Federal Grants Advisory: Advised regional governments on applying for ARRA funding for energy-efficiency infrastructure including public transit and building upgrades.",
+      ],
     },
     {
-      company: "HDR",
+      company: "HDR | HLB Decision Economics",
       title: "Economist",
-      dates: "2007 - 2008",
-      description: "Modeled cost and risk of public infrastructure projects.",
+      dates: "Nov 2007 - Dec 2008",
+      descriptions: [
+        "Economic and risk modeling for infrastructure clients across the US, spanning public-sector evaluation and private-sector market assessment. Tools: cost-benefit analysis, Monte Carlo cost-risk methods, regression for market sizing.",
+        "Southeastern US Construction Market Assessment: For a large US contractor, assessed market potential across water/wastewater, power, seaports, rail, and airports. Led areas involving risk and statistical modeling. Output shaped the client's resource-allocation strategy.",
+        "Transportation Infrastructure Project Evaluations: Cost-benefit modeling for public-entity clients; reports informed how clients prioritized public funding awards.",
+        "Cost and Schedule Risk Modeling: Built Monte Carlo cost-risk analyses estimating total cost and approximate schedule under uncertainty, used to size contingency and set baselines.",
+      ],
     },
     {
-      company: "Department of Energy (Energy Information Administration)",
-      title: "Economist",
-      dates: "2005 - 2007",
-      description:
-        'Assisted data collection of electricity retail sales. Worked on special projects analyzing the impact of "deregulation" of US wholesale and retail electricity markets.',
+      company: "US Department of Energy / EIA",
+      title: "Industry Economist",
+      dates: "Jun 2005 - Nov 2007",
+      descriptions: [
+        "Industry economist at the US Energy Information Administration focused on retail electricity. Tools: survey-data methodology and edit-check design, energy-model interpretation, web data-product development, analytical writing.",
+        "Electricity Sales and Revenue Survey: Developed and analyzed edit checks, improving data-collection efficiency and surfacing trends for EIA reports.",
+        "OAIF Detail: Summarized energy-model results during a detail focused on economic effects of a potential new policy.",
+        "EIA Web Data Products: Developed, improved, and maintained EIA's retail electricity web data products, working with IT to take products to production. Led projects.",
+      ],
     },
   ];
 
   const education = [
     {
       degree: "La Capsule JavaScript Full-Stack Web Developer Bootcamp",
-      level: "BAC +3 / Bachelor's equivalent",
+      level: "Certified Full-Stack Web & Mobile Developer (JavaScript)",
       location: "Paris, France",
-      dates: "2024",
+      dates: "Sep 2024 - Dec 2024",
     },
     {
-      degree: "BA and MA Economics George Mason University",
+      degree: "George Mason University",
+      level: "M.A., Economics",
       location: "Fairfax, VA",
-      dates: "1999-2006",
+      dates: "2005 - 2007",
+    },
+    {
+      degree: "George Mason University",
+      level: "B.A., Economics",
+      location: "Fairfax, VA",
+      dates: "1999 - 2004",
     },
   ];
 
@@ -139,25 +124,36 @@ export default function ResumeSection() {
             </div>
 
             <h3 className="text-xl font-mono font-semibold text-gray-700">
-              Software Engineer
+              Founding Engineer | Full-Stack TypeScript & Python | AI
+              Integration
             </h3>
 
             <p className="text-gray-700">
-              Full-stack developer specializing in the integration of AI into
-              production workflows. Experienced in architecting and deploying
-              data-driven web and mobile applications, automating processes with
-              AI, and applying statistical and analytical methods to improve
-              system efficiency and user experience.
+              Problem solver who builds software end-to-end. For 5+ years has
+              shipped production systems independently, including News Nexus, a
+              5-service platform delivering weekly news-clip reports under a US
+              federal contract, and Kyber Vision, a volleyball-analytics mobile
+              app for a European sports-tech product. Prior 15 years as a
+              federal economist. Open to founding-engineer and early-stage roles
+              where breadth, ownership, and shipping matter more than
+              specialization.
             </p>
 
             <div className="bg-gray-100 border-2 border-black rounded-lg p-4">
               <span className="font-mono font-semibold text-yellow-600">
-                Programmer and DevOps skills:{" "}
+                Technical skills:{" "}
               </span>
               <span className="text-gray-700">
-                JavaScript, React, Python, Kivy, Swift, HTML/CSS, SQL, MySQL,
-                MongoDb, AWS, Linux Server, Restful API, Host Web Applications,
-                GitHub, HuggingFace, Langflow
+                JavaScript, TypeScript, React, React Native (Expo), Next.js,
+                Redux Toolkit, Tailwind, Python, Flask, FastAPI, Node.js,
+                ExpressJS, REST API design, JWT auth, Postgres, Sequelize,
+                schema migration, SQLite, SQL, MySQL, MongoDb, BullMQ, Redis,
+                custom FIFO with cooperative cancellation, OpenAI, HuggingFace,
+                sentence-transformers, Langflow, ffmpeg, YouTube API,
+                Playwright scraping, Ubuntu, AWS, Linux Server, reverse proxy,
+                GitHub, Kivy, Swift, HTML/CSS, Restful API,{" "}
+                {"Host Web Applications"}, architecture, build, ops,
+                stakeholders
               </span>
             </div>
 
@@ -195,59 +191,6 @@ export default function ResumeSection() {
 
         <hr className="border-t-2 border-black my-8" />
 
-        {/* Projects Section */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold font-mono mb-6">Projects</h2>
-          <div className="space-y-6">
-            {projects.map((project, index) => (
-              <div key={index} className="space-y-2">
-                <Link
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xl font-bold font-mono text-yellow-600 hover:text-yellow-700 transition-colors"
-                >
-                  {project.title}
-                </Link>
-                <p className="text-gray-700">{project.description}</p>
-                <p className="text-gray-600 text-sm">
-                  Technologies used: {project.technologies}
-                </p>
-                {project.demo && (
-                  <p className="text-sm">
-                    <span className="underline">Expo Go</span>:{" "}
-                    <Link
-                      href={project.demo.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-bold text-green-600 hover:text-green-700"
-                    >
-                      {project.demo.text}
-                    </Link>
-                    .
-                  </p>
-                )}
-                {project.appStore && (
-                  <p className="text-sm">
-                    <span className="underline">Apple App Store search</span>:{" "}
-                    <Link
-                      href={project.appStore.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-bold text-green-600 hover:text-green-700"
-                    >
-                      {project.appStore.text}
-                    </Link>
-                    .
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <hr className="border-t-2 border-black my-8" />
-
         {/* Work Experience Section */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold font-mono mb-6">Work Experience</h2>
@@ -260,7 +203,11 @@ export default function ResumeSection() {
                   </div>
                   <div className="text-gray-600">{job.dates}</div>
                 </div>
-                <p className="text-gray-700">{job.description}</p>
+                {job.descriptions.map((description, descriptionIndex) => (
+                  <p key={descriptionIndex} className="text-gray-700">
+                    {description}
+                  </p>
+                ))}
               </div>
             ))}
           </div>
@@ -288,6 +235,14 @@ export default function ResumeSection() {
               </div>
             ))}
           </div>
+        </div>
+
+        <hr className="border-t-2 border-black my-8" />
+
+        {/* Interests Section */}
+        <div>
+          <h2 className="text-2xl font-bold font-mono mb-6">Interests</h2>
+          <p className="text-gray-700">Guitar, Reading, French</p>
         </div>
       </div>
     </section>
