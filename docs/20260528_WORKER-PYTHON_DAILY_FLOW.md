@@ -2,16 +2,16 @@
 created_at: 2026-05-28
 updated_at: 2026-05-28
 created_by: codex (gpt-5)
-modified_by: codex (gpt-5)
+modified_by: operator (nick)
 ---
 
 # Cron Services Python Daily Flow
 
-This document describes the current daily flow for `cron-services-python`, based on the implementation in `cron-services-python/src/` and the host `personalweb03-services.service` / `personalweb03-services.timer` units inspected on 2026-05-28. It avoids older notes where they conflict with the current code.
+This document describes the current daily flow for `worker-python`, based on the implementation in `worker-python/src/` and the host `personalweb03-services.service` / `personalweb03-services.timer` units inspected on 2026-05-28. It avoids older notes where they conflict with the current code.
 
 ## Package Purpose
 
-`cron-services-python` is the scheduled-services package for PersonalWeb03. Its jobs write homepage data artifacts under:
+`worker-python` is the scheduled-services package for PersonalWeb03. Its jobs write homepage data artifacts under:
 
 ```text
 PATH_PROJECT_RESOURCES/services-data/
@@ -34,8 +34,8 @@ This schedules the job daily at 23:00 local system time. `Persistent=true` means
 The current host service is a one-shot unit that runs from the package directory:
 
 ```ini
-WorkingDirectory=/home/limited_user/applications/PersonalWeb03/cron-services-python/
-EnvironmentFile=/home/limited_user/applications/PersonalWeb03/cron-services-python/.env
+WorkingDirectory=/home/limited_user/applications/PersonalWeb03/worker-python/
+EnvironmentFile=/home/limited_user/applications/PersonalWeb03/worker-python/.env
 ExecStart=/home/limited_user/environments/personal_web03/bin/python src/main.py --run-anyway
 Restart=on-failure
 RestartSec=10
@@ -53,7 +53,7 @@ That executes both services and bypasses the application-level time guardrail. T
 
 ## CLI Modes
 
-The entrypoint is `cron-services-python/src/main.py`.
+The entrypoint is `worker-python/src/main.py`.
 
 ```bash
 python src/main.py
@@ -80,7 +80,7 @@ All modes call `load_dotenv()` and `configure_logging()` before argument handlin
 
 In combined mode, `main.py` performs this sequence:
 
-1. Load environment variables from `cron-services-python/.env`.
+1. Load environment variables from `worker-python/.env`.
 2. Configure Loguru logging through `src/utils/logging_config.py`.
 3. Parse CLI flags.
 4. If no individual service flag is present, create `Config()` and enforce the time guardrail unless `--run-anyway` was supplied.
@@ -144,7 +144,7 @@ Inputs:
 - Optional `URL_BASE_OPENAI`, loaded by config but not currently passed into the OpenAI client implementation
 - `PATH_PROJECT_RESOURCES/obsidian/LEFT-OFF.md`
 - `PATH_PROJECT_RESOURCES/services-data/project_time_entries.csv`, optional prompt context
-- `cron-services-python/src/templates/left-off-summarizer.md`
+- `worker-python/src/templates/left-off-summarizer.md`
 
 Steps:
 
@@ -178,8 +178,8 @@ Expected JSON fields:
 
 ```json
 {
-  "summary": "markdown summary text",
-  "datetime_summary": "YYYY-MM-DD HH:MM:SS"
+	"summary": "markdown summary text",
+	"datetime_summary": "YYYY-MM-DD HH:MM:SS"
 }
 ```
 

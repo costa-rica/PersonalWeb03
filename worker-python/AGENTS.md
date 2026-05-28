@@ -1,10 +1,10 @@
 # AGENTS.md
 
-This file provides guidance to engineers and coding agents when working in `cron-services-python/`.
+This file provides guidance to engineers and coding agents when working in `worker-python/`.
 
 ## Project Overview
 
-`cron-services-python` is the scheduled-services package in the PersonalWeb03 monorepo. It runs standalone Python jobs that write artifacts into `PATH_PROJECT_RESOURCES/services-data/` for the rest of the site to consume.
+`worker-python` is the scheduled-services package in the PersonalWeb03 monorepo. It runs standalone Python jobs that write artifacts into `PATH_PROJECT_RESOURCES/services-data/` for the rest of the site to consume.
 
 There are two service flows:
 
@@ -40,7 +40,7 @@ python -m unittest discover -s tests
 
 ## Environment and Secrets
 
-This project depends on a local `.env` file in `cron-services-python/`. Before running anything that touches external services, confirm these values are present and valid:
+This project depends on a local `.env` file in `worker-python/`. Before running anything that touches external services, confirm these values are present and valid:
 
 - Shared runtime: `NAME_APP`, `RUN_ENVIRONMENT`, `PATH_PROJECT_RESOURCES`
 - Logging in testing or production: `PATH_TO_LOGS`
