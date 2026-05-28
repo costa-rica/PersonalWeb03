@@ -39,7 +39,7 @@ def run_left_off_service():
         config = Config()
         config.validate_left_off_config()
         
-        # Step 1: Load LEFT-OFF.md from the Obsidian resources directory
+        # Step 1: Load LEFT-OFF.md from the worker services-data directory
         source_path = config.get_left_off_source_path()
         logger.info(f"Step 1: Loading LEFT-OFF markdown from {source_path}")
         if not source_path.exists():

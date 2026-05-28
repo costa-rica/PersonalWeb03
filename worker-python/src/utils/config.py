@@ -31,8 +31,12 @@ class Config:
             )
         
         # LEFT-OFF service config
-        self.left_off_source_dir = Path(self.path_project_resources) / 'obsidian'
-        self.left_off_source_name = 'LEFT-OFF.md'
+        self.left_off_source_path = Path(
+            os.getenv(
+                'PATH_LEFT_OFF_SOURCE',
+                self.services_data_dir / 'LEFT-OFF.md',
+            )
+        )
         
         # OpenAI config
         self.openai_base_url = os.getenv('URL_BASE_OPENAI', 'https://api.openai.com/v1')
@@ -63,7 +67,7 @@ class Config:
 
     def get_left_off_source_path(self):
         """Get the full path for the LEFT-OFF.md source file."""
-        return self.left_off_source_dir / self.left_off_source_name
+        return self.left_off_source_path
 
     def get_activities_file_path(self):
         """Get the full path for the last-7-days-activities.md file."""

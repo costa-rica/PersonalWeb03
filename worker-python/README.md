@@ -10,7 +10,7 @@ Automated services for PersonalWeb03 that run as scheduled cron jobs. Downloads 
 
 **File**: `services-data/left-off-7-day-summary.json`
 
-Generates AI-powered summaries of the last 7 days of activities from `obsidian/LEFT-OFF.md`.
+Generates AI-powered summaries of the last 7 days of activities from `services-data/LEFT-OFF.md`.
 
 ```json
 {
@@ -53,6 +53,10 @@ PATH_PROJECT_RESOURCES=/path/to/project/resources
 
 # LEFT-OFF Service
 KEY_OPENAI=your_openai_api_key
+# Optional path overrides
+PATH_LEFT_OFF_SOURCE=/path/to/project/resources/services-data/LEFT-OFF.md
+PATH_LEFT_OFF_NICKVAULT_SOURCE=/home/nick/NickVault/LEFT-OFF.md
+PATH_LEFT_OFF_DESTINATION=/path/to/project/resources/services-data/LEFT-OFF.md
 
 # Toggl Service
 TOGGL_API_TOKEN=your_toggl_api_token
@@ -70,6 +74,9 @@ python src/main.py --run-anyway       # Runs LEFT-OFF + Toggl anytime (bypass gu
 # Run individual services (anytime - bypass guardrail)
 python src/main.py --run-left-off     # LEFT-OFF only
 python src/main.py --run-toggl        # Toggl only
+
+# Copy NickVault LEFT-OFF.md into the worker input path
+python scripts/sync_left_off.py
 
 # Run the unit tests
 python -m unittest discover -s tests
@@ -89,7 +96,7 @@ python -m unittest discover -s tests
 
 ## LEFT-OFF Source Format
 
-The LEFT-OFF service reads from `PATH_PROJECT_RESOURCES/obsidian/LEFT-OFF.md`.
+The LEFT-OFF service reads from `PATH_PROJECT_RESOURCES/services-data/LEFT-OFF.md` by default.
 
 - Top-level date headings must use `# YYYYMMDD`
 - Top-level date headings should be newest first

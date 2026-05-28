@@ -2,7 +2,7 @@
 created_at: 2026-05-28
 updated_at: 2026-05-28
 created_by: codex (gpt-5)
-modified_by: operator (nick)
+modified_by: codex (gpt-5)
 ---
 
 # Cron Services Python Daily Flow
@@ -139,17 +139,18 @@ Current write-path guardrail: `Config()` warns if `services-data/` does not exis
 
 Inputs:
 
-- `PATH_PROJECT_RESOURCES`, used to locate the source and outputs
+- `PATH_PROJECT_RESOURCES`, used to locate the default source and outputs
 - `KEY_OPENAI`
 - Optional `URL_BASE_OPENAI`, loaded by config but not currently passed into the OpenAI client implementation
-- `PATH_PROJECT_RESOURCES/obsidian/LEFT-OFF.md`
+- Optional `PATH_LEFT_OFF_SOURCE`, used to override the worker input path
+- `PATH_PROJECT_RESOURCES/services-data/LEFT-OFF.md`
 - `PATH_PROJECT_RESOURCES/services-data/project_time_entries.csv`, optional prompt context
 - `worker-python/src/templates/left-off-summarizer.md`
 
 Steps:
 
 1. Validate LEFT-OFF configuration.
-2. Confirm `PATH_PROJECT_RESOURCES/obsidian/LEFT-OFF.md` exists.
+2. Confirm `PATH_PROJECT_RESOURCES/services-data/LEFT-OFF.md` exists, unless `PATH_LEFT_OFF_SOURCE` points to another worker input path.
 3. Load the markdown source.
 4. Find top-level date headings matching `# YYYYMMDD`.
 5. Compute a cutoff as `datetime.now() - 8 days`, formatted as `YYYYMMDD`.

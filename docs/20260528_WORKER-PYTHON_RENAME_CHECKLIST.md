@@ -2,7 +2,7 @@
 created_at: 2026-05-28
 updated_at: 2026-05-28
 created_by: hermes (gpt-5.5)
-modified_by: hermes (gpt-5.5)
+modified_by: codex (gpt-5)
 ---
 
 # Worker Python Rename Checklist
@@ -14,7 +14,7 @@ modified_by: hermes (gpt-5.5)
 - [x] Daily-flow doc was renamed to `docs/20260528_WORKER-PYTHON_DAILY_FLOW.md`.
 - [x] New systemd reference files were added under `docs/references/`.
 - [ ] Runtime `.env` has been copied from the old folder to `worker-python/.env`.
-- [ ] LEFT-OFF copy source script has been restored under `worker-python/scripts/sync_left_off.py` before enabling the renamed LEFT-OFF copy timer.
+- [x] LEFT-OFF copy source script has been restored under `worker-python/scripts/sync_left_off.py` before enabling the renamed LEFT-OFF copy timer.
 - [ ] Old systemd units have been disabled and removed.
 - [ ] New systemd units have been installed, daemon-reloaded, enabled, started, and verified.
 - [ ] Old untracked `cron-services-python/` runtime leftovers have been removed after `.env`, scripts, or any other needed runtime files are migrated.
@@ -61,7 +61,7 @@ systemd-analyze verify \
   docs/references/personalweb03-worker-python-left-off-copy.timer
 ```
 
-Important current finding: after the repository rename, `worker-python/.env` does not exist locally yet, while the old untracked `cron-services-python/.env` still exists. The old `cron-services-python/scripts/` directory currently has only `__pycache__/sync_left_off...pyc` files, not the `sync_left_off.py` source file. Restore or recreate that source file before enabling the renamed LEFT-OFF copy unit.
+Important current finding: `worker-python/scripts/sync_left_off.py` has been recreated. Continue to verify runtime `.env` and service ownership/mode with metadata-only commands before enabling the renamed LEFT-OFF copy unit.
 
 ## Runtime file migration
 
@@ -78,21 +78,17 @@ stat -c '%U:%G %a %s %n' \
   /home/limited_user/applications/PersonalWeb03/worker-python/.env
 ```
 
-Restore `sync_left_off.py` before enabling the LEFT-OFF copy timer. If the source exists in another backup location, install it like this:
+`sync_left_off.py` now exists in `worker-python/scripts/`. Before enabling the LEFT-OFF copy timer, compile-check it with the project venv:
 
 ```bash
 cd /home/limited_user/applications/PersonalWeb03
-
-sudo install -D -o nick -g limited_user -m 0640 \
-  /path/to/sync_left_off.py \
-  /home/limited_user/applications/PersonalWeb03/worker-python/scripts/sync_left_off.py
 
 /home/limited_user/environments/personal_web03/bin/python \
   -m py_compile \
   /home/limited_user/applications/PersonalWeb03/worker-python/scripts/sync_left_off.py
 ```
 
-If the source cannot be found, do not enable `personalweb03-worker-python-left-off-copy.timer` yet. Enable only `personalweb03-worker-python.timer`, then fix the copy helper separately.
+If the script does not compile, do not enable `personalweb03-worker-python-left-off-copy.timer` yet. Enable only `personalweb03-worker-python.timer`, then fix the copy helper separately.
 
 ## Replace systemd units
 
@@ -148,11 +144,11 @@ sudo systemctl reset-failed \
 # Enable the main daily worker timer.
 sudo systemctl enable --now personalweb03-worker-python.timer
 
-# Enable this only after worker-python/scripts/sync_left_off.py exists and compiles.
+# Enable this only after worker-python/scripts/sync_left_off.py compiles.
 sudo systemctl enable --now personalweb03-worker-python-left-off-copy.timer
 ```
 
-If `sync_left_off.py` is still missing, skip the last command and leave the renamed LEFT-OFF copy timer disabled until the script is restored.
+If `sync_left_off.py` does not compile, skip the last command and leave the renamed LEFT-OFF copy timer disabled until the script is fixed.
 
 ## Verify timers and services
 
@@ -167,7 +163,7 @@ sudo systemctl status personalweb03-worker-python.service --no-pager -l
 sudo journalctl -u personalweb03-worker-python.service -n 80 --no-pager
 ```
 
-Only run the LEFT-OFF copy service manually after `sync_left_off.py` exists:
+Only run the LEFT-OFF copy service manually after `sync_left_off.py` compiles:
 
 ```bash
 sudo systemctl start personalweb03-worker-python-left-off-copy.service
@@ -228,6 +224,6 @@ cd /home/limited_user/applications/PersonalWeb03/worker-python
 /home/limited_user/environments/personal_web03/bin/python -m unittest discover -s tests
 
 sudo systemctl enable --now personalweb03-worker-python.timer
-# Enable this too only after sync_left_off.py exists.
+# Enable this too only after sync_left_off.py compiles.
 sudo systemctl enable --now personalweb03-worker-python-left-off-copy.timer
 ```
