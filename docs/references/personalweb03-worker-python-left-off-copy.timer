@@ -1,0 +1,16 @@
+# PersonalWeb03 worker-python LEFT-OFF copy — systemd timer template
+#
+# Replaces: personalweb03-left-off-copy.timer
+# Install target: /etc/systemd/system/personalweb03-worker-python-left-off-copy.timer
+
+[Unit]
+Description=Copy NickVault LEFT-OFF.md before the PersonalWeb03 worker-python cron window
+Requires=personalweb03-worker-python-left-off-copy.service
+
+[Timer]
+OnCalendar=*-*-* 22:55:00
+Persistent=true
+Unit=personalweb03-worker-python-left-off-copy.service
+
+[Install]
+WantedBy=timers.target
