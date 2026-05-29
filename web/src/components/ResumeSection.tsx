@@ -4,6 +4,9 @@ import Link from "next/link";
 import { Mail, MapPin, Globe, Github, Linkedin } from "lucide-react";
 
 export default function ResumeSection() {
+  const API_BASE_URL =
+    process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
+
   const contactInfo = [
     {
       icon: Mail,
@@ -115,9 +118,11 @@ export default function ResumeSection() {
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <h1 className="text-4xl font-bold font-mono">Nick Rodriguez</h1>
               <Link
-                href="/resumeNRodriguez.pdf"
+                href={`${API_BASE_URL}/downloads/resumeNRodriguez.pdf`}
                 className="px-6 py-2 bg-black text-white font-mono rounded-lg hover:bg-gray-800 transition-colors text-sm"
                 target="_blank"
+                rel="noopener noreferrer"
+                download
               >
                 Download PDF
               </Link>

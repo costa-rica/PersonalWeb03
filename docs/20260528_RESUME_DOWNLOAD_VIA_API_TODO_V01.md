@@ -66,31 +66,33 @@ Goal: confirm production has the prerequisites the web change will rely on. This
 
 Goal: switch `ResumeSection` from the static `/resumeNRodriguez.pdf` path to the API-hosted URL.
 
-- [ ] Edit [web/src/components/ResumeSection.tsx](../web/src/components/ResumeSection.tsx) (link is at line 118 in the current revision):
-  - [ ] At the top of the component (matching the pattern used in `HeroSection.tsx`, `BlogSection.tsx`, `MarkdownRenderer.tsx`, `web/src/app/blog/[id]/page.tsx`, and `web/src/lib/api/admin.ts`), read the base URL:
+- [x] Edit [web/src/components/ResumeSection.tsx](../web/src/components/ResumeSection.tsx) (link is at line 118 in the current revision):
+  - [x] At the top of the component (matching the pattern used in `HeroSection.tsx`, `BlogSection.tsx`, `MarkdownRenderer.tsx`, `web/src/app/blog/[id]/page.tsx`, and `web/src/lib/api/admin.ts`), read the base URL:
 
     ```ts
     const API_BASE_URL =
       process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
     ```
 
-  - [ ] Change the `Download PDF` `<Link>`'s `href` from `/resumeNRodriguez.pdf` to `` `${API_BASE_URL}/downloads/resumeNRodriguez.pdf` ``.
-  - [ ] Keep `target="_blank"`.
-  - [ ] Add `rel="noopener noreferrer"` to match the other external links in this component.
-  - [ ] Add the `download` attribute as belt-and-suspenders (API already sets `Content-Disposition: attachment`).
-- [ ] Keep the filename inline at the call site — do not introduce a constant or helper. (The plan explicitly prefers no indirection for a single-use string.)
-- [ ] Confirm no other code in `web/` references `/resumeNRodriguez.pdf` (a grep should show only `ResumeSection.tsx`). If any other reference exists, surface it before proceeding.
+  - [x] Change the `Download PDF` `<Link>`'s `href` from `/resumeNRodriguez.pdf` to `` `${API_BASE_URL}/downloads/resumeNRodriguez.pdf` ``.
+  - [x] Keep `target="_blank"`.
+  - [x] Add `rel="noopener noreferrer"` to match the other external links in this component.
+  - [x] Add the `download` attribute as belt-and-suspenders (API already sets `Content-Disposition: attachment`).
+- [x] Keep the filename inline at the call site — do not introduce a constant or helper. (The plan explicitly prefers no indirection for a single-use string.)
+- [x] Confirm no other code in `web/` references `/resumeNRodriguez.pdf` (a grep should show only `ResumeSection.tsx`). If any other reference exists, surface it before proceeding.
 
 ### Phase 3 verification (web)
 
 Run from `web/`:
 
-- [ ] `npm run lint` — fix any new warnings or errors introduced by the edit.
-- [ ] `npm run build` — must succeed. (Note: `next.config.mjs` sets `ignoreBuildErrors: true` for TypeScript per `web/AGENTS.md`; still ensure the build completes cleanly.)
-- [ ] No automated test suite is configured for `web/` in `web/AGENTS.md`. Skip test execution unless one has been added since.
+- [x] `npm run lint` — fix any new warnings or errors introduced by the edit.
+- [x] `npm run build` — must succeed. (Note: `next.config.mjs` sets `ignoreBuildErrors: true` for TypeScript per `web/AGENTS.md`; still ensure the build completes cleanly.)
+- [x] No automated test suite is configured for `web/` in `web/AGENTS.md`. Skip test execution unless one has been added since.
 - [ ] Manual smoke test with API + web running locally: click "Download PDF" in the resume section. Browser downloads `resumeNRodriguez.pdf`. Open the downloaded file and confirm it renders as the expected resume.
 - [ ] Replace `${PATH_PROJECT_RESOURCES}/downloadable/resumeNRodriguez.pdf` with a modified PDF, hard-refresh, click again — the new file downloads without rebuilding the web app. Restore the original file after this check.
-- [ ] Check off the Phase 3 tasks and commit. Use an `ideal` `feat:` commit per `AGENTS.md`. Title ≤ 50 chars (e.g., `feat: serve resume via api downloads endpoint`). Body should reference this TODO file and Phase 3, and note that the resume must exist at `PATH_PROJECT_RESOURCES/downloadable/resumeNRodriguez.pdf` on every host running the API. Append the `co-authored-by:` line for the implementing agent.
+- [x] Check off the Phase 3 tasks and commit. Use an `ideal` `feat:` commit per `AGENTS.md`. Title ≤ 50 chars (e.g., `feat: serve resume via api downloads endpoint`). Body should reference this TODO file and Phase 3, and note that the resume must exist at `PATH_PROJECT_RESOURCES/downloadable/resumeNRodriguez.pdf` on every host running the API. Append the `co-authored-by:` line for the implementing agent.
+
+Note: no browser binary is available on this host, so the browser-click smoke checks remain unchecked. The local web server was run with `NEXT_PUBLIC_API_BASE_URL=http://localhost:8010`, the dev bundle contained the API download URL, the API download returned a PDF, and a temporary PDF swap in `PATH_PROJECT_RESOURCES/downloadable/` was served without rebuilding before the original file was restored.
 
 ## Phase 4 — Clean up the static copy
 
