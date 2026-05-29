@@ -2,7 +2,7 @@
 created_at: 2026-05-29
 updated_at: 2026-05-29
 created_by: claude (opus-4.7)
-modified_by: claude (opus-4.7)
+modified_by: codex (gpt-5)
 ---
 
 # Resume Download via API TODO V01
@@ -20,10 +20,10 @@ Authoritative references:
 
 Goal: confirm the API can serve `resumeNRodriguez.pdf` from `${PATH_PROJECT_RESOURCES}/downloadable/` on the local dev machine.
 
-- [ ] In `api/.env`, confirm `PATH_PROJECT_RESOURCES` is set and points at a real absolute path.
-- [ ] Confirm `${PATH_PROJECT_RESOURCES}/downloadable/` exists on disk. (`api/src/main.py` creates it on startup; start the API once if needed to materialize it.)
-- [ ] Copy the current `web/public/resumeNRodriguez.pdf` to `${PATH_PROJECT_RESOURCES}/downloadable/resumeNRodriguez.pdf` on the local dev machine. Do not delete the `web/public/` copy yet — Phase 3 handles deletion.
-- [ ] Keep a separate copy of the resume PDF outside the repo (e.g., in `~/` or a backup folder) so rollback never depends solely on git history.
+- [x] In `api/.env`, confirm `PATH_PROJECT_RESOURCES` is set and points at a real absolute path.
+- [x] Confirm `${PATH_PROJECT_RESOURCES}/downloadable/` exists on disk. (`api/src/main.py` creates it on startup; start the API once if needed to materialize it.)
+- [x] Copy the current `web/public/resumeNRodriguez.pdf` to `${PATH_PROJECT_RESOURCES}/downloadable/resumeNRodriguez.pdf` on the local dev machine. Do not delete the `web/public/` copy yet — Phase 3 handles deletion.
+- [x] Keep a separate copy of the resume PDF outside the repo (e.g., in `~/` or a backup folder) so rollback never depends solely on git history.
 
 ### Phase 1 verification (local dev)
 
@@ -36,6 +36,8 @@ Goal: confirm the API can serve `resumeNRodriguez.pdf` from `${PATH_PROJECT_RESO
   ```
 
 - [ ] If `file` does not report a PDF, stop and resolve before continuing (most likely: wrong `PATH_PROJECT_RESOURCES`, missing file, or a 404 body written to the output file by curl without `-f`).
+
+Note: port 8000 was already occupied on this host by another local service, so the API could not bind to the exact default command above. The same venv-backed API was started on port 8010 and the `GET` smoke test returned a PDF from `http://localhost:8010/downloads/resumeNRodriguez.pdf`.
 
 This phase is server-side configuration and has no code changes, so no lint / type / build run is required. Do not commit anything in this phase (no repo files change).
 
@@ -53,12 +55,12 @@ Goal: confirm production has the prerequisites the web change will rely on. This
   file /tmp/r.pdf   # expect: "PDF document, version 1.x"
   ```
 
-- [ ] Record `resumeNRodriguez.pdf` as a **required downloadable asset** in whatever deployment/runbook doc the project maintains for `PATH_PROJECT_RESOURCES` contents. If no such doc exists, add a short note to `api/README.md` (or a new file under `docs/references/`) listing the expected contents of `PATH_PROJECT_RESOURCES/downloadable/`.
+- [x] Record `resumeNRodriguez.pdf` as a **required downloadable asset** in whatever deployment/runbook doc the project maintains for `PATH_PROJECT_RESOURCES` contents. If no such doc exists, add a short note to `api/README.md` (or a new file under `docs/references/`) listing the expected contents of `PATH_PROJECT_RESOURCES/downloadable/`.
 
 ### Phase 2 verification
 
 - [ ] Production `curl ... | file` reports a PDF.
-- [ ] If a documentation file was edited or added in the last task above, commit it as a `docs:` commit per the format in `AGENTS.md` ("Commit Message Guidance"). No lint / type / test / build run is required for a docs-only commit, but if `web/` or `api/` source files were touched as part of staging the docs, run the relevant package's lint/test/build before committing.
+- [x] If a documentation file was edited or added in the last task above, commit it as a `docs:` commit per the format in `AGENTS.md` ("Commit Message Guidance"). No lint / type / test / build run is required for a docs-only commit, but if `web/` or `api/` source files were touched as part of staging the docs, run the relevant package's lint/test/build before committing.
 
 ## Phase 3 — Web change
 
