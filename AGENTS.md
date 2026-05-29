@@ -4,7 +4,7 @@ This repository is a monorepo for PersonalWeb03. Start with the root `README.md`
 
 ## Python
 
-When running Python, use the venv in the project. Do not use the system environment.
+When running Python, use the venv in the project. Do not use the system environment. Before running Python commands, verify the active interpreter with `which python` and `python --version`.
 
 ## Repository Layout
 
