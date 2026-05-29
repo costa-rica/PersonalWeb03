@@ -83,14 +83,18 @@ See `.env.example` for required configuration:
 
 The API serves public downloadable files from
 `PATH_PROJECT_RESOURCES/downloadable/` through the `/downloads/{filename}`
-endpoint. Each host running the API must stage the current resume PDF at:
+endpoint. Each host running the API must stage the current public resume and
+resume image assets at:
 
 ```text
 PATH_PROJECT_RESOURCES/downloadable/resumeNRodriguez.pdf
+PATH_PROJECT_RESOURCES/downloadable/headshotNRodriguez.jpg
+PATH_PROJECT_RESOURCES/downloadable/headshotNRodriguezCrop.jpg
 ```
 
 Keep this directory on persistent storage and include it in the host backup or
-provisioning process so the resume survives rebuilds and host replacement.
+provisioning process so the resume and replaceable image assets survive rebuilds
+and host replacement.
 
 ## Project Structure
 

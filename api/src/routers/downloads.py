@@ -1,5 +1,6 @@
 """Downloads router for serving downloadable files."""
 
+import mimetypes
 import os
 from pathlib import Path
 from fastapi import APIRouter, HTTPException, status
@@ -67,8 +68,10 @@ def download_file(filename: str):
         )
 
     logger.info(f"Serving file: {filename}")
+    media_type = mimetypes.guess_type(file_path.name)[0] or "application/octet-stream"
+
     return FileResponse(
         path=str(file_path),
         filename=filename,
-        media_type="application/octet-stream"
+        media_type=media_type
     )

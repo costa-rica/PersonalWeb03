@@ -1,11 +1,14 @@
 import Image from "next/image";
 import { useEffect } from "react";
+import { cn } from "@/lib/utils";
 
 interface ModalDisplayPictureProps {
   isOpen: boolean;
   onClose: () => void;
   src: string;
   alt: string;
+  imageClassName?: string;
+  containerClassName?: string;
 }
 
 export default function ModalDisplayPicture({
@@ -13,6 +16,8 @@ export default function ModalDisplayPicture({
   onClose,
   src,
   alt,
+  imageClassName,
+  containerClassName,
 }: ModalDisplayPictureProps) {
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -41,14 +46,17 @@ export default function ModalDisplayPicture({
         - 5% margin sides -> max-width: 90vw
       */}
       <div 
-        className="relative w-[90vw] h-[90vh] rounded-2xl overflow-hidden"
+        className={cn(
+          "relative w-[90vw] h-[90vh] rounded-2xl overflow-hidden",
+          containerClassName
+        )}
         onClick={(e) => e.stopPropagation()} 
       >
         <Image
             src={src}
             alt={alt}
             fill
-            className="object-contain"
+            className={cn("object-contain", imageClassName)}
             sizes="90vw"
             priority
         />

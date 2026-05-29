@@ -9,6 +9,8 @@ import ModalDisplayPicture from "./ModalDisplayPicture";
 export default function ResumeSection() {
   const API_BASE_URL =
     process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
+  const headshotThumbnailSrc = `${API_BASE_URL}/downloads/headshotNRodriguezCrop.jpg`;
+  const headshotFullSrc = `${API_BASE_URL}/downloads/headshotNRodriguez.jpg`;
   const [isHeadshotModalOpen, setIsHeadshotModalOpen] = useState(false);
 
   const contactInfo = [
@@ -126,7 +128,7 @@ export default function ResumeSection() {
               className="self-start shrink-0 cursor-pointer transition-opacity hover:opacity-95"
             >
               <Image
-                src="/headshotNRodriguezCrop.jpg"
+                src={headshotThumbnailSrc}
                 alt="Nick Rodriguez headshot"
                 width={160}
                 height={160}
@@ -277,8 +279,10 @@ export default function ResumeSection() {
       <ModalDisplayPicture
         isOpen={isHeadshotModalOpen}
         onClose={() => setIsHeadshotModalOpen(false)}
-        src="/headshotNRodriguez.jpg"
+        src={headshotFullSrc}
         alt="Nick Rodriguez headshot"
+        imageClassName="rounded-2xl"
+        containerClassName="w-[90vmin] h-[90vmin]"
       />
     </section>
   );
