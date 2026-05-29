@@ -4,7 +4,7 @@ This repository is a monorepo for PersonalWeb03. Start with the root `README.md`
 
 ## Python
 
-When running Python, use the venv in the project. Do not use the system environment.
+When running Python, use the venv in the project. Do not use the system environment. Before running Python commands, verify the active interpreter with `which python` and `python --version`.
 
 ## Repository Layout
 
@@ -14,16 +14,16 @@ When running Python, use the venv in the project. Do not use the system environm
 2. `web/`
    - Next.js frontend for the personal website and admin pages.
    - Read `web/AGENTS.md` before editing frontend code.
-3. `cron-services-python/`
+3. `worker-python/`
    - Python scheduled services that generate data files used by the site.
-   - Read `cron-services-python/AGENTS.md` before editing service code.
+   - Read `worker-python/AGENTS.md` before editing service code.
 4. `docs/`
    - Shared images and reference material for the repository.
 
 ## Working Rules
 
 1. Keep changes scoped to the relevant package unless the task clearly crosses package boundaries.
-2. When changing shared data shapes or file outputs, check all consumers across `api/`, `web/`, and `cron-services-python/`.
+2. When changing shared data shapes or file outputs, check all consumers across `api/`, `web/`, and `worker-python/`.
 3. Prefer the current source code over older notes if documentation and implementation disagree.
 4. Treat local `.env` files, tokens, and generated service outputs as sensitive.
 5. Do not rename top-level packages or move files between packages unless the task explicitly requires a monorepo restructuring.

@@ -1,0 +1,16 @@
+# PersonalWeb03 worker-python — systemd timer template
+#
+# Replaces: personalweb03-services.timer
+# Install target: /etc/systemd/system/personalweb03-worker-python.timer
+
+[Unit]
+Description=PersonalWeb03 worker-python timer
+Requires=personalweb03-worker-python.service
+
+[Timer]
+OnCalendar=*-*-* 23:00:00
+Persistent=true
+Unit=personalweb03-worker-python.service
+
+[Install]
+WantedBy=timers.target

@@ -140,7 +140,7 @@ Use `get_current_user` dependency for authentication.
 
 **Behavior:**
 
-- Returns files with `application/octet-stream` MIME type
+- Returns files with a MIME type inferred from the filename, falling back to `application/octet-stream`
 - Original filename preserved in response
 - Comprehensive logging of download requests and security violations
 

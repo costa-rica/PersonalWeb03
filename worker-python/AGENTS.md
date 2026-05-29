@@ -1,14 +1,14 @@
 # AGENTS.md
 
-This file provides guidance to engineers and coding agents when working in `cron-services-python/`.
+This file provides guidance to engineers and coding agents when working in `worker-python/`.
 
 ## Project Overview
 
-`cron-services-python` is the scheduled-services package in the PersonalWeb03 monorepo. It runs standalone Python jobs that write artifacts into `PATH_PROJECT_RESOURCES/services-data/` for the rest of the site to consume.
+`worker-python` is the scheduled-services package in the PersonalWeb03 monorepo. It runs standalone Python jobs that write artifacts into `PATH_PROJECT_RESOURCES/services-data/` for the rest of the site to consume.
 
 There are two service flows:
 
-- LEFT-OFF: reads `LEFT-OFF.md` from the Obsidian resources folder, extracts the most recent activity window, and writes `left-off-7-day-summary.json`
+- LEFT-OFF: reads `LEFT-OFF.md` from `PATH_PROJECT_RESOURCES/services-data/`, extracts the most recent activity window, and writes `left-off-7-day-summary.json`
 - Toggl: fetches recent Toggl Track time entries, aggregates them by project, and writes `project_time_entries.csv`
 
 ## Common Commands
@@ -31,6 +31,9 @@ python src/main.py --run-anyway
 python src/main.py --run-left-off
 python src/main.py --run-toggl
 
+# Copy NickVault LEFT-OFF.md into the worker input path
+python scripts/sync_left_off.py
+
 # Compile-check the package without running network calls
 python -m compileall src
 
@@ -40,12 +43,13 @@ python -m unittest discover -s tests
 
 ## Environment and Secrets
 
-This project depends on a local `.env` file in `cron-services-python/`. Before running anything that touches external services, confirm these values are present and valid:
+This project depends on a local `.env` file in `worker-python/`. Before running anything that touches external services, confirm these values are present and valid:
 
 - Shared runtime: `NAME_APP`, `RUN_ENVIRONMENT`, `PATH_PROJECT_RESOURCES`
 - Logging in testing or production: `PATH_TO_LOGS`
 - LEFT-OFF: `KEY_OPENAI`
-- Optional LEFT-OFF overrides: `URL_BASE_OPENAI`
+- Optional LEFT-OFF overrides: `URL_BASE_OPENAI`, `PATH_LEFT_OFF_SOURCE`
+- Optional LEFT-OFF copy overrides: `PATH_LEFT_OFF_NICKVAULT_SOURCE`, `PATH_LEFT_OFF_DESTINATION`
 - Toggl: `TOGGL_API_TOKEN`
 - Guardrail: `TIME_WINDOW_START`
 
@@ -71,12 +75,15 @@ src/
     ├── config.py                  # Env loading and path helpers
     ├── guardrail.py               # Allowed execution window
     └── logging_config.py          # Loguru configuration
+scripts/
+└── sync_left_off.py                # Copies NickVault LEFT-OFF.md to services-data
 ```
 
-## Expected Outputs
+## Expected Service Data
 
-All outputs are rooted under `PATH_PROJECT_RESOURCES/services-data/`:
+Worker inputs and outputs are rooted under `PATH_PROJECT_RESOURCES/services-data/`:
 
+- `LEFT-OFF.md`
 - `left-off-temp/last-7-days-activities.md`
 - `left-off-7-day-summary.json`
 - `project_time_entries.csv`

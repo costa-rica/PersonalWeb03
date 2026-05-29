@@ -74,9 +74,27 @@ See `.env.example` for required configuration:
 
 - `NAME_APP` - Application name
 - `PATH_BLOG` - Absolute path where blog files are stored
+- `PATH_PROJECT_RESOURCES` - Absolute path where API-managed resource files are stored
 - `NAME_DB` - Database filename
 - `PATH_DATABASE` - Database directory path
 - `JWT_SECRET_KEY` - Secret key for JWT signing
+
+## Downloadable Assets
+
+The API serves public downloadable files from
+`PATH_PROJECT_RESOURCES/downloadable/` through the `/downloads/{filename}`
+endpoint. Each host running the API must stage the current public resume and
+resume image assets at:
+
+```text
+PATH_PROJECT_RESOURCES/downloadable/resumeNRodriguez.pdf
+PATH_PROJECT_RESOURCES/downloadable/headshotNRodriguez.jpg
+PATH_PROJECT_RESOURCES/downloadable/headshotNRodriguezCrop.jpg
+```
+
+Keep this directory on persistent storage and include it in the host backup or
+provisioning process so the resume and replaceable image assets survive rebuilds
+and host replacement.
 
 ## Project Structure
 

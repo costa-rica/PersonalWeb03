@@ -1,0 +1,25 @@
+# PersonalWeb03 worker-python — systemd service template
+#
+# Replaces: personalweb03-services.service
+# Install target: /etc/systemd/system/personalweb03-worker-python.service
+#
+# Operator checks before install:
+# - /home/limited_user/applications/PersonalWeb03/worker-python/.env exists and is readable by limited_user.
+# - /home/limited_user/environments/personal_web03/bin/python exists.
+# - PATH_PROJECT_RESOURCES/services-data exists and is writable by the service flow.
+
+[Unit]
+Description=PersonalWeb03 worker-python job
+StartLimitIntervalSec=1d
+StartLimitBurst=5
+
+[Service]
+Type=oneshot
+User=limited_user
+Group=limited_user
+WorkingDirectory=/home/limited_user/applications/PersonalWeb03/worker-python/
+Environment="PATH=/home/limited_user/environments/personal_web03/bin"
+EnvironmentFile=/home/limited_user/applications/PersonalWeb03/worker-python/.env
+ExecStart=/home/limited_user/environments/personal_web03/bin/python src/main.py --run-anyway
+Restart=on-failure
+RestartSec=10

@@ -1,0 +1,35 @@
+# PersonalWeb03 worker-python LEFT-OFF copy — systemd service template
+#
+# Replaces: personalweb03-left-off-copy.service
+# Install target: /etc/systemd/system/personalweb03-worker-python-left-off-copy.service
+#
+# Operator checks before install:
+# - /home/limited_user/applications/PersonalWeb03/worker-python/.env exists and is readable by nick and limited_user.
+# - /home/limited_user/applications/PersonalWeb03/worker-python/scripts/sync_left_off.py exists.
+# - /home/limited_user/project_resources/PersonalWeb03/services-data exists.
+# - User=nick, Group=limited_user, and UMask=0027 must stay together for the 0640 output contract.
+#
+# Post-install mode check:
+#   stat -c '%U:%G %a %n' /home/limited_user/project_resources/PersonalWeb03/services-data/LEFT-OFF.md
+#   journalctl -u personalweb03-worker-python-left-off-copy.service -n 50 --no-pager | grep 'destination mode=0o640'
+
+[Unit]
+Description=PersonalWeb03 worker-python LEFT-OFF NickVault copy
+After=local-fs.target
+
+[Service]
+Type=oneshot
+User=nick
+Group=limited_user
+UMask=0027
+WorkingDirectory=/home/limited_user/applications/PersonalWeb03/worker-python
+EnvironmentFile=/home/limited_user/applications/PersonalWeb03/worker-python/.env
+ExecStart=/home/limited_user/environments/personal_web03/bin/python /home/limited_user/applications/PersonalWeb03/worker-python/scripts/sync_left_off.py
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/limited_user/project_resources/PersonalWeb03/services-data
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
