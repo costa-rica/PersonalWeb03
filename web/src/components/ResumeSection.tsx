@@ -1,11 +1,15 @@
 "use client";
 
+import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Mail, MapPin, Globe, Github, Linkedin } from "lucide-react";
+import ModalDisplayPicture from "./ModalDisplayPicture";
 
 export default function ResumeSection() {
   const API_BASE_URL =
     process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
+  const [isHeadshotModalOpen, setIsHeadshotModalOpen] = useState(false);
 
   const contactInfo = [
     {
@@ -114,61 +118,80 @@ export default function ResumeSection() {
         {/* Top Personal Info Section */}
         <div className="flex flex-col lg:flex-row gap-6 mb-8">
           {/* Left Side - Name, Title, Objective, Skills */}
-          <div className="flex-1 space-y-4">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-              <h1 className="text-4xl font-bold font-mono">Nick Rodriguez</h1>
-              <Link
-                href={`${API_BASE_URL}/downloads/resumeNRodriguez.pdf`}
-                className="px-6 py-2 bg-black text-white font-mono rounded-lg hover:bg-gray-800 transition-colors text-sm"
-                target="_blank"
-                rel="noopener noreferrer"
-                download
-              >
-                Download PDF
-              </Link>
-            </div>
+          <div className="flex-1 flex flex-col lg:flex-row gap-6">
+            <button
+              type="button"
+              onClick={() => setIsHeadshotModalOpen(true)}
+              aria-label="Open headshot"
+              className="self-start shrink-0 cursor-pointer transition-opacity hover:opacity-95"
+            >
+              <Image
+                src="/headshotNRodriguezCrop.jpg"
+                alt="Nick Rodriguez headshot"
+                width={160}
+                height={160}
+                className="block w-40 h-40 object-cover rounded-lg border-2 border-black"
+              />
+            </button>
 
-            <h3 className="text-xl font-mono font-semibold text-gray-700">
-              Founding Engineer | Full-Stack TypeScript & Python | AI
-              Integration
-            </h3>
+            <div className="flex-1 space-y-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <h1 className="text-4xl font-bold font-mono">
+                  Nick Rodriguez
+                </h1>
+                <Link
+                  href={`${API_BASE_URL}/downloads/resumeNRodriguez.pdf`}
+                  className="px-6 py-2 bg-black text-white font-mono rounded-lg hover:bg-gray-800 transition-colors text-sm"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  download
+                >
+                  Download PDF
+                </Link>
+              </div>
 
-            <p className="text-gray-700">
-              Problem solver who builds software end-to-end. For 5+ years has
-              shipped production systems independently, including News Nexus, a
-              5-service platform delivering weekly news-clip reports under a US
-              federal contract, and Kyber Vision, a volleyball-analytics mobile
-              app for a European sports-tech product. Prior 15 years as a
-              federal economist. Open to founding-engineer and early-stage roles
-              where breadth, ownership, and shipping matter more than
-              specialization.
-            </p>
+              <h3 className="text-xl font-mono font-semibold text-gray-700">
+                Founding Engineer | Full-Stack TypeScript & Python | AI
+                Integration
+              </h3>
 
-            <div className="bg-gray-100 border-2 border-black rounded-lg p-4">
-              <span className="font-mono font-semibold text-yellow-600">
-                Technical skills:{" "}
-              </span>
-              <span className="text-gray-700">
-                JavaScript, TypeScript, React, React Native (Expo), Next.js,
-                Redux Toolkit, Tailwind, Python, Flask, FastAPI, Node.js,
-                ExpressJS, REST API design, JWT auth, Postgres, Sequelize,
-                schema migration, SQLite, SQL, MySQL, MongoDb, BullMQ, Redis,
-                custom FIFO with cooperative cancellation, OpenAI, HuggingFace,
-                sentence-transformers, Langflow, ffmpeg, YouTube API,
-                Playwright scraping, Ubuntu, AWS, Linux Server, reverse proxy,
-                GitHub, Kivy, Swift, HTML/CSS, Restful API,{" "}
-                {"Host Web Applications"}, architecture, build, ops,
-                stakeholders
-              </span>
-            </div>
+              <p className="text-gray-700">
+                Problem solver who builds software end-to-end. For 5+ years has
+                shipped production systems independently, including News Nexus,
+                a 5-service platform delivering weekly news-clip reports under
+                a US federal contract, and Kyber Vision, a volleyball-analytics
+                mobile app for a European sports-tech product. Prior 15 years
+                as a federal economist. Open to founding-engineer and
+                early-stage roles where breadth, ownership, and shipping matter
+                more than specialization.
+              </p>
 
-            <div className="bg-gray-100 border-2 border-black rounded-lg p-4">
-              <span className="font-mono font-semibold text-yellow-600">
-                Video and image editing skills:{" "}
-              </span>
-              <span className="text-gray-700">
-                Shotcut, Flixier, iMovie, Krita
-              </span>
+              <div className="bg-gray-100 border-2 border-black rounded-lg p-4">
+                <span className="font-mono font-semibold text-yellow-600">
+                  Technical skills:{" "}
+                </span>
+                <span className="text-gray-700">
+                  JavaScript, TypeScript, React, React Native (Expo), Next.js,
+                  Redux Toolkit, Tailwind, Python, Flask, FastAPI, Node.js,
+                  ExpressJS, REST API design, JWT auth, Postgres, Sequelize,
+                  schema migration, SQLite, SQL, MySQL, MongoDb, BullMQ, Redis,
+                  custom FIFO with cooperative cancellation, OpenAI,
+                  HuggingFace, sentence-transformers, Langflow, ffmpeg, YouTube
+                  API, Playwright scraping, Ubuntu, AWS, Linux Server, reverse
+                  proxy, GitHub, Kivy, Swift, HTML/CSS, Restful API,{" "}
+                  {"Host Web Applications"}, architecture, build, ops,
+                  stakeholders
+                </span>
+              </div>
+
+              <div className="bg-gray-100 border-2 border-black rounded-lg p-4">
+                <span className="font-mono font-semibold text-yellow-600">
+                  Video and image editing skills:{" "}
+                </span>
+                <span className="text-gray-700">
+                  Shotcut, Flixier, iMovie, Krita
+                </span>
+              </div>
             </div>
           </div>
 
@@ -250,6 +273,13 @@ export default function ResumeSection() {
           <p className="text-gray-700">Guitar, Reading, French</p>
         </div>
       </div>
+
+      <ModalDisplayPicture
+        isOpen={isHeadshotModalOpen}
+        onClose={() => setIsHeadshotModalOpen(false)}
+        src="/headshotNRodriguez.jpg"
+        alt="Nick Rodriguez headshot"
+      />
     </section>
   );
 }
