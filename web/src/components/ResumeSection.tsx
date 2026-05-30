@@ -120,7 +120,7 @@ export default function ResumeSection() {
         {/* Top Personal Info Section */}
         <div className="flex flex-col lg:flex-row gap-6 mb-8">
           {/* Left Side - Name, Title, Objective, Skills */}
-          <div className="flex-1 flex flex-col lg:flex-row gap-6">
+          <div className="flex-1 grid gap-6 lg:grid-cols-[10rem_minmax(0,1fr)] lg:items-start">
             <button
               type="button"
               onClick={() => setIsHeadshotModalOpen(true)}
@@ -136,7 +136,7 @@ export default function ResumeSection() {
               />
             </button>
 
-            <div className="flex-1 space-y-4">
+            <div className="space-y-4">
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <h1 className="text-4xl font-bold font-mono">
                   Nick Rodriguez
@@ -167,33 +167,33 @@ export default function ResumeSection() {
                 early-stage roles where breadth, ownership, and shipping matter
                 more than specialization.
               </p>
+            </div>
 
-              <div className="bg-gray-100 border-2 border-black rounded-lg p-4">
-                <span className="font-mono font-semibold text-yellow-600">
-                  Technical skills:{" "}
-                </span>
-                <span className="text-gray-700">
-                  JavaScript, TypeScript, React, React Native (Expo), Next.js,
-                  Redux Toolkit, Tailwind, Python, Flask, FastAPI, Node.js,
-                  ExpressJS, REST API design, JWT auth, Postgres, Sequelize,
-                  schema migration, SQLite, SQL, MySQL, MongoDb, BullMQ, Redis,
-                  custom FIFO with cooperative cancellation, OpenAI,
-                  HuggingFace, sentence-transformers, Langflow, ffmpeg, YouTube
-                  API, Playwright scraping, Ubuntu, AWS, Linux Server, reverse
-                  proxy, GitHub, Kivy, Swift, HTML/CSS, Restful API,{" "}
-                  {"Host Web Applications"}, architecture, build, ops,
-                  stakeholders
-                </span>
-              </div>
+            <div className="bg-gray-100 border-2 border-black rounded-lg p-4 lg:col-span-2">
+              <span className="font-mono font-semibold text-yellow-600">
+                Technical skills:{" "}
+              </span>
+              <span className="text-gray-700">
+                JavaScript, TypeScript, React, React Native (Expo), Next.js,
+                Redux Toolkit, Tailwind, Python, Flask, FastAPI, Node.js,
+                ExpressJS, REST API design, JWT auth, Postgres, Sequelize,
+                schema migration, SQLite, SQL, MySQL, MongoDb, BullMQ, Redis,
+                custom FIFO with cooperative cancellation, OpenAI, HuggingFace,
+                sentence-transformers, Langflow, ffmpeg, YouTube API,
+                Playwright scraping, Ubuntu, AWS, Linux Server, reverse proxy,
+                GitHub, Kivy, Swift, HTML/CSS, Restful API,{" "}
+                {"Host Web Applications"}, architecture, build, ops,
+                stakeholders
+              </span>
+            </div>
 
-              <div className="bg-gray-100 border-2 border-black rounded-lg p-4">
-                <span className="font-mono font-semibold text-yellow-600">
-                  Video and image editing skills:{" "}
-                </span>
-                <span className="text-gray-700">
-                  Shotcut, Flixier, iMovie, Krita
-                </span>
-              </div>
+            <div className="bg-gray-100 border-2 border-black rounded-lg p-4 lg:col-span-2">
+              <span className="font-mono font-semibold text-yellow-600">
+                Video and image editing skills:{" "}
+              </span>
+              <span className="text-gray-700">
+                Shotcut, Flixier, iMovie, Krita
+              </span>
             </div>
           </div>
 
