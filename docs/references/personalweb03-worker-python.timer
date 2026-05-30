@@ -2,13 +2,17 @@
 #
 # Replaces: personalweb03-services.timer
 # Install target: /etc/systemd/system/personalweb03-worker-python.timer
+# LA-local fallback timing:
+# - NickVault logbook generation: about 01:00 America/Los_Angeles.
+# - PersonalWeb03 logbook copy: about 02:00 America/Los_Angeles.
+# - this worker: about 02:30 America/Los_Angeles, with service-level Requires=/After=personalweb03-worker-python-left-off-copy.service.
 
 [Unit]
 Description=PersonalWeb03 worker-python timer
 Requires=personalweb03-worker-python.service
 
 [Timer]
-OnCalendar=*-*-* 23:00:00
+OnCalendar=*-*-* 02:30:00 America/Los_Angeles
 Persistent=true
 Unit=personalweb03-worker-python.service
 

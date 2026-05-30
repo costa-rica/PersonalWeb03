@@ -30,7 +30,8 @@ class Config:
                 "This directory should be created before running services."
             )
         
-        # LEFT-OFF service config
+        # Temporary worker input contract: NickVault logbook.md is copied into
+        # the existing services-data/LEFT-OFF.md artifact before this service runs.
         self.left_off_source_path = Path(
             os.getenv(
                 'PATH_LEFT_OFF_SOURCE',
@@ -66,7 +67,7 @@ class Config:
         logger.info("LEFT-OFF configuration validated successfully")
 
     def get_left_off_source_path(self):
-        """Get the full path for the LEFT-OFF.md source file."""
+        """Get the worker input path for the copied logbook artifact."""
         return self.left_off_source_path
 
     def get_activities_file_path(self):

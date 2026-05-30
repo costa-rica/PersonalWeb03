@@ -1,4 +1,4 @@
-"""Copy the NickVault LEFT-OFF markdown file into worker service data."""
+"""Copy the NickVault logbook markdown file into worker service data."""
 
 import logging
 import os
@@ -10,7 +10,9 @@ from dotenv import load_dotenv
 
 
 WORKER_ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE_PATH = Path("/home/nick/NickVault/LEFT-OFF.md")
+DEFAULT_LOGBOOK_SOURCE_PATH = Path("/home/nick/NickVault/logbook.md")
+DEFAULT_LEGACY_SOURCE_PATH = Path("/home/nick/NickVault/LEFT-OFF.md")
+DEFAULT_SOURCE_PATH = DEFAULT_LOGBOOK_SOURCE_PATH
 DEFAULT_MODE = 0o640
 
 ENV_SOURCE_PATH = "PATH_LEFT_OFF_NICKVAULT_SOURCE"
@@ -53,13 +55,26 @@ def _path_from_env(env, key):
 
 
 def resolve_source_path(env=None):
-    """Resolve the source LEFT-OFF.md path without reading file contents."""
+    """Resolve the NickVault source path without reading file contents.
+
+    The preferred upstream file is root ``logbook.md``. The legacy
+    ``LEFT-OFF.md`` fallback applies only to this NickVault source lookup so it
+    cannot hide a mismatch between the copy destination and worker read path.
+    """
     env = os.environ if env is None else env
-    return _path_from_env(env, ENV_SOURCE_PATH) or DEFAULT_SOURCE_PATH
+    explicit_source = _path_from_env(env, ENV_SOURCE_PATH)
+    if explicit_source:
+        return explicit_source
+
+    if DEFAULT_LOGBOOK_SOURCE_PATH.is_file():
+        return DEFAULT_LOGBOOK_SOURCE_PATH
+    if DEFAULT_LEGACY_SOURCE_PATH.is_file():
+        return DEFAULT_LEGACY_SOURCE_PATH
+    return DEFAULT_LOGBOOK_SOURCE_PATH
 
 
 def resolve_destination_path(env=None):
-    """Resolve the worker input path for LEFT-OFF.md."""
+    """Resolve the worker input path for the temporary LEFT-OFF artifact."""
     env = os.environ if env is None else env
     explicit_destination = _path_from_env(env, ENV_DESTINATION_PATH)
     if explicit_destination:
@@ -82,7 +97,7 @@ def copy_left_off(source_path, destination_path, mode=DEFAULT_MODE):
     destination_path = Path(destination_path).expanduser()
 
     if not source_path.is_file():
-        raise FileNotFoundError(f"LEFT-OFF source file not found: {source_path}")
+        raise FileNotFoundError(f"NickVault logbook source file not found: {source_path}")
 
     _log_stats("source", source_path)
     destination_path.parent.mkdir(parents=True, exist_ok=True)

@@ -7,9 +7,13 @@
 # - /home/limited_user/applications/PersonalWeb03/worker-python/.env exists and is readable by limited_user.
 # - /home/limited_user/environments/personal_web03/bin/python exists.
 # - PATH_PROJECT_RESOURCES/services-data exists and is writable by the service flow.
+# - personalweb03-worker-python-left-off-copy.service is installed and verified. This worker uses Requires=/After= so a failed copy prevents stale logbook summaries.
+# - Keep old left-off unit names temporarily. Disable old UTC timing only after replacement verification; delete old units only after 3 clean daily runs.
 
 [Unit]
 Description=PersonalWeb03 worker-python job
+Requires=personalweb03-worker-python-left-off-copy.service
+After=personalweb03-worker-python-left-off-copy.service
 StartLimitIntervalSec=1d
 StartLimitBurst=5
 
