@@ -38,7 +38,7 @@ def get_hero_section_data():
     hero_section_dir = Path(PATH_PROJECT_RESOURCES) / "services-data"
 
     # Read up_to_lately text and date from JSON file
-    json_file_path = hero_section_dir / "left-off-7-day-summary.json"
+    json_file_path = hero_section_dir / "logbook-7-day-summary.json"
     if not json_file_path.exists():
         logger.error(f"JSON file not found: {json_file_path}")
         raise HTTPException(

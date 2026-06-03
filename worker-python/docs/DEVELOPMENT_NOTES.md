@@ -13,18 +13,18 @@ PersonalWeb03-Services/
 ├── src/
 │   ├── main.py                      # Entry point with CLI and guardrail logic
 │   ├── services/                    # Service implementations
-│   │   ├── left_off/                # LEFT-OFF document summarization
+│   │   ├── logbook/                # LOGBOOK document summarization
 │   │   │   ├── onedrive_client.py   # Legacy MS Graph helper kept for reference
-│   │   │   ├── document_parser.py   # LEFT-OFF.md parsing and extraction
+│   │   │   ├── document_parser.py   # LOGBOOK.md parsing and extraction
 │   │   │   └── summarizer.py        # OpenAI-powered summarization
 │   │   └── toggl/                   # (Future) Toggl Tracker service
 │   ├── utils/                       # Shared utilities
 │   │   ├── config.py                # Environment config and validation
 │   │   └── guardrail.py             # Time-based execution control
 │   └── templates/                   # Prompt templates
-│       └── left-off-summarizer.md   # OpenAI prompt for LEFT-OFF
+│       └── logbook-summarizer.md   # OpenAI prompt for LOGBOOK
 ├── docs/
-│   ├── REQUIREMENTS-LEFT-OFF.md     # LEFT-OFF service spec
+│   ├── REQUIREMENTS-LOGBOOK.md     # LOGBOOK service spec
 │   ├── REQUIREMENTS-TOGGL.md        # Toggl service spec
 │   └── reference-code/              # Original reference implementations
 └── requirements.txt                 # Python dependencies
@@ -33,14 +33,18 @@ PersonalWeb03-Services/
 ## Running the Services
 
 ### Individual Services
+
 Services can be run anytime (bypass guardrail) with specific flags:
+
 ```bash
-python src/main.py --run-left-off   # Run LEFT-OFF service
+python src/main.py --run-logbook   # Run LOGBOOK service
 python src/main.py --run-toggl      # Run Toggl service (not implemented)
 ```
 
 ### Scheduled Execution (with Guardrail)
+
 Running without flags triggers the time guardrail:
+
 ```bash
 python src/main.py                  # Check time window, exit if outside
 python src/main.py --run-anyway     # Bypass guardrail, show help
@@ -51,12 +55,14 @@ python src/main.py --run-anyway     # Bypass guardrail, show help
 **File**: `src/utils/guardrail.py`
 
 Enforces execution window for scheduled cron jobs:
+
 - **Allowed Window**: Sunday 10:55 PM - 11:05 PM (local system time)
 - **Exit Code**: 2 when blocked, 0 when allowed
 - **Logging**: Shows current time, allowed window, and bypass instructions
 
 **Implementation Notes**:
-- Individual service flags (`--run-left-off`, etc.) bypass guardrail automatically
+
+- Individual service flags (`--run-logbook`, etc.) bypass guardrail automatically
 - `--run-anyway` flag bypasses guardrail for testing
 - When `main.py` runs without service flags, guardrail is enforced
 - Uses `datetime.now().weekday()` where 6 = Sunday
@@ -68,22 +74,26 @@ Enforces execution window for scheduled cron jobs:
 Loads and validates environment variables from `.env`:
 
 ### Required Variables
+
 - `PATH_PROJECT_RESOURCES` - Base path for output files
 - `KEY_OPENAI` - OpenAI API key
 
 ### Path Helpers
-- `get_left_off_source_path()` → `{PATH_PROJECT_RESOURCES}/obsidian/LEFT-OFF.md`
-- `get_activities_file_path()` → `{PATH_PROJECT_RESOURCES}/services-data/left-off-temp/last-7-days-activities.md`
-- `get_summary_json_path()` → `{PATH_PROJECT_RESOURCES}/services-data/left-off-7-day-summary.json`
+
+- `get_logbook_source_path()` → `{PATH_PROJECT_RESOURCES}/obsidian/LOGBOOK.md`
+- `get_activities_file_path()` → `{PATH_PROJECT_RESOURCES}/services-data/logbook-temp/last-7-days-activities.md`
+- `get_summary_json_path()` → `{PATH_PROJECT_RESOURCES}/services-data/logbook-7-day-summary.json`
 
 **Directory Structure**:
+
 - Source files → `obsidian/`
-- Temp files (extracted markdown) → `services-data/left-off-temp/`
-- Final output (JSON summary) → `services-data/left-off-7-day-summary.json`
+- Temp files (extracted markdown) → `services-data/logbook-temp/`
+- Final output (JSON summary) → `services-data/logbook-7-day-summary.json`
 
 ## Logging
 
 All modules use Python's `logging` module with consistent formatting:
+
 ```python
 logging.basicConfig(
     level=logging.INFO,
@@ -96,32 +106,33 @@ Each module has its own logger: `logger = logging.getLogger(__name__)`
 
 ---
 
-## LEFT-OFF Service
+## LOGBOOK Service
 
-Reads LEFT-OFF.md from the Obsidian resources directory, extracts last 7 days of activities, and generates AI-powered summaries.
+Reads LOGBOOK.md from the Obsidian resources directory, extracts last 7 days of activities, and generates AI-powered summaries.
 
 ### Workflow
 
 1. **Load Source**:
-   - Read `{PATH_PROJECT_RESOURCES}/obsidian/LEFT-OFF.md`
+   - Read `{PATH_PROJECT_RESOURCES}/obsidian/LOGBOOK.md`
    - Confirm the source file exists before parsing
 
 2. **Parse** (`document_parser.py`):
-   - Load markdown from `LEFT-OFF.md`
+   - Load markdown from `LOGBOOK.md`
    - Find cutoff date (8 days ago in YYYYMMDD format)
    - Extract all content before the first top-level `# YYYYMMDD` heading that is at or older than the cutoff
-   - Preserve markdown and save to `services-data/left-off-temp/last-7-days-activities.md`
+   - Preserve markdown and save to `services-data/logbook-temp/last-7-days-activities.md`
 
 3. **Summarize** (`summarizer.py`):
-   - Load prompt template from `templates/left-off-summarizer.md`
+   - Load prompt template from `templates/logbook-summarizer.md`
    - Replace `<< last-7-days-activities.md >>` placeholder with extracted content
    - Call OpenAI API (gpt-4o-mini) with `response_format={"type": "json_object"}`
-   - Save JSON response to `services-data/left-off-7-day-summary.json`
+   - Save JSON response to `services-data/logbook-7-day-summary.json`
    - Print result to console
 
 ### Document Structure Expectations
 
-The `LEFT-OFF.md` file must follow this structure:
+The `LOGBOOK.md` file must follow this structure:
+
 - **Top-level heading**: Date in `# YYYYMMDD` format (for example, `# 20260322`)
 - **Nested headings**: Any lower markdown heading level may appear under a date
 - **Organization**: Most recent entries at top, oldest at bottom
@@ -131,23 +142,23 @@ Parser extracts all lines until it finds the first top-level date heading that i
 
 ### OpenAI Integration
 
-**File**: `src/services/left_off/summarizer.py`
+**File**: `src/services/logbook/summarizer.py`
 
 - **Model**: `gpt-4o-mini` (configurable)
 - **Response Format**: JSON object with `summary` and `datetime_summary` fields
-- **Template**: `src/templates/left-off-summarizer.md` defines the prompt structure
+- **Template**: `src/templates/logbook-summarizer.md` defines the prompt structure
 - **Error Handling**: Catches JSON decode errors, file not found, API failures
 
 **Template Customization**:
-Edit `templates/left-off-summarizer.md` to modify summary style, length, or format.
+Edit `templates/logbook-summarizer.md` to modify summary style, length, or format.
 
 ### Output Files
 
-1. **Temp Files** (in `services-data/left-off-temp/`):
+1. **Temp Files** (in `services-data/logbook-temp/`):
    - `last-7-days-activities.md` - Extracted markdown
 
 2. **Final Output** (in `services-data/`):
-   - `left-off-7-day-summary.json` - JSON with summary and timestamp
+   - `logbook-7-day-summary.json` - JSON with summary and timestamp
 
 ### Error Cases
 
@@ -180,12 +191,14 @@ Use exit codes for cron job monitoring and alerting.
 ## Dependencies
 
 See `requirements.txt`:
+
 - `requests` - HTTP requests for Graph API
 - `openai` - OpenAI API client
 - `python-dotenv` - Load .env files
 - `httpx==0.27.2` - HTTP client (pinned for OpenAI compatibility)
 
 **Version Notes**:
+
 - `httpx` pinned to 0.27.2 due to incompatibility between 0.28.x and OpenAI SDK
 - `openai` uses JSON mode for structured responses
 
@@ -210,4 +223,4 @@ See `requirements.txt`:
 4. **Production Deployment**:
    - Deploy as cron job on Sunday 11:00 PM
    - Monitor exit codes for success/failure
-   - Confirm `PATH_PROJECT_RESOURCES/obsidian/LEFT-OFF.md` remains available to the cron environment
+   - Confirm `PATH_PROJECT_RESOURCES/obsidian/LOGBOOK.md` remains available to the cron environment

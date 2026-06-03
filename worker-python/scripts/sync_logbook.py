@@ -11,16 +11,15 @@ from dotenv import load_dotenv
 
 WORKER_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_LOGBOOK_SOURCE_PATH = Path("/home/nick/NickVault/logbook.md")
-DEFAULT_LEGACY_SOURCE_PATH = Path("/home/nick/NickVault/LEFT-OFF.md")
 DEFAULT_SOURCE_PATH = DEFAULT_LOGBOOK_SOURCE_PATH
 DEFAULT_MODE = 0o640
 
-ENV_SOURCE_PATH = "PATH_LEFT_OFF_NICKVAULT_SOURCE"
-ENV_WORKER_SOURCE_PATH = "PATH_LEFT_OFF_SOURCE"
-ENV_DESTINATION_PATH = "PATH_LEFT_OFF_DESTINATION"
+ENV_SOURCE_PATH = "PATH_LOGBOOK_NICKVAULT_SOURCE"
+ENV_WORKER_SOURCE_PATH = "PATH_LOGBOOK_SOURCE"
+ENV_DESTINATION_PATH = "PATH_LOGBOOK_DESTINATION"
 ENV_PROJECT_RESOURCES = "PATH_PROJECT_RESOURCES"
 
-logger = logging.getLogger("sync_left_off")
+logger = logging.getLogger("sync_logbook")
 
 
 def _mode(path):
@@ -55,26 +54,17 @@ def _path_from_env(env, key):
 
 
 def resolve_source_path(env=None):
-    """Resolve the NickVault source path without reading file contents.
-
-    The preferred upstream file is root ``logbook.md``. The legacy
-    ``LEFT-OFF.md`` fallback applies only to this NickVault source lookup so it
-    cannot hide a mismatch between the copy destination and worker read path.
-    """
+    """Resolve the NickVault source path without reading file contents."""
     env = os.environ if env is None else env
     explicit_source = _path_from_env(env, ENV_SOURCE_PATH)
     if explicit_source:
         return explicit_source
 
-    if DEFAULT_LOGBOOK_SOURCE_PATH.is_file():
-        return DEFAULT_LOGBOOK_SOURCE_PATH
-    if DEFAULT_LEGACY_SOURCE_PATH.is_file():
-        return DEFAULT_LEGACY_SOURCE_PATH
     return DEFAULT_LOGBOOK_SOURCE_PATH
 
 
 def resolve_destination_path(env=None):
-    """Resolve the worker input path for the temporary LEFT-OFF artifact."""
+    """Resolve the worker input path for the temporary LOGBOOK artifact."""
     env = os.environ if env is None else env
     explicit_destination = _path_from_env(env, ENV_DESTINATION_PATH)
     if explicit_destination:
@@ -88,10 +78,10 @@ def resolve_destination_path(env=None):
     if not project_resources:
         raise ValueError(f"{ENV_PROJECT_RESOURCES} not set in environment")
 
-    return project_resources / "services-data" / "LEFT-OFF.md"
+    return project_resources / "services-data" / "LOGBOOK.md"
 
 
-def copy_left_off(source_path, destination_path, mode=DEFAULT_MODE):
+def copy_logbook(source_path, destination_path, mode=DEFAULT_MODE):
     """Copy source markdown to destination and apply the expected file mode."""
     source_path = Path(source_path).expanduser()
     destination_path = Path(destination_path).expanduser()
@@ -118,7 +108,7 @@ def main():
 
     source_path = resolve_source_path()
     destination_path = resolve_destination_path()
-    copy_left_off(source_path, destination_path)
+    copy_logbook(source_path, destination_path)
 
 
 if __name__ == "__main__":

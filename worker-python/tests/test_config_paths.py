@@ -17,7 +17,7 @@ from utils.config import Config
 
 
 class ConfigPathTests(unittest.TestCase):
-    def test_left_off_source_defaults_to_services_data_file(self):
+    def test_logbook_source_defaults_to_services_data_file(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             env = {
                 "PATH_PROJECT_RESOURCES": temp_dir,
@@ -27,22 +27,22 @@ class ConfigPathTests(unittest.TestCase):
                 config = Config()
 
             self.assertEqual(
-                config.get_left_off_source_path(),
-                Path(temp_dir) / "services-data" / "LEFT-OFF.md",
+                config.get_logbook_source_path(),
+                Path(temp_dir) / "services-data" / "LOGBOOK.md",
             )
 
-    def test_left_off_source_uses_non_secret_override(self):
+    def test_logbook_source_uses_non_secret_override(self):
         with tempfile.TemporaryDirectory() as temp_dir:
-            override_path = Path(temp_dir) / "custom" / "LEFT-OFF.md"
+            override_path = Path(temp_dir) / "custom" / "LOGBOOK.md"
             env = {
                 "PATH_PROJECT_RESOURCES": temp_dir,
-                "PATH_LEFT_OFF_SOURCE": str(override_path),
+                "PATH_LOGBOOK_SOURCE": str(override_path),
             }
 
             with patch.dict(os.environ, env, clear=True), patch("utils.config.load_dotenv"):
                 config = Config()
 
-            self.assertEqual(config.get_left_off_source_path(), override_path)
+            self.assertEqual(config.get_logbook_source_path(), override_path)
 
 
 if __name__ == "__main__":

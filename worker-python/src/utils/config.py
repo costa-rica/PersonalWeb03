@@ -31,11 +31,11 @@ class Config:
             )
         
         # Temporary worker input contract: NickVault logbook.md is copied into
-        # the existing services-data/LEFT-OFF.md artifact before this service runs.
-        self.left_off_source_path = Path(
+        # the existing services-data/LOGBOOK.md artifact before this service runs.
+        self.logbook_source_path = Path(
             os.getenv(
-                'PATH_LEFT_OFF_SOURCE',
-                self.services_data_dir / 'LEFT-OFF.md',
+                'PATH_LOGBOOK_SOURCE',
+                self.services_data_dir / 'LOGBOOK.md',
             )
         )
         
@@ -49,9 +49,9 @@ class Config:
         # Time guardrail config
         self.time_window_start = os.getenv('TIME_WINDOW_START', '23:00')
 
-    def validate_left_off_config(self):
+    def validate_logbook_config(self):
         """
-        Validate that all required config for LEFT-OFF service is present.
+        Validate that all required config for LOGBOOK service is present.
         
         Raises:
             ValueError: If required configuration is missing
@@ -64,19 +64,19 @@ class Config:
         if missing:
             raise ValueError(f"Missing required environment variables: {', '.join(missing)}")
         
-        logger.info("LEFT-OFF configuration validated successfully")
+        logger.info("LOGBOOK configuration validated successfully")
 
-    def get_left_off_source_path(self):
+    def get_logbook_source_path(self):
         """Get the worker input path for the copied logbook artifact."""
-        return self.left_off_source_path
+        return self.logbook_source_path
 
     def get_activities_file_path(self):
         """Get the full path for the last-7-days-activities.md file."""
-        return self.services_data_dir / 'left-off-temp' / 'last-7-days-activities.md'
+        return self.services_data_dir / 'logbook-temp' / 'last-7-days-activities.md'
     
     def get_summary_json_path(self):
         """Get the full path for the summary JSON output file."""
-        return self.services_data_dir / 'left-off-7-day-summary.json'
+        return self.services_data_dir / 'logbook-7-day-summary.json'
     
     def validate_toggl_config(self):
         """

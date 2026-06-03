@@ -12,12 +12,12 @@ if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
 
-from services.left_off.document_parser import LeftOffMarkdownParser
+from services.logbook.document_parser import LeftOffMarkdownParser
 
 
 class LeftOffMarkdownParserTests(unittest.TestCase):
     def _write_markdown(self, directory, content):
-        markdown_path = Path(directory) / "LEFT-OFF.md"
+        markdown_path = Path(directory) / "LOGBOOK.md"
         markdown_path.write_text(content, encoding="utf-8")
         return markdown_path
 
@@ -27,17 +27,17 @@ class LeftOffMarkdownParserTests(unittest.TestCase):
     def test_extracts_only_the_last_7_days(self):
         content = """# 20260322
 
-## LEFT-OFF
+## LOGBOOK
 - [ ] Latest item
 
 # 20260321
 
-## LEFT-OFF
+## LOGBOOK
 - [ ] Keep this too
 
 # 20260314
 
-## LEFT-OFF
+## LOGBOOK
 - [ ] This should be excluded
 """
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -60,12 +60,12 @@ class LeftOffMarkdownParserTests(unittest.TestCase):
     def test_extracts_entire_file_when_no_cutoff_is_found(self):
         content = """# 20260322
 
-## LEFT-OFF
+## LOGBOOK
 - [ ] Only recent notes
 
 # 20260320
 
-## LEFT-OFF
+## LOGBOOK
 - [ ] Still within the window
 """
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -83,7 +83,7 @@ class LeftOffMarkdownParserTests(unittest.TestCase):
     def test_preserves_markdown_content(self):
         content = """# 20260322
 
-## LEFT-OFF
+## LOGBOOK
 - [ ] Open to choses a faire faster
 - [ ] Daily note files pre-structured
 `inline code`
@@ -191,7 +191,7 @@ modified_by: codex (gpt-5)
             self.assertIn("# 20260322", self._read_output(temp_dir))
 
     def test_fails_when_no_valid_date_headings_exist(self):
-        content = """# LEFT-OFF
+        content = """# LOGBOOK
 
 ## Notes
 - [ ] This heading is not a date

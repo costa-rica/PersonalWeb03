@@ -8,7 +8,7 @@ This file provides guidance to engineers and coding agents when working in `work
 
 There are two service flows:
 
-- LEFT-OFF: reads the temporary worker input `LEFT-OFF.md` from `PATH_PROJECT_RESOURCES/services-data/`, extracts the most recent activity window, and writes `left-off-7-day-summary.json`. The upstream NickVault source is root `logbook.md`, copied into this temporary artifact by `scripts/sync_left_off.py`.
+- LOGBOOK: reads the temporary worker input `LOGBOOK.md` from `PATH_PROJECT_RESOURCES/services-data/`, extracts the most recent activity window, and writes `logbook-7-day-summary.json`. The upstream NickVault source is root `logbook.md`, copied into this temporary artifact by `scripts/sync_logbook.py`.
 - Toggl: fetches recent Toggl Track time entries, aggregates them by project, and writes `project_time_entries.csv`
 
 ## Common Commands
@@ -28,11 +28,11 @@ python src/main.py
 python src/main.py --run-anyway
 
 # Run individual services directly
-python src/main.py --run-left-off
+python src/main.py --run-logbook
 python src/main.py --run-toggl
 
-# Copy NickVault logbook.md into the temporary LEFT-OFF worker input path
-python scripts/sync_left_off.py
+# Copy NickVault logbook.md into the temporary LOGBOOK worker input path
+python scripts/sync_logbook.py
 
 # Compile-check the package without running network calls
 python -m compileall src
@@ -47,11 +47,11 @@ This project depends on a local `.env` file in `worker-python/`. Before running 
 
 - Shared runtime: `NAME_APP`, `RUN_ENVIRONMENT`, `PATH_PROJECT_RESOURCES`
 - Logging in testing or production: `PATH_TO_LOGS`
-- LEFT-OFF: `KEY_OPENAI`
-- Optional LEFT-OFF overrides: `URL_BASE_OPENAI`, `PATH_LEFT_OFF_SOURCE`
-- Optional LEFT-OFF copy overrides: `PATH_LEFT_OFF_NICKVAULT_SOURCE`, `PATH_LEFT_OFF_DESTINATION`
-  - `PATH_LEFT_OFF_NICKVAULT_SOURCE` points at the upstream NickVault source. By default, the copy helper prefers `/home/nick/NickVault/logbook.md` and falls back to `/home/nick/NickVault/LEFT-OFF.md` for one deployment cycle.
-  - `PATH_LEFT_OFF_SOURCE` and `PATH_LEFT_OFF_DESTINATION` describe the worker-side artifact. By default, both resolve to `PATH_PROJECT_RESOURCES/services-data/LEFT-OFF.md`; do not add fallback behavior here because it can mask copy/read mismatches.
+- LOGBOOK: `KEY_OPENAI`
+- Optional LOGBOOK overrides: `URL_BASE_OPENAI`, `PATH_LOGBOOK_SOURCE`
+- Optional LOGBOOK copy overrides: `PATH_LOGBOOK_NICKVAULT_SOURCE`, `PATH_LOGBOOK_DESTINATION`
+  - `PATH_LOGBOOK_NICKVAULT_SOURCE` points at the upstream NickVault source. By default, the copy helper prefers `/home/nick/NickVault/logbook.md` and falls back to `/home/nick/NickVault/LOGBOOK.md` for one deployment cycle.
+  - `PATH_LOGBOOK_SOURCE` and `PATH_LOGBOOK_DESTINATION` describe the worker-side artifact. By default, both resolve to `PATH_PROJECT_RESOURCES/services-data/LOGBOOK.md`; do not add fallback behavior here because it can mask copy/read mismatches.
 - Toggl: `TOGGL_API_TOKEN`
 - Guardrail: `TIME_WINDOW_START`
 
@@ -64,7 +64,7 @@ src/
 ├── main.py                        # CLI entry point and orchestration
 ├── get_auth_token.py              # One-time helper to obtain OneDrive refresh token
 ├── services/
-│   ├── left_off/
+│   ├── logbook/
 │   │   ├── onedrive_client.py     # Legacy MS Graph helper retained for reference
 │   │   ├── document_parser.py     # Extract recent sections from copied logbook input
 │   │   └── summarizer.py          # OpenAI call that returns JSON
@@ -72,22 +72,22 @@ src/
 │       ├── toggl_client.py        # Toggl Track API client
 │       └── time_aggregator.py     # Groups durations by project
 ├── templates/
-│   └── left-off-summarizer.md     # Prompt template
+│   └── logbook-summarizer.md     # Prompt template
 └── utils/
     ├── config.py                  # Env loading and path helpers
     ├── guardrail.py               # Allowed execution window
     └── logging_config.py          # Loguru configuration
 scripts/
-└── sync_left_off.py                # Copies NickVault logbook.md to services-data/LEFT-OFF.md
+└── sync_logbook.py                # Copies NickVault logbook.md to services-data/LOGBOOK.md
 ```
 
 ## Expected Service Data
 
 Worker inputs and outputs are rooted under `PATH_PROJECT_RESOURCES/services-data/`:
 
-- `LEFT-OFF.md` (temporary worker-side copy of NickVault root `logbook.md`)
-- `left-off-temp/last-7-days-activities.md`
-- `left-off-7-day-summary.json`
+- `LOGBOOK.md` (temporary worker-side copy of NickVault root `logbook.md`)
+- `logbook-temp/last-7-days-activities.md`
+- `logbook-7-day-summary.json`
 - `project_time_entries.csv`
 
 The web and API projects may rely on these files being present and shaped consistently, so preserve filenames and top-level JSON and CSV columns unless the consuming code is updated too.
@@ -98,7 +98,7 @@ The web and API projects may rely on these files being present and shaped consis
 - Keep service entrypoints in `src/main.py` thin. Put external API logic in service modules and env parsing in `utils/config.py`.
 - Preserve exit code semantics: `0` success, `1` operational error, `2` blocked by guardrail.
 - Be careful with the copied logbook document format. The parser expects optional YAML frontmatter followed by top-level `# YYYYMMDD` headings, newest first, with all content for a day living under that heading until the next top-level date heading. Canon logbook sections include `## Accomplished Today` and `## Still Open`.
-- If you change prompt behavior, edit `src/templates/left-off-summarizer.md` instead of hardcoding prompt text in Python.
+- If you change prompt behavior, edit `src/templates/logbook-summarizer.md` instead of hardcoding prompt text in Python.
 - When changing paths or output schemas, search the whole monorepo for consumers before editing.
 - Avoid adding networked tests that hit live APIs. Prefer isolated unit tests or compile checks.
 

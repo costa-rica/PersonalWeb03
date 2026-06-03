@@ -1,20 +1,20 @@
 # PersonalWeb03 worker-python logbook copy — systemd service template
 #
-# Replaces: personalweb03-left-off-copy.service
-# Install target: /etc/systemd/system/personalweb03-worker-python-left-off-copy.service
-# Keep the left-off unit name temporarily for deployment compatibility.
+# Replaces: personalweb03-logbook-copy.service
+# Install target: /etc/systemd/system/personalweb03-worker-python-logbook-copy.service
+# Keep the logbook unit name temporarily for deployment compatibility.
 #
 # Operator checks before install:
 # - /home/limited_user/applications/PersonalWeb03/worker-python/.env exists and is readable by nick and limited_user.
-# - /home/limited_user/applications/PersonalWeb03/worker-python/scripts/sync_left_off.py exists.
+# - /home/limited_user/applications/PersonalWeb03/worker-python/scripts/sync_logbook.py exists.
 # - /home/nick/NickVault/logbook.md exists after nickvault-daily-files.service runs at about 01:00 America/Los_Angeles.
 # - /home/limited_user/project_resources/PersonalWeb03/services-data exists.
 # - User=nick, Group=limited_user, and UMask=0027 must stay together for the 0640 output contract.
 # - This service keeps After=nickvault-daily-files.service as a soft ordering hint. Do not add Requires=nickvault-daily-files.service here unless you intentionally want this copy job to start the NickVault job.
 #
 # Post-install mode check:
-#   stat -c '%U:%G %a %n' /home/limited_user/project_resources/PersonalWeb03/services-data/LEFT-OFF.md
-#   journalctl -u personalweb03-worker-python-left-off-copy.service -n 50 --no-pager | grep 'destination mode=0o640'
+#   stat -c '%U:%G %a %n' /home/limited_user/project_resources/PersonalWeb03/services-data/LOGBOOK.md
+#   journalctl -u personalweb03-worker-python-logbook-copy.service -n 50 --no-pager | grep 'destination mode=0o640'
 
 [Unit]
 Description=PersonalWeb03 worker-python NickVault logbook copy
@@ -27,7 +27,7 @@ Group=limited_user
 UMask=0027
 WorkingDirectory=/home/limited_user/applications/PersonalWeb03/worker-python
 EnvironmentFile=/home/limited_user/applications/PersonalWeb03/worker-python/.env
-ExecStart=/home/limited_user/environments/personal_web03/bin/python /home/limited_user/applications/PersonalWeb03/worker-python/scripts/sync_left_off.py
+ExecStart=/home/limited_user/environments/personal_web03/bin/python /home/limited_user/applications/PersonalWeb03/worker-python/scripts/sync_logbook.py
 ProtectSystem=strict
 ProtectHome=read-only
 ReadOnlyPaths=/home/nick/NickVault

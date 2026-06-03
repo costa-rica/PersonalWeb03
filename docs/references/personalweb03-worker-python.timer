@@ -5,7 +5,7 @@
 # LA-local fallback timing:
 # - NickVault logbook generation: about 01:00 America/Los_Angeles.
 # - PersonalWeb03 logbook copy: about 02:00 America/Los_Angeles.
-# - this worker: about 02:30 America/Los_Angeles, with service-level Requires=/After=personalweb03-worker-python-left-off-copy.service.
+# - this worker: about 02:30 America/Los_Angeles, with service-level Requires=/After=personalweb03-worker-python-logbook-copy.service.
 
 [Unit]
 Description=PersonalWeb03 worker-python timer

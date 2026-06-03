@@ -1,8 +1,8 @@
 # PersonalWeb03 worker-python logbook copy — systemd timer template
 #
-# Replaces: personalweb03-left-off-copy.timer
-# Install target: /etc/systemd/system/personalweb03-worker-python-left-off-copy.timer
-# Keep the left-off unit name temporarily for deployment compatibility.
+# Replaces: personalweb03-logbook-copy.timer
+# Install target: /etc/systemd/system/personalweb03-worker-python-logbook-copy.timer
+# Keep the logbook unit name temporarily for deployment compatibility.
 # Intended LA-local flow:
 # - nickvault-daily-files.timer runs NickVault logbook generation at about 01:00 America/Los_Angeles.
 # - this timer copies /home/nick/NickVault/logbook.md at about 02:00 America/Los_Angeles.
@@ -10,12 +10,12 @@
 
 [Unit]
 Description=Copy NickVault logbook.md before the PersonalWeb03 worker-python job
-Requires=personalweb03-worker-python-left-off-copy.service
+Requires=personalweb03-worker-python-logbook-copy.service
 
 [Timer]
 OnCalendar=*-*-* 02:00:00 America/Los_Angeles
 Persistent=true
-Unit=personalweb03-worker-python-left-off-copy.service
+Unit=personalweb03-worker-python-logbook-copy.service
 
 [Install]
 WantedBy=timers.target

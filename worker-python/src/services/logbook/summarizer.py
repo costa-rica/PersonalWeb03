@@ -1,5 +1,5 @@
 """
-AI-powered summarizer for LEFT-OFF activities using OpenAI API.
+AI-powered summarizer for LOGBOOK activities using OpenAI API.
 """
 
 import json
@@ -10,7 +10,7 @@ from loguru import logger
 
 
 class Summarizer:
-    """Generates AI-powered summaries of LEFT-OFF activities using OpenAI."""
+    """Generates AI-powered summaries of LOGBOOK activities using OpenAI."""
 
     def __init__(self, api_key, base_url=None, model='gpt-4o-mini'):
         """

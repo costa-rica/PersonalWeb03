@@ -6,20 +6,21 @@ Automated services for PersonalWeb03 that run as scheduled jobs. Copies NickVaul
 
 ## Outputs
 
-### LEFT-OFF Service
+### LOGBOOK Service
 
-**File**: `services-data/left-off-7-day-summary.json`
+**File**: `services-data/logbook-7-day-summary.json`
 
-Generates AI-powered summaries of the last 7 days of activities from `services-data/LEFT-OFF.md`. That worker-side file is a temporary compatibility artifact; `scripts/sync_left_off.py` copies the upstream NickVault root `logbook.md` into it before the worker runs.
+Generates AI-powered summaries of the last 7 days of activities from `services-data/LOGBOOK.md`. That worker-side file is a temporary compatibility artifact; `scripts/sync_logbook.py` copies the upstream NickVault root `logbook.md` into it before the worker runs.
 
 ```json
 {
-  "summary": "- Continued work on CadmusAI, focusing on IP address rate limiting.\n- Presented at the MLH / DigitalOcean Hackathon, deployed live demo.\n- Made UI fixes and architectural changes to PersonalWeb03.\n- Restored old blog entries and added admin features.",
-  "datetime_summary": "2025-12-07 12:00:00"
+	"summary": "- Continued work on CadmusAI, focusing on IP address rate limiting.\n- Presented at the MLH / DigitalOcean Hackathon, deployed live demo.\n- Made UI fixes and architectural changes to PersonalWeb03.\n- Restored old blog entries and added admin features.",
+	"datetime_summary": "2025-12-07 12:00:00"
 }
 ```
 
-**Temp Files**: `services-data/left-off-temp/`
+**Temp Files**: `services-data/logbook-temp/`
+
 - `last-7-days-activities.md` - Extracted activities in markdown
 
 ---
@@ -47,16 +48,17 @@ pip install -r requirements.txt
 ```
 
 **Environment Variables**: Add to `.env`
+
 ```bash
 # Shared
 PATH_PROJECT_RESOURCES=/path/to/project/resources
 
-# LEFT-OFF Service
+# LOGBOOK Service
 KEY_OPENAI=your_openai_api_key
 # Optional path overrides
-PATH_LEFT_OFF_SOURCE=/path/to/project/resources/services-data/LEFT-OFF.md
-PATH_LEFT_OFF_NICKVAULT_SOURCE=/home/nick/NickVault/logbook.md
-PATH_LEFT_OFF_DESTINATION=/path/to/project/resources/services-data/LEFT-OFF.md
+PATH_LOGBOOK_SOURCE=/path/to/project/resources/services-data/LOGBOOK.md
+PATH_LOGBOOK_NICKVAULT_SOURCE=/home/nick/NickVault/logbook.md
+PATH_LOGBOOK_DESTINATION=/path/to/project/resources/services-data/LOGBOOK.md
 
 # Toggl Service
 TOGGL_API_TOKEN=your_toggl_api_token
@@ -68,21 +70,22 @@ TOGGL_API_TOKEN=your_toggl_api_token
 
 ```bash
 # Run both services (default - respects time window)
-python src/main.py                    # Runs LEFT-OFF + Toggl during 23:00-23:10 window
-python src/main.py --run-anyway       # Runs LEFT-OFF + Toggl anytime (bypass guardrail)
+python src/main.py                    # Runs LOGBOOK + Toggl during 23:00-23:10 window
+python src/main.py --run-anyway       # Runs LOGBOOK + Toggl anytime (bypass guardrail)
 
 # Run individual services (anytime - bypass guardrail)
-python src/main.py --run-left-off     # LEFT-OFF only
+python src/main.py --run-logbook     # LOGBOOK only
 python src/main.py --run-toggl        # Toggl only
 
-# Copy NickVault logbook.md into the temporary LEFT-OFF worker input path
-python scripts/sync_left_off.py
+# Copy NickVault logbook.md into the temporary LOGBOOK worker input path
+python scripts/sync_logbook.py
 
 # Run the unit tests
 python -m unittest discover -s tests
 ```
 
 **Exit Codes**:
+
 - `0` - Success
 - `1` - Error (auth, API, file issues)
 - `2` - Time restriction (outside allowed window)
@@ -94,15 +97,15 @@ python -m unittest discover -s tests
 - **[DEVELOPMENT_NOTES.md](docs/DEVELOPMENT_NOTES.md)** - Complete engineering reference with API details, architecture, and troubleshooting
 - **requirements/** - Original specifications used for initial development (historical reference)
 
-## LEFT-OFF Input Contract
+## LOGBOOK Input Contract
 
-The LEFT-OFF service reads from `PATH_PROJECT_RESOURCES/services-data/LEFT-OFF.md` by default. For the current deployment cycle, keep that filename and the existing left-off command/unit names. The upstream source of truth is NickVault root `logbook.md`, copied into the worker input path by `scripts/sync_left_off.py`.
+The LOGBOOK service reads from `PATH_PROJECT_RESOURCES/services-data/LOGBOOK.md` by default. For the current deployment cycle, keep that filename and the existing logbook command/unit names. The upstream source of truth is NickVault root `logbook.md`, copied into the worker input path by `scripts/sync_logbook.py`.
 
 Default path behavior:
 
-- NickVault source: prefer `/home/nick/NickVault/logbook.md`; fall back to `/home/nick/NickVault/LEFT-OFF.md` only when the preferred source is absent.
-- Worker input: `PATH_LEFT_OFF_SOURCE` defaults to `PATH_PROJECT_RESOURCES/services-data/LEFT-OFF.md`.
-- Copy destination: `PATH_LEFT_OFF_DESTINATION` defaults to `PATH_LEFT_OFF_SOURCE`, or to `PATH_PROJECT_RESOURCES/services-data/LEFT-OFF.md` when no worker source override is set.
+- NickVault source: prefer `/home/nick/NickVault/logbook.md`; fall back to `/home/nick/NickVault/LOGBOOK.md` only when the preferred source is absent.
+- Worker input: `PATH_LOGBOOK_SOURCE` defaults to `PATH_PROJECT_RESOURCES/services-data/LOGBOOK.md`.
+- Copy destination: `PATH_LOGBOOK_DESTINATION` defaults to `PATH_LOGBOOK_SOURCE`, or to `PATH_PROJECT_RESOURCES/services-data/LOGBOOK.md` when no worker source override is set.
 
 - Top-level date headings must use `# YYYYMMDD`
 - Top-level date headings should be newest first
@@ -116,6 +119,7 @@ Default path behavior:
 ## Time-Based Guardrail
 
 Services run within a configurable daily time window for scheduled cron execution:
+
 - **Default Window**: 23:00 - 23:10 (11:00 PM - 11:10 PM) daily unless the systemd timer runs `src/main.py --run-anyway`
 - **Configuration**: Set `TIME_WINDOW_START=HH:MM` in .env (e.g., `TIME_WINDOW_START=23:00`)
 - **Window Duration**: Always 10 minutes from start time

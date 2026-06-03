@@ -1,5 +1,5 @@
 """
-Document parser for extracting content from LEFT-OFF.docx file.
+Document parser for extracting content from LOGBOOK.docx file.
 """
 
 import logging
@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 class DocumentParser:
-    """Parser for extracting last 7 days of activities from LEFT-OFF.docx."""
+    """Parser for extracting last 7 days of activities from LOGBOOK.docx."""
 
     def __init__(self, docx_path):
         """

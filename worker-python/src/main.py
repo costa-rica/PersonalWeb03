@@ -19,31 +19,31 @@ sys.path.insert(0, str(Path(__file__).parent))
 from utils.config import Config
 from utils.guardrail import TimeGuardrail
 from utils.logging_config import configure_logging
-from services.left_off.document_parser import DocumentParser
-from services.left_off.summarizer import Summarizer
+from services.logbook.document_parser import DocumentParser
+from services.logbook.summarizer import Summarizer
 from services.toggl.toggl_client import TogglClient
 from services.toggl.time_aggregator import TimeAggregator
 
 
-def run_left_off_service():
+def run_logbook_service():
     """
-    Run the LEFT-OFF markdown summarization service.
+    Run the LOGBOOK markdown summarization service.
     
     Returns:
         int: Exit code (0=success, 1=error)
     """
-    logger.info("Starting LEFT-OFF service")
+    logger.info("Starting LOGBOOK service")
     
     try:
         # Load and validate configuration
         config = Config()
-        config.validate_left_off_config()
+        config.validate_logbook_config()
         
-        # Step 1: Load LEFT-OFF.md from the worker services-data directory
-        source_path = config.get_left_off_source_path()
-        logger.info(f"Step 1: Loading LEFT-OFF markdown from {source_path}")
+        # Step 1: Load LOGBOOK.md from the worker services-data directory
+        source_path = config.get_logbook_source_path()
+        logger.info(f"Step 1: Loading LOGBOOK markdown from {source_path}")
         if not source_path.exists():
-            logger.error(f"LEFT-OFF markdown file not found: {source_path}")
+            logger.error(f"LOGBOOK markdown file not found: {source_path}")
             return 1
         
         # Step 2: Parse markdown and extract last 7 days
@@ -51,7 +51,7 @@ def run_left_off_service():
         parser = DocumentParser(str(source_path))
         
         if not parser.load_document():
-            logger.error("Failed to load LEFT-OFF markdown")
+            logger.error("Failed to load LOGBOOK markdown")
             return 1
         
         activities_path = config.get_activities_file_path()
@@ -61,7 +61,7 @@ def run_left_off_service():
         
         # Step 3: Generate AI-powered summary
         logger.info("Step 3: Generating AI-powered summary")
-        template_path = Path(__file__).parent / 'templates' / 'left-off-summarizer.md'
+        template_path = Path(__file__).parent / 'templates' / 'logbook-summarizer.md'
         
         summarizer = Summarizer(
             api_key=config.openai_api_key,
@@ -99,7 +99,7 @@ def run_left_off_service():
         print(json.dumps(summary_result, indent=2))
         print("="*80 + "\n")
         
-        logger.info("LEFT-OFF service completed successfully")
+        logger.info("LOGBOOK service completed successfully")
         return 0
         
     except ValueError as e:
@@ -216,9 +216,9 @@ def main():
     )
     
     parser.add_argument(
-        '--run-left-off',
+        '--run-logbook',
         action='store_true',
-        help='Run only the LEFT-OFF markdown summary service'
+        help='Run only the LOGBOOK markdown summary service'
     )
     
     parser.add_argument(
@@ -236,8 +236,8 @@ def main():
     args = parser.parse_args()
     
     # Run individual services (bypass guardrail)
-    if args.run_left_off:
-        exit_code = run_left_off_service()
+    if args.run_logbook:
+        exit_code = run_logbook_service()
         sys.exit(exit_code)
     elif args.run_toggl:
         exit_code = run_toggl_service()
@@ -255,15 +255,15 @@ def main():
     # Run both services
     logger.info("Time window check passed - executing both services")
     
-    # Run Toggl service first so LEFT-OFF can use the refreshed CSV data when available.
+    # Run Toggl service first so LOGBOOK can use the refreshed CSV data when available.
     toggl_exit_code = run_toggl_service()
     if toggl_exit_code != 0:
-        logger.warning("Toggl service failed, continuing with LEFT-OFF without refreshed Toggl data")
+        logger.warning("Toggl service failed, continuing with LOGBOOK without refreshed Toggl data")
 
-    # Run LEFT-OFF service
-    left_off_exit_code = run_left_off_service()
-    if left_off_exit_code != 0:
-        sys.exit(left_off_exit_code)
+    # Run LOGBOOK service
+    logbook_exit_code = run_logbook_service()
+    if logbook_exit_code != 0:
+        sys.exit(logbook_exit_code)
 
     sys.exit(toggl_exit_code)
 

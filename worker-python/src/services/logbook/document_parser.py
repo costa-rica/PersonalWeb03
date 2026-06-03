@@ -1,5 +1,5 @@
 """
-Markdown parser for extracting recent content from LEFT-OFF.md.
+Markdown parser for extracting recent content from LOGBOOK.md.
 """
 
 import re
@@ -14,7 +14,7 @@ except ImportError:  # pragma: no cover - fallback for minimal test environments
 
 
 class LeftOffMarkdownParser:
-    """Parser for extracting the last 7 days of activities from LEFT-OFF.md."""
+    """Parser for extracting the last 7 days of activities from LOGBOOK.md."""
 
     DATE_HEADING_PATTERN = re.compile(r"^#\s+(\d{8})\s*$")
 
@@ -23,7 +23,7 @@ class LeftOffMarkdownParser:
         Initialize the markdown parser.
 
         Args:
-            markdown_path: Path to the LEFT-OFF.md file
+            markdown_path: Path to the LOGBOOK.md file
             now_provider: Optional callable returning the current datetime
         """
         self.markdown_path = Path(markdown_path)
@@ -85,7 +85,7 @@ class LeftOffMarkdownParser:
                 break
 
         if not found_date_heading:
-            logger.error("No valid '# YYYYMMDD' headings found in LEFT-OFF markdown")
+            logger.error("No valid '# YYYYMMDD' headings found in LOGBOOK markdown")
             return False
 
         if cutoff_index is None:
