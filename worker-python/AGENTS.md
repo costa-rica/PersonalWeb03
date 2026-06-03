@@ -62,10 +62,8 @@ Treat `.env`, tokens, and downloaded outputs as sensitive. Do not print secrets 
 ```text
 src/
 ├── main.py                        # CLI entry point and orchestration
-├── get_auth_token.py              # One-time helper to obtain OneDrive refresh token
 ├── services/
 │   ├── logbook/
-│   │   ├── onedrive_client.py     # Legacy MS Graph helper retained for reference
 │   │   ├── document_parser.py     # Extract recent sections from copied logbook input
 │   │   └── summarizer.py          # OpenAI call that returns JSON
 │   └── toggl/
@@ -107,7 +105,6 @@ The web and API projects may rely on these files being present and shaped consis
 - `Summarizer` accepts a `base_url` argument, but the current implementation does not pass it into the `OpenAI` client. If you are trying to support a non-default OpenAI-compatible endpoint, verify that path first.
 - Running `--run-toggl` can fail when `services-data/` does not already exist because the CSV write path is not created on demand.
 - The guardrail is implemented as a daily local-time window, not a weekly schedule.
-- `src/get_auth_token.py` opens a local browser flow on `http://localhost:8000`, so avoid changing that without also updating the Azure app registration.
 
 ## Safe Validation
 

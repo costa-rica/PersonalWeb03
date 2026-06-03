@@ -14,7 +14,6 @@ PersonalWeb03-Services/
 │   ├── main.py                      # Entry point with CLI and guardrail logic
 │   ├── services/                    # Service implementations
 │   │   ├── logbook/                # LOGBOOK document summarization
-│   │   │   ├── onedrive_client.py   # Legacy MS Graph helper kept for reference
 │   │   │   ├── document_parser.py   # LOGBOOK.md parsing and extraction
 │   │   │   └── summarizer.py        # OpenAI-powered summarization
 │   │   └── toggl/                   # (Future) Toggl Tracker service
