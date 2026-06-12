@@ -20,11 +20,18 @@ export default function ProjectsSection() {
       url: "https://news-nexus.kineticmetrics.com",
     },
     {
-      name: "Kyber Vision",
+      name: "Tastermonial",
       description:
-        "Kyber Vision turns volleyball into a playful, data-driven experience. It’s not just about numbers—it’s about making the game easier to understand, more fun to track, and better for team development.",
-      image: "/logo-kyber-vision.png",
-      url: "https://kybervision.eu/",
+        "A food and wellness app for tracking what you eat, how you feel, and the patterns that connect them.",
+      image: "/logo-tastermonial.png",
+      url: "https://flutter.tastermonial.dashanddata.com/",
+    },
+    {
+      name: "Go Lightly",
+      description:
+        "Go Lightly is a web platform that lets users compose and generate custom meditation audio by sequencing text-to-speech narration, prerecorded ambient sounds, and silence pauses into a final MP3.",
+      image: "/logo-go-lightly.png",
+      url: "https://go-lightly.love/",
     },
     {
       name: "What Sticks",
@@ -32,6 +39,13 @@ export default function ProjectsSection() {
         "The wellness application that provides insights on sleep and exercise based on data already collected by your devices. ",
       image: "/logo-what-sticks.png",
       url: "https://what-sticks.com/",
+    },
+    {
+      name: "Kyber Vision",
+      description:
+        "Kyber Vision turns volleyball into a playful, data-driven experience. It’s not just about numbers—it’s about making the game easier to understand, more fun to track, and better for team development.",
+      image: "/logo-kyber-vision.png",
+      url: "https://kybervision.eu/",
     },
   ];
 
@@ -61,7 +75,7 @@ export default function ProjectsSection() {
                     src={project.image || "/placeholder.svg"}
                     alt={project.name}
                     fill
-                    className="object-cover"
+                    className="object-contain p-4"
                   />
                 </div>
               </Link>
