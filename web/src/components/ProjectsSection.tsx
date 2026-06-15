@@ -17,7 +17,7 @@ export default function ProjectsSection() {
       description:
         "Article collecting and analysis of news articles from various sources. The Consumer Product Safety Commission (CPSC) has hired Kinetic Metrics to collect articles on hazards caused by consumer products in the United States.",
       image: "/logo-news-nexus.png",
-      url: "https://news-nexus.kineticmetrics.com",
+      url: "https://news-nexus-lite.dashanddata.com/",
     },
     {
       name: "Tastermonial",
