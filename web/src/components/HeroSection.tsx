@@ -53,7 +53,7 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="min-h-screen lg:h-screen flex flex-col border-2 border-black rounded-3xl overflow-hidden bg-white">
+    <section className="min-h-screen flex flex-col border-2 border-black rounded-3xl overflow-hidden bg-white">
       <Navigation />
 
       <div className="flex-1 flex flex-col lg:flex-row">
