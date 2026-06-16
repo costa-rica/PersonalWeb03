@@ -16,9 +16,6 @@ interface TogglEntry {
 }
 
 export default function HeroSection() {
-  // Configuration: Number of words to show before truncating
-  const TRUNCATE_WORD_COUNT = 35;
-
   // Check if hours table should be displayed (from env variable)
   const shouldDisplayHours = process.env.NEXT_PUBLIC_DISPLAY_HOURS_SPENT === 'true';
 
@@ -26,13 +23,7 @@ export default function HeroSection() {
   const [togglTable, setTogglTable] = useState<TogglEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isExpanded, setIsExpanded] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Helper function to count words
-  const countWords = (text: string): number => {
-    return text.trim().split(/\s+/).filter(word => word.length > 0).length;
-  };
 
   useEffect(() => {
     const fetchHeroData = async () => {
@@ -102,77 +93,29 @@ export default function HeroSection() {
               {!loading && !error && upToLately && (
                 <div className="p-4 border-2 border-black rounded-2xl bg-gray-50">
                   <div className="text-sm text-gray-800 leading-relaxed space-y-2">
-                    {(() => {
-                      const wordCount = countWords(upToLately.text);
-                      const shouldTruncate = wordCount > TRUNCATE_WORD_COUNT;
-                      
-                      // Split text into lines
-                      const lines = upToLately.text.split('\n');
-                      
-                      // If we should truncate and not expanded, preserve line structure
-                      let displayLines = lines;
-                      if (shouldTruncate && !isExpanded) {
-                        // Accumulate lines until we reach word limit
-                        let wordsSoFar = 0;
-                        displayLines = [];
-                        
-                        for (const line of lines) {
-                          const lineWordCount = countWords(line);
-                          if (wordsSoFar + lineWordCount <= TRUNCATE_WORD_COUNT) {
-                            displayLines.push(line);
-                            wordsSoFar += lineWordCount;
-                          } else {
-                            // If we have room for partial line, add it
-                            if (wordsSoFar < TRUNCATE_WORD_COUNT) {
-                              const wordsNeeded = TRUNCATE_WORD_COUNT - wordsSoFar;
-                              const lineWords = line.trim().split(/\s+/);
-                              const partialLine = lineWords.slice(0, wordsNeeded).join(' ');
-                              displayLines.push(partialLine);
-                            }
-                            break;
-                          }
-                        }
+                    {upToLately.text.split('\n').map((line, index) => {
+                      if (line.trim().startsWith('- ')) {
+                        return (
+                          <ul key={index} className="list-disc list-inside">
+                            <li className="text-gray-800">
+                              {line.trim().substring(2)}
+                            </li>
+                          </ul>
+                        );
+                      } else if (line.trim()) {
+                        return (
+                          <p key={index} className="text-gray-800">
+                            {line}
+                          </p>
+                        );
                       }
-                      
-                      return (
-                        <>
-                          {displayLines.map((line, index) => {
-                            // Check if line is a bullet point
-                            if (line.trim().startsWith('- ')) {
-                              return (
-                                <ul key={index} className="list-disc list-inside">
-                                  <li className="text-gray-800">
-                                    {line.trim().substring(2)}
-                                  </li>
-                                </ul>
-                              );
-                            } else if (line.trim()) {
-                              // Regular non-empty line
-                              return (
-                                <p key={index} className="text-gray-800">
-                                  {line}
-                                </p>
-                              );
-                            }
-                            return null;
-                          })}
-                          
-                          {shouldTruncate && (
-                            <button
-                              onClick={() => setIsExpanded(!isExpanded)}
-                              className="text-xs text-gray-500 hover:text-gray-700 font-mono mt-2 transition-colors duration-200"
-                            >
-                              {isExpanded ? 'read less' : 'read more...'}
-                            </button>
-                          )}
-                        </>
-                      );
-                    })()}
+                      return null;
+                    })}
                   </div>
                 </div>
               )}
 
-              {!loading && !error && shouldDisplayHours && togglTable.length > 0 && upToLately && (isExpanded || countWords(upToLately.text) <= TRUNCATE_WORD_COUNT) && (
+              {!loading && !error && shouldDisplayHours && togglTable.length > 0 && upToLately && (
                 <div className="border-2 border-black rounded-2xl overflow-hidden bg-gray-50">
                   <table className="w-full font-mono text-sm">
                     <thead>
