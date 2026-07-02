@@ -41,12 +41,110 @@ export default function ResumeSection() {
       dates: "Nov 2020 - Present",
       descriptions: [
         "Building production software end-to-end, independently, for paying clients, equity-stake partners, and personal products. Stack spans full-stack web, mobile, AI integration, and DevOps.",
-        "Encipher Systems (enciphersystems.com): Built and deployed the company marketing website end-to-end. Took a client-provided Figma design, added custom animations, coded it from scratch in Next.js 16 / React 19, and deployed to the client's custom domain. Includes a hardened contact workflow: Zod validation, honeypot, process-level rate limiting, and Nodemailer SMTP delivery with structured failure logging.",
-        "News Nexus (news-nexus-lite.dashanddata.com): Sole builder and operator of a 5-service production platform supporting a US federal contract with the Consumer Product Safety Commission via Kinetic Metrics. Ingests news from multiple sources into Postgres 16 via a shared Sequelize model package; runs deduplication, semantic and location scoring, OpenAI state classification, and content scraping through Node and Python workers; serves a Next.js review portal for human-in-the-loop clip approval and weekly PDF/Excel contract delivery. Completed SQLite to Postgres migration.",
-        "Tastermonial (tastermonial.com): Partnered with the founder to add Oura sleep tracking across their stack: Elixir (Phoenix) and Python (FastAPI) backends, new PostgreSQL schemas, Junction webhook ingestion, and Flutter mobile UI. Stood up an isolated parallel ecosystem outside Tastermonial's prod/dev environments and shipped an auth-enabled Flutter web build so test users could trial it safely.",
-        "Go Lightly (go-lightly.love): Guided-meditation creation platform where users compose meditations from ordered elements: text synthesized via ElevenLabs, uploaded sounds, and timed pauses. Built as a TypeScript monorepo: a Next.js 16 / React 19 / Redux Toolkit web app, an Express 5 API with JWT and Google OAuth, and a job-queue audio worker that assembles the final MP3 with ffmpeg over Sequelize 6 models on PostgreSQL, served through authenticated byte-range streaming.",
-        "Kyber Vision (kybervision.eu): Built the React Native mobile app for a European volleyball analytics product. Handles auth, team and player admin, live match scripting via a custom court-zone tap and swipe-wheel gesture system, video upload and review, action-to-video timeline sync, and highlight montage requests. Integrates with an Express API, shared Sequelize models, and a BullMQ + Redis + ffmpeg worker that uploads to YouTube and generates montages.",
-        "What Sticks (what-sticks.com): Sleep and weather tracking web app. Daily API calls pull Oura Ring sleep scores and weather conditions; computes per-user temperature-to-sleep correlations over time.",
+        <>
+          Encipher Systems (
+          <Link
+            href="https://enciphersystems.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-gray-400 underline-offset-2 hover:text-black"
+          >
+            enciphersystems.com
+          </Link>
+          ): Built and deployed the company marketing website end-to-end. Took a
+          client-provided Figma design, added custom animations, coded it from
+          scratch in Next.js 16 / React 19, and deployed to the client's custom
+          domain. Includes a hardened contact workflow: Zod validation,
+          honeypot, process-level rate limiting, and Nodemailer SMTP delivery
+          with structured failure logging.
+        </>,
+        <>
+          News Nexus (
+          <Link
+            href="https://news-nexus-lite.dashanddata.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-gray-400 underline-offset-2 hover:text-black"
+          >
+            news-nexus-lite.dashanddata.com
+          </Link>
+          ): Sole builder and operator of a 5-service production platform
+          supporting a US federal contract with the Consumer Product Safety
+          Commission via Kinetic Metrics. Ingests news from multiple sources
+          into Postgres 16 via a shared Sequelize model package; runs
+          deduplication, semantic and location scoring, OpenAI state
+          classification, and content scraping through Node and Python workers;
+          serves a Next.js review portal for human-in-the-loop clip approval and
+          weekly PDF/Excel contract delivery. Completed SQLite to Postgres
+          migration.
+        </>,
+        <>
+          Tastermonial (
+          <Link
+            href="https://tastermonial.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-gray-400 underline-offset-2 hover:text-black"
+          >
+            tastermonial.com
+          </Link>
+          ): Partnered with the founder to add Oura sleep tracking across their
+          stack: Elixir (Phoenix) and Python (FastAPI) backends, new PostgreSQL
+          schemas, Junction webhook ingestion, and Flutter mobile UI. Stood up
+          an isolated parallel ecosystem outside Tastermonial's prod/dev
+          environments and shipped an auth-enabled Flutter web build so test
+          users could trial it safely.
+        </>,
+        <>
+          Go Lightly (
+          <Link
+            href="https://go-lightly.love"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-gray-400 underline-offset-2 hover:text-black"
+          >
+            go-lightly.love
+          </Link>
+          ): Guided-meditation creation platform where users compose meditations
+          from ordered elements: text synthesized via ElevenLabs, uploaded
+          sounds, and timed pauses. Built as a TypeScript monorepo: a Next.js 16
+          / React 19 / Redux Toolkit web app, an Express 5 API with JWT and
+          Google OAuth, and a job-queue audio worker that assembles the final
+          MP3 with ffmpeg over Sequelize 6 models on PostgreSQL, served through
+          authenticated byte-range streaming.
+        </>,
+        <>
+          Kyber Vision (
+          <Link
+            href="https://kybervision.eu"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-gray-400 underline-offset-2 hover:text-black"
+          >
+            kybervision.eu
+          </Link>
+          ): Built the React Native mobile app for a European volleyball
+          analytics product. Handles auth, team and player admin, live match
+          scripting via a custom court-zone tap and swipe-wheel gesture system,
+          video upload and review, action-to-video timeline sync, and highlight
+          montage requests. Integrates with an Express API, shared Sequelize
+          models, and a BullMQ + Redis + ffmpeg worker that uploads to YouTube
+          and generates montages.
+        </>,
+        <>
+          What Sticks (
+          <Link
+            href="https://what-sticks.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-gray-400 underline-offset-2 hover:text-black"
+          >
+            what-sticks.com
+          </Link>
+          ): Sleep and weather tracking web app. Daily API calls pull Oura Ring
+          sleep scores and weather conditions; computes per-user
+          temperature-to-sleep correlations over time.
+        </>,
       ],
     },
     {
