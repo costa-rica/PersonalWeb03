@@ -40,7 +40,7 @@ export default function ResumeSection() {
       title: "Software Engineer",
       dates: "Nov 2020 - Present",
       descriptions: [
-        "Building production software end-to-end, independently, for paying clients, equity-stake partners, and personal products. Stack spans full-stack web, mobile, AI integration, and DevOps.",
+        "Building production software end-to-end, independently. Most of the work below is greenfield, empty repo to deployed system. Stack spans full-stack web, mobile, AI integration, and DevOps.",
         <>
           Encipher Systems (
           <Link
@@ -51,12 +51,12 @@ export default function ResumeSection() {
           >
             enciphersystems.com
           </Link>
-          ): Built and deployed the company marketing website end-to-end. Took a
-          client-provided Figma design, added custom animations, coded it from
-          scratch in Next.js 16 / React 19, and deployed to the client's custom
-          domain. Includes a hardened contact workflow: Zod validation,
-          honeypot, process-level rate limiting, and Nodemailer SMTP delivery
-          with structured failure logging.
+          ): Sole engineer on the company marketing website, live on the
+          client's custom domain. Started from a client-provided Figma design,
+          added custom animations beyond the design, and coded the site from
+          scratch in Next.js 16 / React 19. Includes a hardened contact
+          workflow: Zod validation, process-level rate limiting, and
+          Nodemailer SMTP delivery with structured failure logging.
         </>,
         <>
           News Nexus (
@@ -68,15 +68,15 @@ export default function ResumeSection() {
           >
             news-nexus-lite.dashanddata.com
           </Link>
-          ): Sole builder and operator of a 5-service production platform
-          supporting a US federal contract with the Consumer Product Safety
-          Commission via Kinetic Metrics. Ingests news from multiple sources
-          into Postgres 16 via a shared Sequelize model package; runs
-          deduplication, semantic and location scoring, OpenAI state
-          classification, and content scraping through Node and Python workers;
-          serves a Next.js review portal for human-in-the-loop clip approval and
-          weekly PDF/Excel contract delivery. Completed SQLite to Postgres
-          migration.
+          ): Sole builder and operator of a 5-service production platform that
+          ships on a weekly delivery deadline under a US federal contract with
+          the Consumer Product Safety Commission via Kinetic Metrics. Ingests
+          news from multiple sources into Postgres 16 via a shared Sequelize
+          model package; runs deduplication, semantic and location scoring,
+          OpenAI state classification, and content scraping through Node and
+          Python workers; serves a Next.js review portal for human-in-the-loop
+          clip approval and weekly PDF/Excel contract delivery. Completed SQLite
+          to Postgres migration.
         </>,
         <>
           Tastermonial (
@@ -124,12 +124,13 @@ export default function ResumeSection() {
             kybervision.eu
           </Link>
           ): Built the React Native mobile app for a European volleyball
-          analytics product. Handles auth, team and player admin, live match
-          scripting via a custom court-zone tap and swipe-wheel gesture system,
-          video upload and review, action-to-video timeline sync, and highlight
-          montage requests. Integrates with an Express API, shared Sequelize
-          models, and a BullMQ + Redis + ffmpeg worker that uploads to YouTube
-          and generates montages.
+          analytics product. Designed a custom court-zone tap and swipe-wheel
+          gesture system for capturing match events at game speed, iterated
+          across iOS hardware until it held up under live match conditions. Also
+          handles auth, team and player admin, video upload and review,
+          action-to-video timeline sync, and highlight montage requests.
+          Integrates with an Express API, shared Sequelize models, and a BullMQ
+          + Redis + ffmpeg worker that uploads to YouTube and generates montages.
         </>,
         <>
           What Sticks (
@@ -253,17 +254,18 @@ export default function ResumeSection() {
               </div>
 
               <h3 className="text-xl font-mono font-semibold text-gray-700">
-                Founding Engineer | Full-Stack TypeScript & Python | AI
-                Integration
+                Founding Engineer | Full-Stack TypeScript & Python | LLM &
+                Retrieval Systems
               </h3>
 
               <p className="text-gray-700">
                 Problem solver who builds software end-to-end. For 5+ years has
                 shipped production systems independently, including News Nexus,
                 a 5-service platform delivering weekly news-clip reports under
-                a US federal contract, and Kyber Vision, a volleyball-analytics
-                mobile app for a European sports-tech product. Prior 15 years
-                as a federal economist. Open to founding-engineer and
+                a US federal contract. Works in person from Frontier Tower in
+                San Francisco, where he hosts a weekly accountability meeting.
+                Prior 15 years as an economist (US Government, ICF, HLB
+                Decision Economics, EIA). Open to founding-engineer and
                 early-stage roles where breadth, ownership, and shipping matter
                 more than specialization.
               </p>
@@ -275,13 +277,15 @@ export default function ResumeSection() {
               </span>
               <span className="text-gray-700">
                 JavaScript, TypeScript, React, React Native (Expo), Next.js,
-                Redux Toolkit, Tailwind, Python, Flask, FastAPI, Node.js,
-                ExpressJS, REST API design, JWT auth, Postgres, Sequelize,
-                schema migration, SQLite, SQL, MySQL, MongoDb, BullMQ, Redis,
-                custom FIFO with cooperative cancellation, OpenAI, HuggingFace,
-                sentence-transformers, Langflow, ffmpeg, YouTube API,
-                Playwright scraping, Ubuntu, AWS, Linux Server, reverse proxy,
-                GitHub, Kivy, Swift, HTML/CSS, Restful API,{" "}
+                Redux Toolkit, Tailwind, Figma-to-production UI, custom gesture
+                systems, Python, Flask, FastAPI, Node.js, ExpressJS, REST API
+                design, JWT auth, Postgres, Sequelize, schema migration, SQLite,
+                SQL, MySQL, MongoDb, BullMQ, Redis, custom FIFO with cooperative
+                cancellation, OpenAI classification, HuggingFace and
+                sentence-transformers embeddings, semantic retrieval and dedupe
+                over unstructured corpora, ffmpeg, YouTube API, Playwright
+                scraping, Ubuntu, AWS, Linux Server, reverse proxy, GitHub,
+                Kivy, Swift, HTML/CSS, Restful API,{" "}
                 {"Host Web Applications"}, architecture, build, ops,
                 stakeholders
               </span>
