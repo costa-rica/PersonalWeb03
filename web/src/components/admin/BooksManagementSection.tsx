@@ -86,7 +86,7 @@ export default function BooksManagementSection({
         isOpen: true,
         type: "success",
         title: "Success",
-        message: `Books CSV uploaded successfully!\n\nInserted: ${result.inserted}\nUpdated: ${result.updated}\nTotal: ${result.total}`,
+        message: `Books CSV uploaded successfully!\n\nInserted: ${result.inserted}\nUpdated: ${result.updated}\nDuplicates merged: ${result.merged}\nSkipped: ${result.skipped}\nTotal processed: ${result.total}`,
       });
       reset();
     } catch (err) {
@@ -123,7 +123,8 @@ export default function BooksManagementSection({
           <div className="border-t-2 border-black p-6 space-y-3">
             <p className="text-sm text-gray-600">
               Upload a GoodReads CSV export to import or update your book
-              library. Existing books (matched by GoodReads ID) will be updated.
+              library. Existing books are matched by GoodReads ID, then title
+              and author. Duplicate editions are merged.
             </p>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div className="space-y-2">

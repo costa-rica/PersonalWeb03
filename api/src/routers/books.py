@@ -3,7 +3,8 @@
 import csv
 import io
 from datetime import datetime
-from typing import List
+from decimal import Decimal, InvalidOperation
+from typing import Callable, List
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File
 from sqlalchemy.orm import Session
 from loguru import logger
@@ -24,12 +25,15 @@ def clean_isbn(value: str) -> str:
 
 
 def safe_int(value: str, default: int = 0) -> int:
-    """Safely parse an integer from a string."""
+    """Safely parse an integer, including integral decimal strings."""
     if not value or not value.strip():
         return default
     try:
-        return int(value.strip())
-    except ValueError:
+        parsed = Decimal(value.strip())
+        if parsed != parsed.to_integral_value():
+            return default
+        return int(parsed)
+    except (InvalidOperation, ValueError, OverflowError):
         return default
 
 
@@ -63,6 +67,118 @@ def safe_float(value: str, default: float = 0.0) -> float:
         return default
 
 
+def normalize_identity(value: str) -> str:
+    """Normalize title and author values for duplicate matching."""
+    return " ".join(value.casefold().split())
+
+
+def import_books_csv(content: str, db: Session) -> dict[str, int]:
+    """Import a GoodReads CSV and reconcile duplicate book editions."""
+    reader = csv.DictReader(io.StringIO(content))
+    fieldnames = set(reader.fieldnames or [])
+    required_fields = {"Book Id", "Title", "Author"}
+    missing_fields = sorted(required_fields - fieldnames)
+    if missing_fields:
+        raise ValueError(
+            f"Missing required CSV columns: {', '.join(missing_fields)}"
+        )
+
+    column_parsers: dict[str, tuple[str, Callable[[str], object]]] = {
+        "Title": ("title", lambda value: value.strip()),
+        "Author": ("author", lambda value: value.strip()),
+        "My Rating": ("my_rating", safe_int),
+        "Average Rating": ("average_rating", safe_float),
+        "Exclusive Shelf": (
+            "exclusive_shelf",
+            lambda value: value.strip() or None,
+        ),
+        "ISBN": ("isbn", lambda value: clean_isbn(value) or None),
+        "ISBN13": ("isbn13", lambda value: clean_isbn(value) or None),
+        "Number of Pages": (
+            "number_of_pages",
+            lambda value: safe_int(value) or None,
+        ),
+        "Year Published": (
+            "year_published",
+            lambda value: safe_int(value) or None,
+        ),
+        "Date Read": ("date_read", normalize_date),
+        "Date Added": ("date_added", normalize_date),
+    }
+
+    existing_books = db.query(Book).all()
+    books_by_id = {book.book_id: book for book in existing_books}
+    books_by_identity: dict[tuple[str, str], list[Book]] = {}
+    for book in existing_books:
+        identity = (
+            normalize_identity(book.title),
+            normalize_identity(book.author),
+        )
+        books_by_identity.setdefault(identity, []).append(book)
+
+    inserted = 0
+    updated = 0
+    merged = 0
+    skipped = 0
+
+    for row in reader:
+        book_id = safe_int(row.get("Book Id", ""))
+        title = row.get("Title", "").strip()
+        author = row.get("Author", "").strip()
+        if not book_id or not title or not author:
+            skipped += 1
+            logger.warning(
+                f"Skipping invalid book row: {title or 'unknown'}"
+            )
+            continue
+
+        identity = (normalize_identity(title), normalize_identity(author))
+        identity_matches = books_by_identity.get(identity, [])
+        existing = books_by_id.get(book_id)
+
+        if existing is None and identity_matches:
+            existing = identity_matches[0]
+            books_by_id.pop(existing.book_id, None)
+            existing.book_id = book_id
+            books_by_id[book_id] = existing
+
+        book_data = {
+            model_field: parser(row.get(csv_field) or "")
+            for csv_field, (model_field, parser) in column_parsers.items()
+            if csv_field in fieldnames
+        }
+
+        if existing:
+            for key, value in book_data.items():
+                setattr(existing, key, value)
+            updated += 1
+
+            duplicates = [
+                book for book in identity_matches if book is not existing
+            ]
+            for duplicate in duplicates:
+                db.delete(duplicate)
+                books_by_id.pop(duplicate.book_id, None)
+                merged += 1
+            books_by_identity[identity] = [existing]
+            logger.debug(f"Updated book: {title}")
+        else:
+            new_book = Book(book_id=book_id, **book_data)
+            db.add(new_book)
+            books_by_id[book_id] = new_book
+            books_by_identity[identity] = [new_book]
+            inserted += 1
+            logger.debug(f"Inserted book: {title}")
+
+    return {
+        "inserted": inserted,
+        "updated": updated,
+        "merged": merged,
+        "skipped": skipped,
+        "total": inserted + updated,
+    }
+
+
 @router.get("/books", response_model=List[BookOut])
 def get_books(db: Session = Depends(get_db)):
     """Get all books ordered by date added (most recent first)."""
@@ -81,7 +197,8 @@ def upload_books_csv(
     """
     Upload a GoodReads CSV export to import/update books.
 
-    Upserts on book_id: updates existing books, inserts new ones.
+    Matches by GoodReads ID, then normalized title and author. Duplicate
+    editions are consolidated into one reading-log record.
     """
     logger.info(f"Books CSV upload initiated by user: {current_user.email}")
 
@@ -92,55 +209,24 @@ def upload_books_csv(
         )
 
     try:
-        content = csv_file.file.read().decode('utf-8')
-        reader = csv.DictReader(io.StringIO(content))
-
-        inserted = 0
-        updated = 0
-
-        for row in reader:
-            book_id = safe_int(row.get('Book Id', ''))
-            if not book_id:
-                logger.warning(f"Skipping row with no Book Id: {row.get('Title', 'unknown')}")
-                continue
-
-            existing = db.query(Book).filter(Book.book_id == book_id).first()
-
-            book_data = {
-                'title': row.get('Title', '').strip(),
-                'author': row.get('Author', '').strip(),
-                'my_rating': safe_int(row.get('My Rating', '')),
-                'average_rating': safe_float(row.get('Average Rating', '')),
-                'exclusive_shelf': row.get('Exclusive Shelf', '').strip() or None,
-                'isbn': clean_isbn(row.get('ISBN', '')) or None,
-                'isbn13': clean_isbn(row.get('ISBN13', '')) or None,
-                'number_of_pages': safe_int(row.get('Number of Pages', '')) or None,
-                'year_published': safe_int(row.get('Year Published', '')) or None,
-                'date_read': normalize_date(row.get('Date Read', '')),
-                'date_added': normalize_date(row.get('Date Added', '')),
-            }
-
-            if existing:
-                for key, value in book_data.items():
-                    setattr(existing, key, value)
-                updated += 1
-                logger.debug(f"Updated book: {book_data['title']}")
-            else:
-                new_book = Book(book_id=book_id, **book_data)
-                db.add(new_book)
-                inserted += 1
-                logger.debug(f"Inserted book: {book_data['title']}")
-
+        content = csv_file.file.read().decode('utf-8-sig')
+        result = import_books_csv(content, db)
         db.commit()
-        total = inserted + updated
-        logger.info(f"Books CSV upload complete: {inserted} inserted, {updated} updated, {total} total")
+        logger.info(
+            "Books CSV upload complete: "
+            f"{result['inserted']} inserted, {result['updated']} updated, "
+            f"{result['merged']} merged, {result['skipped']} skipped"
+        )
 
-        return {
-            "inserted": inserted,
-            "updated": updated,
-            "total": total,
-        }
+        return result
 
+    except (UnicodeDecodeError, ValueError) as e:
+        logger.warning(f"Books CSV upload rejected: {e}")
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Invalid CSV: {str(e)}"
+        )
     except Exception as e:
         logger.error(f"Books CSV upload failed: {e}")
         db.rollback()

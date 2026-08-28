@@ -14,6 +14,8 @@ export interface BookItem {
 export interface UploadBooksSummary {
   inserted: number
   updated: number
+  merged: number
+  skipped: number
   total: number
 }
 

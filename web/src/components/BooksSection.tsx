@@ -142,7 +142,7 @@ export default function BooksSection() {
                       Author
                     </th>
                     <th className="text-center px-2 py-3 font-mono font-bold text-sm text-black">
-                      Year
+                      Read
                     </th>
                     <th className="text-center px-2 py-3 font-mono font-bold text-sm text-black">
                       My
