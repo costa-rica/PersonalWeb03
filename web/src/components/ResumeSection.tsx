@@ -21,7 +21,7 @@ export default function ResumeSection() {
     },
     // { icon: Phone, text: "+1(415) 406-9480", href: "tel:+14154069480" },
     { icon: MapPin, text: "San Francisco, CA USA" },
-    { icon: Globe, text: "nick-rodriguez.info", href: "https://iamnick.info" },
+    { icon: Globe, text: "nick-rodriguez.info", href: "https://nick-rodriguez.info" },
     {
       icon: Github,
       text: "github.com/costa-rica",
@@ -37,6 +37,7 @@ export default function ResumeSection() {
   const experience = [
     {
       company: "Dashboards and Databases",
+      companyUrl: "https://dashanddata.com/",
       title: "Software Engineer",
       dates: "Nov 2020 - Present",
       descriptions: [
@@ -333,7 +334,19 @@ export default function ResumeSection() {
               <div key={index} className="space-y-2">
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
                   <div className="text-lg">
-                    {job.company} <em className="text-gray-600">{job.title}</em>
+                    {job.companyUrl ? (
+                      <Link
+                        href={job.companyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline decoration-gray-400 underline-offset-2 hover:text-black"
+                      >
+                        {job.company}
+                      </Link>
+                    ) : (
+                      job.company
+                    )}{" "}
+                    <em className="text-gray-600">{job.title}</em>
                   </div>
                   <div className="text-gray-600">{job.dates}</div>
                 </div>
